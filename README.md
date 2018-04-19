@@ -14,7 +14,7 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 docker-compose up
 ```
 
-### Caso seja incluído um novo pacote via NPM, a imagem dos containers devem ser atualizadas
+### Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada
 
 ```shell
 docker-compose down
@@ -49,3 +49,14 @@ Aguardar até que os novos pods criados estejam com status `running`
 ```shell
 kubectl get pods
 ```
+
+### Observações Finais
+
+Antes de realizar pushs garanta que, além de não ter quebrado nenhum funcionalidade, seu código está respeitando as regras do linter.
+
+```shell
+docker-compose up web (caso ainda não esteja rodando)
+docker-compose exec web npm run lint
+```
+
+No futuro, o processo de deploy sera automatizado e a build irá falhar caso aconteça algum erro no linter.
