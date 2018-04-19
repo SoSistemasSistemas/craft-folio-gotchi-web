@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: craft-folio-gotchi-web
+  labels:
+    name: craft-folio-gotchi-web
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 'http'
+  selector:
+    name: craft-folio-gotchi-web
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: craft-folio-gotchi-web
+  labels:
+    name: craft-folio-gotchi-web
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: craft-folio-gotchi-web
+    spec:
+      containers:
+      - name: craft-folio-gotchi-web
+        image: gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:0.1.0
+        resources:
+          requests:
+            cpu: "50m"
+          limits:
+            cpu: "150m"
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: API_PORT
+          value: '80'
