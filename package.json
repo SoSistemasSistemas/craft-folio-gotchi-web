@@ -4,7 +4,8 @@
   "description": "Microservice responsible for serve the Web Application of the project CraftFolioGotchi. This project is the final assignment of the class Web Programming of CEFET-MG Computer Engeneer Degree.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint 'src/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,14 @@
   },
   "homepage": "https://github.com/SoSistemasSistemas/craft-folio-gotchi-web#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
     "nodemon": "^1.17.3"
   }
 }
