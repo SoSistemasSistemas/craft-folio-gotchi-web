@@ -1,0 +1,29 @@
+{
+  "name": "craft-folio-gotchi-web",
+  "version": "1.0.0",
+  "description": "Microservice responsible for serve the Web Application of the project CraftFolioGotchi. This project is the final assignment of the class Web Programming of CEFET-MG Computer Engeneer Degree.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoSistemasSistemas/craft-folio-gotchi-web.git"
+  },
+  "keywords": [
+    "craft-folio-gotchi",
+    "web"
+  ],
+  "author": "SoSistemasSistemas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/issues"
+  },
+  "homepage": "https://github.com/SoSistemasSistemas/craft-folio-gotchi-web#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}
