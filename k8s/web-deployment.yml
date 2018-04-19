@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: craft-folio-gotchi-web
-        image: gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:0.1.0
+        image: gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:0.1.1
         resources:
           requests:
             cpu: "50m"
