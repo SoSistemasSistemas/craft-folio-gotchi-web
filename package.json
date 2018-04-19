@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint 'src/**/*.js'"
+    "lint": "eslint 'src/**/*.js'",
+    "bundle": "webpack",
+    "bundle:watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -22,11 +24,17 @@
   },
   "homepage": "https://github.com/SoSistemasSistemas/craft-folio-gotchi-web#readme",
   "dependencies": {
+    "bootstrap": "^4.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",

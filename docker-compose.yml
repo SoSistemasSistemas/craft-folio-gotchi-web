@@ -12,3 +12,12 @@ services:
     ports:
       - 80:80
     container_name: craft-folio-gotchi-web
+  webpack:
+    build: .
+    command: ["npm", "run", "bundle:watch"]
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: craft-folio-gotchi-web-webpack
