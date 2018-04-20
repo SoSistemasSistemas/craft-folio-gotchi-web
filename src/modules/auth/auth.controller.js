@@ -1,14 +1,15 @@
 export default class AuthController {
-  constructor($location) {
+  constructor($location, authService) {
     this.$location = $location;
+    this.authService = authService;
 
     this.username = 'luisnascimento';
     this.password = '12345';
   }
 
   login() {
-    this.$location.path('/home');
+    this.authService.login().then(() => this.$location.path('/home'));
   }
 }
 
-AuthController.$inject = ['$location'];
+AuthController.$inject = ['$location', 'authService'];
