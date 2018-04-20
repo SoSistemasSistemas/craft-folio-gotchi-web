@@ -25,6 +25,7 @@
   "homepage": "https://github.com/SoSistemasSistemas/craft-folio-gotchi-web#readme",
   "dependencies": {
     "angular": "^1.6.10",
+    "angular-ui-router": "^1.0.3",
     "bootstrap": "^4.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -42,6 +43,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
+    "html-loader": "^0.5.5",
     "nodemon": "^1.17.3",
     "style-loader": "^0.21.0"
   }
