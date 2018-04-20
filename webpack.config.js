@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    init: './src/assets/modules/application/app.controller.js',
+    init: './src/modules/application/app.controller.js',
   },
   output: {
     path: path.resolve(__dirname, 'src/dist'),
