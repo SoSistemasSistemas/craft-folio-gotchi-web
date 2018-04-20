@@ -1,5 +1,28 @@
-<div class="jumbotron">
-  <h1>Hello, {{auth.username}}</h1>
+<div id="auth">    
+  <div class="container form">
+    <div class="form-header">
+      <h3> CraftFolioGotchi </h3>
+      <h5> Login </h5>
+    </div>
+    <hr>
+    <div class="form-body">
+      <form>
+        <div class="row">
+          <div class="col-md-12">
+              <input type="text" name="username" ng-model="authForm.username"
+                     ng-required="true" placeholder="Usuário" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+              <input type="password" name="password" ng-model="authForm.password"
+                     ng-required="true" placeholder="Senha" class="form-control">
+          </div>
+        </div>
+      </form>          
+    </div>
+    <div class="form-footer">
+      <button type="button" class="btn btn-block btn-primary" ng-click="auth.login()"> Login </button>
+    </div>
+  </div>
 </div>
-
-<button class="btn btn-primary" ng-click="auth.login()">Login</button>

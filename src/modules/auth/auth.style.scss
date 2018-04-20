@@ -1,0 +1,28 @@
+#auth{
+  width: 100vw;
+  height: 100vh;
+  background-color: #609e47;
+  .form {
+    background-color: #FFF;
+    min-width: 250px;
+    max-width: 350px;
+    width: 25vw;
+    padding: 20px;
+    box-shadow: 5px 5px 10px 10px #4b7b37;
+    border-radius: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  };
+  .form-header {
+    text-align: center;
+    padding-bottom: 15px; 
+  }
+  .form-body {
+    padding-bottom: 15px;
+    input {
+      width: 100%;
+      margin-bottom: 3px;
+    }
+  }
+}
