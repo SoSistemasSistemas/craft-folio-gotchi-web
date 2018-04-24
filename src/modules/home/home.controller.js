@@ -30,12 +30,30 @@ export default class HomeController {
     document.getElementById("mySidenav").style.width = "0";
   };
 
-  changeActiveSkyCarousel() {
-    this.widgetConfigs.sky = document.querySelectorAll('#skyCarousel .active img')[0].src;
+  changeActiveSkyCarousel(isGoingFoward) {
+    const previousIndex = parseInt(document.querySelectorAll('#skyCarousel .active img')[0].attributes[2].value);
+    let nextIndex = isGoingFoward ? previousIndex + 1 : previousIndex - 1;
+
+    if (nextIndex === this.skyTextures.length)
+      nextIndex = 0;
+    
+    if (nextIndex === -1)
+      nextIndex = this.skyTextures.length - 1;
+
+    this.widgetConfigs.sky = this.skyTextures[nextIndex];
   }
 
-  changeActiveGroundCarousel() {
-    this.widgetConfigs.ground = document.querySelectorAll('#groundCarousel .active img')[0].src;
+  changeActiveGroundCarousel(isGoingFoward) {
+    const previousIndex = parseInt(document.querySelectorAll('#groundCarousel .active img')[0].attributes[2].value);
+    let nextIndex = isGoingFoward ? previousIndex + 1 : previousIndex - 1;
+
+    if (nextIndex === this.groundTextures.length)
+      nextIndex = 0;
+    
+    if (nextIndex === -1)
+      nextIndex = this.groundTextures.length - 1;
+
+    this.widgetConfigs.ground = this.groundTextures[nextIndex];
   }
 
   saveWidgetConfigs() {

@@ -16,7 +16,7 @@
           <div class="carousel-inner">
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
                  ng-repeat="sky in home.skyTextures">
-              <img src="{{ sky }}" style="width:100%; height: 300px;">
+              <img src="{{ sky }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
       
@@ -26,7 +26,7 @@
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#skyCarousel" data-slide="next"
-          ng-click="home.changeActiveSkyCarousel()">
+          ng-click="home.changeActiveSkyCarousel(true)">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -40,7 +40,7 @@
           <div class="carousel-inner">
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
                   ng-repeat="ground in home.groundTextures">
-              <img src="{{ ground }}" style="width:100%; height: 300px;">
+              <img src="{{ ground }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
       
@@ -50,7 +50,7 @@
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#groundCarousel" data-slide="next"
-             ng-click="home.changeActiveGroundCarousel()">
+             ng-click="home.changeActiveGroundCarousel(true)">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
