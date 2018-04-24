@@ -1,9 +1,12 @@
 # craft-folio-gotchi-web
+
 Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotchi. Esse projeto faz parte do trabalho final da disciplina Programação WEB do curso de Engenharia de Computação/CEFET-MG.
 
 ## Requisítos de ambiente
+
 - docker
 - docker-compose
+- virtualbox
 - gcloud (Para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
 - node (opcional)
 - npm (opcional)
@@ -11,6 +14,9 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 ## Como rodar aplicação local
 
 ```shell
+docker-machine create default
+docker-machine start default
+eval $(docker-machine env default)
 docker-compose up
 ```
 
