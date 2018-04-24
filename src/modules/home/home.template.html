@@ -16,15 +16,17 @@
           <div class="carousel-inner">
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
                  ng-repeat="sky in home.skyTextures">
-              <img src="{{ sky }}" alt="Los Angeles" style="width:100%; height: 300px;">
+              <img src="{{ sky }}" style="width:100%; height: 300px;">
             </div>
           </div>
       
           <!-- Left and right controls -->
-          <a class="carousel-control-prev" href="#skyCarousel" data-slide="prev">
+          <a class="carousel-control-prev" href="#skyCarousel" data-slide="prev"
+             ng-click="home.changeActiveSkyCarousel()">
               <span class="carousel-control-prev-icon"></span>
           </a>
-          <a class="carousel-control-next" href="#skyCarousel" data-slide="next">
+          <a class="carousel-control-next" href="#skyCarousel" data-slide="next"
+          ng-click="home.changeActiveSkyCarousel()">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -38,15 +40,17 @@
           <div class="carousel-inner">
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
                   ng-repeat="ground in home.groundTextures">
-              <img src="{{ ground }}" alt="Los Angeles" style="width:100%; height: 300px;">
+              <img src="{{ ground }}" style="width:100%; height: 300px;">
             </div>
           </div>
       
           <!-- Left and right controls -->
-          <a class="carousel-control-prev" href="#groundCarousel" data-slide="prev">
+          <a class="carousel-control-prev" href="#groundCarousel" data-slide="prev"
+             ng-click="home.changeActiveGroundCarousel()">
               <span class="carousel-control-prev-icon"></span>
           </a>
-          <a class="carousel-control-next" href="#groundCarousel" data-slide="next">
+          <a class="carousel-control-next" href="#groundCarousel" data-slide="next"
+             ng-click="home.changeActiveGroundCarousel()">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -60,15 +64,19 @@
         <h5>Outdoor</h5>
       </div>
       
-      <button type="button" class="btn btn-block btn-primary">Salvar</button>
+      <button type="button" class="btn btn-block btn-primary"
+              ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
   </div>
 
-  <div id="sky">
+  <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
     <button class="btn pull-left" type="button" 
             ng-click="home.openWidgetConfiguration()">
       <i class="fa fa-edit"></i>Editar
     </button>
   </div>
-  <div id="ground"></div>
+
+  <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}">
+
+  </div>
 </div>
