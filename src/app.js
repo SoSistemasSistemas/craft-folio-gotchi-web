@@ -16,5 +16,5 @@ app.use('/', (req, res) => {
 });
 
 app.listen(parseInt(API_PORT, 10), () => {
-  console.log('CraftFolioGotchi up and running... :)');
+  console.log(`CraftFolioGotchi up and running at 0.0.0.0:${API_PORT}... :)`);
 });
