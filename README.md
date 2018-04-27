@@ -4,12 +4,12 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 
 ## Requisitos de ambiente
 
-- docker
-- docker-compose
-- virtualbox (apenas em host Mac)
-- gcloud (Para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
-- node (opcional)
-- npm (opcional)
+- npm
+- node
+- docker (opcional)
+- docker-compose (opcional)
+- virtualbox (opcional, apenas em host Mac)
+- gcloud (opcional, para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
 
 ## Como rodar aplicação local
 
