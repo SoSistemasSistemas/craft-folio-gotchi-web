@@ -2,11 +2,11 @@
 
 Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotchi. Esse projeto faz parte do trabalho final da disciplina Programação WEB do curso de Engenharia de Computação/CEFET-MG.
 
-## Requisítos de ambiente
+## Requisitos de ambiente
 
 - docker
 - docker-compose
-- virtualbox
+- virtualbox (apenas em host Mac)
 - gcloud (Para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
 - node (opcional)
 - npm (opcional)
@@ -52,7 +52,7 @@ gcloud docker -- push gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:
 
 Atualizar o atributo referente a tag da imagem no arquivo `k8s/web-deployment.yml`
 
-Aplicar as alterações no cluster de producão
+Aplicar as alterações no cluster de produção
 
 ```shell
 kubectl apply -f k8s/web-deployment.yml
@@ -66,7 +66,7 @@ kubectl get pods
 
 ### Observações Finais
 
-Antes de realizar pushs garanta que, além de não ter quebrado nenhum funcionalidade, seu código está respeitando as regras do linter.
+Antes de realizar pushs garanta que, além de não ter quebrado nenhuma funcionalidade, seu código está respeitando as regras do linter.
 
 ```shell
 docker-compose up web (caso ainda não esteja rodando)
