@@ -20,6 +20,14 @@ eval $(docker-machine env default)
 docker-compose up
 ```
 
+Sem Docker:
+
+```shell
+npm install
+npm run bundle
+API_PORT=8000 node src/app.js
+```
+
 ### Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada
 
 ```shell
