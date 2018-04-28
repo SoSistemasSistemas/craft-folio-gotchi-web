@@ -1,18 +1,19 @@
-export default class HomeController {
+/* eslint-env browser */
 
+export default class HomeController {
   constructor(widgetService) {
     this.widgetService = widgetService;
 
     this.widgetConfigs = widgetService.getAll() || {};
 
     this.skyTextures = [
-      'https://storage.googleapis.com/sss-cfg-widgets/sky/sky_1.jpg',
-      'https://storage.googleapis.com/sss-cfg-widgets/sky/sky_2.jpg',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_1.jpg',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_2.jpg',
     ];
     this.groundTextures = [
-      'https://storage.googleapis.com/sss-cfg-widgets/ground/grass.jpg',
-      'https://storage.googleapis.com/sss-cfg-widgets/ground/rock.png',
-      'https://storage.googleapis.com/sss-cfg-widgets/ground/sand.jpg',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/grass.jpg',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/rock.png',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/sand.jpg',
     ];
 
     this.widgetConfigs.sky = this.widgetConfigs.sky || this.skyTextures[0];
@@ -22,38 +23,50 @@ export default class HomeController {
   openWidgetConfiguration() {
     this.rollbackWidgetConfigs = Object.assign({}, this.widgetConfigs);
 
-    document.getElementById("mySidenav").style.width = "500px";
-  };
-  
+    document.getElementById('mySidenav').style.width = '500px';
+  }
+
   closeWidgetConfiguration() {
     this.widgetConfigs = this.rollbackWidgetConfigs;
-    document.getElementById("mySidenav").style.width = "0";
-  };
+    document.getElementById('mySidenav').style.width = '0';
+  }
 
-  changeActiveSkyCarousel(isGoingFoward) {
-    const previousIndex = parseInt(document.querySelectorAll('#skyCarousel .active img')[0].attributes[2].value);
-    let nextIndex = isGoingFoward ? previousIndex + 1 : previousIndex - 1;
-
-    if (nextIndex === this.skyTextures.length)
-      nextIndex = 0;
-    
-    if (nextIndex === -1)
-      nextIndex = this.skyTextures.length - 1;
+  changeSky(direction) {
+    const skyImage = document.querySelectorAll('#skyCarousel .active img')[0];
+    const previousIndex = parseInt(skyImage.attributes[2].value, 10);
+    const nextIndex =
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.skyTextures.length);
 
     this.widgetConfigs.sky = this.skyTextures[nextIndex];
   }
 
-  changeActiveGroundCarousel(isGoingFoward) {
-    const previousIndex = parseInt(document.querySelectorAll('#groundCarousel .active img')[0].attributes[2].value);
-    let nextIndex = isGoingFoward ? previousIndex + 1 : previousIndex - 1;
-
-    if (nextIndex === this.groundTextures.length)
-      nextIndex = 0;
-    
-    if (nextIndex === -1)
-      nextIndex = this.groundTextures.length - 1;
+  changeGround(direction) {
+    const groundImage = document.querySelectorAll('#groundCarousel .active img')[0];
+    const previousIndex = parseInt(groundImage.attributes[2].value, 10);
+    const nextIndex =
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.groundTextures.length);
 
     this.widgetConfigs.ground = this.groundTextures[nextIndex];
+  }
+
+  getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
+    let nextIndex = 0;
+
+    if (direction === 'next') {
+      nextIndex = previousIndex + 1;
+    } else if (direction === 'prev') {
+      nextIndex = previousIndex - 1;
+    }
+
+    if (nextIndex === totalBackgrounds) {
+      nextIndex = 0;
+    }
+
+    if (nextIndex === -1) {
+      nextIndex = totalBackgrounds - 1;
+    }
+
+    return nextIndex;
   }
 
   saveWidgetConfigs() {
