@@ -3,6 +3,7 @@ import uiRouter from 'angular-ui-router';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery';
+import 'sweetalert';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './home.style.scss';
 

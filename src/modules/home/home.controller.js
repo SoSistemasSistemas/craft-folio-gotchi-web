@@ -1,4 +1,5 @@
 /* eslint-env browser */
+/* global swal */
 
 export default class HomeController {
   constructor(widgetService) {
@@ -26,9 +27,39 @@ export default class HomeController {
     document.getElementById('mySidenav').style.width = '500px';
   }
 
-  closeWidgetConfiguration() {
-    this.widgetConfigs = this.rollbackWidgetConfigs;
+  closeWidgetConfiguration(rollbackWidgetConfigs) {
+    if (rollbackWidgetConfigs) {
+      this.widgetConfigs = this.rollbackWidgetConfigs;
+    }
+
     document.getElementById('mySidenav').style.width = '0';
+  }
+
+  askToCloseWidgetConfiguration() {
+    const title = 'Atenção';
+    const message = 'As alterações realizadas nos seus Widgets serão perdidas, caso não as salve. \
+                     Tem certeza de que deseja prosseguir?';
+
+    swal(title, message, 'warning', {
+      focusConfirm: false,
+      buttons: {
+        cancel: {
+          text: 'Continuar editando',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Prosseguir',
+          value: true,
+          visible: true,
+        },
+      },
+    })
+      .then((proceed) => {
+        if (proceed) {
+          this.closeWidgetConfiguration(true);
+        }
+      });
   }
 
   changeSky(direction) {
@@ -72,6 +103,7 @@ export default class HomeController {
   saveWidgetConfigs() {
     this.widgetService.upsertBulk(this.widgetConfigs);
     this.closeWidgetConfiguration();
+    swal('', 'Configurações de Widgets salvas com sucesso', 'success');
   }
 }
 
