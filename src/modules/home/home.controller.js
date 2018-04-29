@@ -8,6 +8,14 @@ const Position = {
   CENTER: '4',
 };
 
+function isValidURL(url) {
+  try {
+    return new URL(url);
+  } catch (error) {
+    return false;
+  }
+}
+
 function getPositionStyle(position) {
   const { CENTER, TOP_CENTER, TOP_RIGHT } = Position;
 
@@ -32,9 +40,11 @@ export default class HomeController {
   constructor(widgetService) {
     this.widgetService = widgetService;
 
+    this.inputOutdoor = {};
+
     this.widgetConfigs = widgetService.getAll() || {};
     this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || this.getWelcomeBoxDefault();
-    this.widgetConfigs.outdoor = this.getOutdoorDefaultContent();
+    this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
@@ -194,6 +204,57 @@ export default class HomeController {
     }
 
     return nextIndex;
+  }
+
+  addOutdoorContent() {
+    const { inputOutdoor } = this;
+    const { url, clickAction } = inputOutdoor
+    
+    if (!isValidURL(url)) {
+      const message =
+        'A URL da imagem informada não é válida. Favor corrigir e tente novamente';
+      return swal('Oops...', message, 'error');
+    }
+
+    if (!isValidURL(clickAction)) {
+      const message = 
+        'A URL de redirecionamento informada não é válida. Favor corrigir e tente novamente';
+      return swal('Oops...', message, 'error');
+    }
+
+    return this.widgetConfigs.outdoor.push(inputOutdoor);
+  }
+
+  removeOutdoorContent(content) {
+    const title = 'Atenção';
+    const message = 'Tem certeza de que deseja excluir esse conteúdo?';
+
+    swal(title, message, 'warning', {
+      dangerMode: true,
+      buttons: {
+        cancel: {
+          text: 'Deixa pra lá',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Sim, excluir',
+          value: true,
+          visible: true,
+        },
+      },
+    })
+      .then((proceed) => {
+        if (proceed) {
+          if (proceed) {
+            this.widgetConfigs.outdoor = this.widgetConfigs.outdoor.filter(cont => {
+              return cont != content;
+            });
+  
+            console.log(this.widgetConfigs.outdoor);
+          }
+        }
+      });
   }
 
   saveWidgetConfigs() {
