@@ -71,6 +71,40 @@
         margin-bottom: 3px;
       }
     }
+
+    #outdoorConfig {
+      .row {
+        .col-md-10 {
+          .row .col-md-12{
+            margin-bottom: 3px;
+          }
+        }
+        .col-md-2 {
+          padding: 5px 10px 5px 0px;
+          button {
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+          }
+        }
+      }
+      table {
+        margin-top: 15px;
+
+        tbody tr td {
+          vertical-align: middle;
+          i {
+            &.link {
+              color: #2196F3;
+            }
+            &.trash {
+              color: #F44336;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
   }
   .sidenav-content {
     margin: 10px;

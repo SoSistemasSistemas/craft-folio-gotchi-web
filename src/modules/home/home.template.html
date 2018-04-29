@@ -129,8 +129,46 @@
         </div>
       </div>
 
-      <div class="sidenav-widget">
+      <div id="outdoorConfig" class="sidenav-widget">
         <h5>Outdoor</h5>
+
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12">
+                <input type="text" placeholder="URL da imagem" class="form-control"
+                       ng-model="home.inputOutdoorImageURL" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <input type="text" placeholder="URL de redirecionamento" class="form-control"
+                       ng-model="home.inputOutdoorClickActionURL" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-block btn-primary">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="content in home.widgetConfigs.outdoor">
+              <td>
+                {{ content.url }}
+              </td>
+              <td>
+                <i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i>
+              </td>
+              <td>
+                <i class="fa fa-trash trash"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
       <button type="button" class="btn btn-block btn-primary"
