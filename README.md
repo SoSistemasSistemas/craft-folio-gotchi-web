@@ -6,6 +6,7 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 
 - docker
 - docker-compose
+- docker-machine
 - virtualbox
 - gcloud (Para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
 - node (opcional)
