@@ -34,6 +34,7 @@ export default class HomeController {
 
     this.widgetConfigs = widgetService.getAll() || {};
     this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || this.getWelcomeBoxDefault();
+    this.widgetConfigs.outdoor = this.getOutdoorDefaultContent();
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
@@ -98,6 +99,23 @@ export default class HomeController {
       width: `${welcomeBox.width}%`,
       height: `${welcomeBox.height}%`,
     }, getPositionStyle(welcomeBox.position));
+  }
+
+  getOutdoorDefaultContent() {
+    return [
+      {
+        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/cefetmg.jpg',
+        clickAction: 'http://www.cefetmg.br/',
+      },
+      {
+        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/github.png',
+        clickAction: 'https://github.com/SoSistemasSistemas',
+      },
+      {
+        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/google.jpg',
+        clickAction: 'https://www.google.com.br/',
+      },
+    ];
   }
 
   openWidgetConfiguration() {

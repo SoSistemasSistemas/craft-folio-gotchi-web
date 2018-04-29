@@ -146,6 +146,24 @@
     <img src="https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/outdoor.png">
     <div id="outdoor-content">
 
+      <div id="outdoorCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" 
+                ng-repeat="content in home.widgetConfigs.outdoor">
+            <a href="{{ content.clickAction }}" target="_blank">
+              <img src="{{ content.url }}">
+            </a>
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#outdoorCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#outdoorCarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+      
     </div>
   </div>
 

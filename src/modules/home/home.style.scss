@@ -34,6 +34,14 @@
       top: 0; left: 0;
       background-color: #FFFFFF;
       border: 4px solid #000000;
+      img {
+        height: 100%;
+      }
+      #outdoorCarousel,
+      #outdoorCarousel .carousel-inner,
+      #outdoorCarousel .carousel-item {
+        height: 100%;
+      }
     }
   }
   #sky {
@@ -105,6 +113,7 @@
     #outdoor {
       width: 50%;
       height: auto;
+      margin: auto 2% 20% auto;
     }
   }
 }
