@@ -1,5 +1,26 @@
 #home {
   height: 100vh;
+
+  #welcomeBox {
+    position: fixed;
+    padding: 5px;
+    z-index: 1;
+
+    background-color: #313a47;
+    
+    width: 25%;
+    height: 13%;
+
+    border: 2px solid #262b33;
+    border-radius: 20px;
+
+    top: 0; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    
+    color: #d3b832;
+    text-align: center;
+    font-size: 3.0vh;
+  }
   #sky {
     height: 70vh;
   }
@@ -10,13 +31,22 @@
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     background-color: #FEFEFE;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+
+    #welcomeBoxConfig {
+      .row {
+        .col-md-4 {
+          text-align: right;
+        }
+        margin-bottom: 3px;
+      }
+    }
   }
   .sidenav-content {
     margin: 10px;

@@ -1,17 +1,23 @@
 /* eslint-env browser */
-/* global swal */
+/* global swal, $ */
 
 export default class HomeController {
-  constructor(widgetService) {
+  constructor($window, widgetService) {
     this.widgetService = widgetService;
 
     this.widgetConfigs = widgetService.getAll() || {};
+    this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || {};
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
 
     this.widgetConfigs.sky = this.skyTextures.find(texture => texture.active).url;
     this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
+
+    this.colorPickerOptions = {
+      swatchOnly: true,
+      format: 'hex'
+    };
   }
 
   getSkyTextures() {
@@ -128,4 +134,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['widgetService'];
+HomeController.$inject = ['$window', 'widgetService'];

@@ -56,8 +56,77 @@
         </div>
       </div>
 
-      <div class="sidenav-widget">
+      <div id="welcomeBoxConfig" class="sidenav-widget">
         <h5>Box de Boas-vindas</h5>
+        <div class="row">
+          <div class="col-md-4">
+            Cor do Fundo:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.backgroundColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Cor da borda:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.borderColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Altura (%):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="5" max="60"
+                     ng-model="home.widgetConfigs.welcomeBox.height"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Largura (%):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="5" max="60"
+                     ng-model="home.widgetConfigs.welcomeBox.width"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Posição:
+          </div>
+          <div class="col-md-8">
+            <select class="form-control" ng-model="home.widgetConfigs.welcomeBox.position">
+              <option value="1">Topo/Esquerda</option>
+              <option value="2">Topo/Centro</option>
+              <option value="3">Topo/Direita</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Texto:
+          </div>
+          <div class="col-md-8">
+            <input type="text" class="form-control" placeholder="Seja bem-vindo ao meu mundo!"
+                   ng-model="home.widgetConfigs.welcomeBox.text"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Cor do texto:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.textColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
       </div>
 
       <div class="sidenav-widget">
@@ -67,6 +136,10 @@
       <button type="button" class="btn btn-block btn-primary"
               ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
+  </div>
+
+  <div id="welcomeBox">
+    <span>{{ home.widgetConfigs.welcomeBox.text || 'Seja vem-vindo ao meu mundo!' }}</span>
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
