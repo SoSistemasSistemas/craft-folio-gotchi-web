@@ -7,18 +7,40 @@ export default class HomeController {
 
     this.widgetConfigs = widgetService.getAll() || {};
 
-    this.skyTextures = [
+    this.skyTextures = this.getSkyTextures();
+    this.groundTextures = this.getGroundTextures();
+
+    this.widgetConfigs.sky = this.skyTextures.find(texture => texture.active).url;
+    this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
+  }
+
+  getSkyTextures() {
+    const texturesUrls = [
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_1.jpg',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_2.jpg',
     ];
-    this.groundTextures = [
+  
+    return texturesUrls.map(url => {
+      return {
+        url,
+        active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
+      }
+    });
+  }
+  
+  getGroundTextures() {
+    const texturesUrls = [
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/grass.jpg',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/rock.png',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/sand.jpg',
-    ];
-
-    this.widgetConfigs.sky = this.widgetConfigs.sky || this.skyTextures[0];
-    this.widgetConfigs.ground = this.widgetConfigs.ground || this.groundTextures[0];
+    ]
+  
+    return texturesUrls.map(url => {
+      return {
+        url,
+        active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
+      }
+    });
   }
 
   openWidgetConfiguration() {
@@ -41,7 +63,6 @@ export default class HomeController {
                      Tem certeza de que deseja prosseguir?';
 
     swal(title, message, 'warning', {
-      focusConfirm: false,
       buttons: {
         cancel: {
           text: 'Continuar editando',
@@ -68,7 +89,7 @@ export default class HomeController {
     const nextIndex =
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.skyTextures.length);
 
-    this.widgetConfigs.sky = this.skyTextures[nextIndex];
+    this.widgetConfigs.sky = this.skyTextures[nextIndex].url;
   }
 
   changeGround(direction) {
@@ -77,7 +98,7 @@ export default class HomeController {
     const nextIndex =
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.groundTextures.length);
 
-    this.widgetConfigs.ground = this.groundTextures[nextIndex];
+    this.widgetConfigs.ground = this.groundTextures[nextIndex].url;
   }
 
   getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
@@ -103,7 +124,7 @@ export default class HomeController {
   saveWidgetConfigs() {
     this.widgetService.upsertBulk(this.widgetConfigs);
     this.closeWidgetConfiguration();
-    swal('', 'Configurações de Widgets salvas com sucesso', 'success');
+    swal('Yaay :)', 'Suas configurações de Widgets foram salvas com sucesso!', 'success');
   }
 }
 
