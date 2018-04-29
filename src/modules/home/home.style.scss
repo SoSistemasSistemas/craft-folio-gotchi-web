@@ -4,20 +4,8 @@
   #welcomeBox {
     position: fixed;
     padding: 5px;
-    z-index: 1;
-
-    background-color: #313a47;
-    
-    width: 25%;
-    height: 13%;
-
-    border: 2px solid #262b33;
+    z-index: 1;    
     border-radius: 20px;
-
-    top: 0; left: 0; bottom: 0; right: 0;
-    margin: auto;
-    
-    color: #d3b832;
     text-align: center;
     font-size: 3.0vh;
   }

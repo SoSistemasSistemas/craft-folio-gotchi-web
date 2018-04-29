@@ -1,12 +1,33 @@
 /* eslint-env browser */
 /* global swal, $ */
 
+const Position = {
+  TOP_LEFT: '1',
+  TOP_CENTER: '2',
+  TOP_RIGHT: '3',
+  CENTER: '4',
+};
+
+function getPositionStyle(position) {
+  const { CENTER, TOP_CENTER, TOP_RIGHT } = Position;
+
+  switch(position) {
+    case CENTER:
+      return { 'top': '0', 'left': '0', 'bottom': '0', 'right': '0', 'margin': 'auto' };
+    case TOP_RIGHT:
+      return { 'top': '0', 'right': '0', 'margin': '2% 2% auto auto' };
+    case TOP_CENTER:
+    default:
+      return { 'left': '0', 'right': '0', 'margin': '2% auto' };
+  }
+}
+
 export default class HomeController {
   constructor($window, widgetService) {
     this.widgetService = widgetService;
 
     this.widgetConfigs = widgetService.getAll() || {};
-    this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || {};
+    this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || this.getWelcomeBoxDefault();
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
@@ -17,6 +38,18 @@ export default class HomeController {
     this.colorPickerOptions = {
       swatchOnly: true,
       format: 'hex'
+    };
+  }
+
+  getWelcomeBoxDefault() {
+    return {
+      backgroundColor: '313A47',
+      borderColor: '262B33',
+      textColor: 'D3B832',
+      text: 'Seja vem-vindo ao meu mundo!',
+      width: 25,
+      height: 13,
+      position: Position.TOP_CENTER,
     };
   }
 
@@ -47,6 +80,18 @@ export default class HomeController {
         active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
       }
     });
+  }
+
+  getWelcomeBoxStyle() {
+    const { welcomeBox } = this.widgetConfigs;
+
+    return Object.assign({
+      'background-color': `#${welcomeBox.backgroundColor}`,
+      'border': `2px solid #${welcomeBox.borderColor}`,
+      'color': `#${welcomeBox.textColor}`,
+      'width': `${welcomeBox.width}%`,
+      'height': `${welcomeBox.height}%`,
+    }, getPositionStyle(welcomeBox.position));
   }
 
   openWidgetConfiguration() {

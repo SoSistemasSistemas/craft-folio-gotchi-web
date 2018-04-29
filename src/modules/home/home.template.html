@@ -102,9 +102,9 @@
           </div>
           <div class="col-md-8">
             <select class="form-control" ng-model="home.widgetConfigs.welcomeBox.position">
-              <option value="1">Topo/Esquerda</option>
               <option value="2">Topo/Centro</option>
               <option value="3">Topo/Direita</option>
+              <option value="4">Centro</option>
             </select>
           </div>
         </div>
@@ -138,8 +138,8 @@
     </div>
   </div>
 
-  <div id="welcomeBox">
-    <span>{{ home.widgetConfigs.welcomeBox.text || 'Seja vem-vindo ao meu mundo!' }}</span>
+  <div id="welcomeBox" ng-style="home.getWelcomeBoxStyle()">
+    <span>{{ home.widgetConfigs.welcomeBox.text }}</span>
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
