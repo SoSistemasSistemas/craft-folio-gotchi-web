@@ -1,22 +1,55 @@
 #home {
   height: 100vh;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  #welcomeBox {
+    position: fixed;
+    padding: 5px;
+    z-index: 1;    
+    border-radius: 20px;
+    text-align: center;
+    font-size: 3.0vh;
+    min-width: 300px;
+    min-height: 50px;
+  }
+  #outdoor {
+    position: fixed;
+    width: 30%;
+    height: 20%;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto 5% 20% auto;
+  }
   #sky {
-    height: 70vh;
+    height: 70%;
   }
   #ground {
-    height: 30vh;
+    height: 30%;
   }
+
   .sidenav {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     background-color: #FEFEFE;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+
+    #welcomeBoxConfig {
+      .row {
+        .col-md-4 {
+          text-align: right;
+        }
+        margin-bottom: 3px;
+      }
+    }
   }
   .sidenav-content {
     margin: 10px;
@@ -47,5 +80,18 @@
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+
+    #welcomeBox {   
+      border-radius: 10px;
+      text-align: center;
+      font-size: 5.0vh;
+    }
+  }
+
+  @media screen and (max-width: 900px){
+    #outdoor {
+      width: 50%;
+      height: 35%;
+    }
   }
 }

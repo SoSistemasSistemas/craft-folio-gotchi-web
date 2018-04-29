@@ -1,16 +1,19 @@
+/* eslint-env browser */
+/* global angular */
+
 class WidgetService {
-  getAll () {
+  getAll() {
     return JSON.parse(localStorage.getItem('widgetsConfig'));
   }
-  
-  getByName (name) {
-    return getAll().name;
+
+  getByName(name) {
+    return this.getAll()[name];
   }
-  
-  upsertBulk (widgets) {
+
+  upsertBulk(widgets) {
     const data = JSON.stringify(widgets);
     localStorage.setItem('widgetsConfig', data);
-  }  
+  }
 }
 
 export default angular.module('services.widget', [])

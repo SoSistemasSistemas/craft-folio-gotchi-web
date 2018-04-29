@@ -2,7 +2,7 @@
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn"
-       ng-click="home.closeWidgetConfiguration()">&times;</a>
+       ng-click="home.askToCloseWidgetConfiguration()">&times;</a>
 
     <div class="sidenav-content">
       <h3>Configure seus Widgets</h3>
@@ -14,19 +14,19 @@
       
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
+            <div class="carousel-item {{ sky.active ? 'active' : '' }}" 
                  ng-repeat="sky in home.skyTextures">
-              <img src="{{ sky }}" style="width:100%; height: 300px;">
+              <img src="{{ sky.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
       
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#skyCarousel" data-slide="prev"
-             ng-click="home.changeActiveSkyCarousel()">
+             ng-click="home.changeSky('prev')">
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#skyCarousel" data-slide="next"
-          ng-click="home.changeActiveSkyCarousel()">
+          ng-click="home.changeSky('next')">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -38,26 +38,95 @@
             
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" 
+            <div class="carousel-item {{ ground.active ? 'active' : '' }}" 
                   ng-repeat="ground in home.groundTextures">
-              <img src="{{ ground }}" style="width:100%; height: 300px;">
+              <img src="{{ ground.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
       
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#groundCarousel" data-slide="prev"
-             ng-click="home.changeActiveGroundCarousel()">
+             ng-click="home.changeGround('prev')">
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#groundCarousel" data-slide="next"
-             ng-click="home.changeActiveGroundCarousel()">
+             ng-click="home.changeGround('next')">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
       </div>
 
-      <div class="sidenav-widget">
+      <div id="welcomeBoxConfig" class="sidenav-widget">
         <h5>Box de Boas-vindas</h5>
+        <div class="row">
+          <div class="col-md-4">
+            Cor do Fundo:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.backgroundColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Cor da borda:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.borderColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Altura (%):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="5" max="60"
+                     ng-model="home.widgetConfigs.welcomeBox.height"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Largura (%):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="5" max="60"
+                     ng-model="home.widgetConfigs.welcomeBox.width"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Posição:
+          </div>
+          <div class="col-md-8">
+            <select class="form-control" ng-model="home.widgetConfigs.welcomeBox.position">
+              <option value="2">Topo/Centro</option>
+              <option value="3">Topo/Direita</option>
+              <option value="4">Centro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Texto:
+          </div>
+          <div class="col-md-8">
+            <input type="text" class="form-control" placeholder="Seja bem-vindo ao meu mundo!"
+                   ng-model="home.widgetConfigs.welcomeBox.text"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Cor do texto:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.welcomeBox.textColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
       </div>
 
       <div class="sidenav-widget">
@@ -67,6 +136,14 @@
       <button type="button" class="btn btn-block btn-primary"
               ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
+  </div>
+
+  <div id="welcomeBox" ng-style="home.getWelcomeBoxStyle()">
+    <span>{{ home.widgetConfigs.welcomeBox.text }}</span>
+  </div>
+
+  <div id="outdoor">
+    <img src="https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/outdoor.png">
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
