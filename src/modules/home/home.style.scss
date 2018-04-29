@@ -1,6 +1,11 @@
 #home {
   height: 100vh;
 
+  img {
+    width: 100%;
+    height: auto;
+  }
+
   #welcomeBox {
     position: fixed;
     padding: 5px;
@@ -8,13 +13,23 @@
     border-radius: 20px;
     text-align: center;
     font-size: 3.0vh;
+    min-width: 300px;
+    min-height: 50px;
+  }
+  #outdoor {
+    position: fixed;
+    width: 30%;
+    height: 20%;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto 5% 20% auto;
   }
   #sky {
-    height: 70vh;
+    height: 70%;
   }
   #ground {
-    height: 30vh;
+    height: 30%;
   }
+
   .sidenav {
     height: 100%;
     width: 0;
@@ -65,5 +80,18 @@
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+
+    #welcomeBox {   
+      border-radius: 10px;
+      text-align: center;
+      font-size: 5.0vh;
+    }
+  }
+
+  @media screen and (max-width: 900px){
+    #outdoor {
+      width: 50%;
+      height: 35%;
+    }
   }
 }
