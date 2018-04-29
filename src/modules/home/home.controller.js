@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global swal, $ */
+/* global swal */
 
 const Position = {
   TOP_LEFT: '1',
@@ -11,19 +11,25 @@ const Position = {
 function getPositionStyle(position) {
   const { CENTER, TOP_CENTER, TOP_RIGHT } = Position;
 
-  switch(position) {
+  switch (position) {
     case CENTER:
-      return { 'top': '0', 'left': '0', 'bottom': '0', 'right': '0', 'margin': 'auto' };
+      return {
+        top: '0', left: '0', bottom: '0', right: '0', margin: 'auto',
+      };
     case TOP_RIGHT:
-      return { 'top': '0', 'right': '0', 'margin': '2% 2% auto auto' };
+      return {
+        top: '0', right: '0', margin: '2% 2% auto auto',
+      };
     case TOP_CENTER:
     default:
-      return { 'left': '0', 'right': '0', 'margin': '2% auto' };
+      return {
+        left: '0', right: '0', margin: '2% auto',
+      };
   }
 }
 
 export default class HomeController {
-  constructor($window, widgetService) {
+  constructor(widgetService) {
     this.widgetService = widgetService;
 
     this.widgetConfigs = widgetService.getAll() || {};
@@ -37,7 +43,7 @@ export default class HomeController {
 
     this.colorPickerOptions = {
       swatchOnly: true,
-      format: 'hex'
+      format: 'hex',
     };
   }
 
@@ -58,27 +64,27 @@ export default class HomeController {
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_1.jpg',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_2.jpg',
     ];
-  
+    /* eslint-disable-next-line */
     return texturesUrls.map(url => {
       return {
         url,
         active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
-      }
+      };
     });
   }
-  
+
   getGroundTextures() {
     const texturesUrls = [
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/grass.jpg',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/rock.png',
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/sand.jpg',
-    ]
-  
+    ];
+    /* eslint-disable-next-line */
     return texturesUrls.map(url => {
       return {
         url,
         active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
-      }
+      };
     });
   }
 
@@ -87,10 +93,10 @@ export default class HomeController {
 
     return Object.assign({
       'background-color': `#${welcomeBox.backgroundColor}`,
-      'border': `2px solid #${welcomeBox.borderColor}`,
-      'color': `#${welcomeBox.textColor}`,
-      'width': `${welcomeBox.width}%`,
-      'height': `${welcomeBox.height}%`,
+      border: `2px solid #${welcomeBox.borderColor}`,
+      color: `#${welcomeBox.textColor}`,
+      width: `${welcomeBox.width}%`,
+      height: `${welcomeBox.height}%`,
     }, getPositionStyle(welcomeBox.position));
   }
 
@@ -179,4 +185,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['$window', 'widgetService'];
+HomeController.$inject = ['widgetService'];

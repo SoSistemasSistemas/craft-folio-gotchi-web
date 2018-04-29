@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery';
 import 'sweetalert';
 import 'tinycolor2';
-import { name as colorpicker } from 'angularjs-color-picker/dist/angularjs-color-picker.min.js';
+import { name as colorpicker } from 'angularjs-color-picker/dist/angularjs-color-picker.min';
 import 'angularjs-color-picker/dist/angularjs-color-picker.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './home.style.scss';
