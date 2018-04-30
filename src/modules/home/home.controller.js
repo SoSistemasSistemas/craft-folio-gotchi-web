@@ -72,7 +72,7 @@ export default class HomeController {
 
   getConsoleDefault() {
     return {
-      backgroundColor: '000000',
+      backgroundColor: '515151',
       textColor: 'FFEB3B',
       height: 60,
     };

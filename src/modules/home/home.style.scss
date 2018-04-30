@@ -11,7 +11,7 @@
     bottom: 0; left: 0;
     z-index: 1;
     width: 100%;
-    background-color: black;
+    background-color: #515151;
     display: flex;
     align-items: center;
     #consoleInput {
@@ -43,7 +43,7 @@
     position: absolute;
     width: 10%;
     height: 25%;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 0; left: 0; bottom: 15px; right: 0;
     margin: auto auto 5% auto;
     // background-color: red;
     z-index: 1;
@@ -146,9 +146,19 @@
     }
   }
   .sidenav-content {
-    margin: 10px;
+    margin: 20px;
     .sidenav-widget {
-      margin-bottom: 40px;
+      h5 {
+        font-weight: bold;
+      }
+      hr {
+        max-width: 100%;
+        margin: 10px 0 25px 0;
+      }
+      box-shadow: 0 0 6px #a4a4a4;
+      padding: 20px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
     }
   }
   .sidenav a {
@@ -169,6 +179,15 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+  }
+
+  .btn-home-edit {
+    margin: 10px 10px;
+    padding: 10px 20px;
+  }
+
+  .btn-home-save {
+    margin-bottom: 30px;
   }
 
   @media screen and (max-height: 450px) {

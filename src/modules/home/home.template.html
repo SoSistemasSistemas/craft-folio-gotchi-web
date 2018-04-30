@@ -10,6 +10,7 @@
 
       <div class="sidenav-widget">
         <h5>Avatar</h5>
+        <hr>
         <div id="avatarCarousel" class="carousel slide" data-interval="false">
 
           <!-- Wrapper for slides -->
@@ -34,6 +35,7 @@
 
       <div class="sidenav-widget">
         <h5>Fundo</h5>
+        <hr>
         <div id="skyCarousel" class="carousel slide" data-interval="false">
 
           <!-- Wrapper for slides -->
@@ -58,6 +60,7 @@
 
       <div class="sidenav-widget">
         <h5>Chão</h5>
+        <hr>
         <div id="groundCarousel" class="carousel slide" data-interval="false">
 
           <!-- Wrapper for slides -->
@@ -82,6 +85,7 @@
 
       <div id="outdoorConfig" class="sidenav-widget">
         <h5>Outdoor</h5>
+        <hr>
 
         <div class="row">
           <div class="col-md-10">
@@ -124,6 +128,7 @@
 
       <div id="consoleConfig" class="sidenav-widget">
         <h5>Console</h5>
+        <hr>
         <div class="row">
           <div class="col-md-4">
             Cor do Fundo:
@@ -153,7 +158,7 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-block btn-primary"
+      <button type="button" class="btn btn-block btn-primary btn-home-save"
               ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
   </div>
@@ -196,7 +201,7 @@
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
-    <button class="btn pull-left" type="button"
+    <button class="btn pull-left btn-home-edit" type="button"
             ng-click="home.openWidgetConfiguration()">
       <i class="fa fa-edit"></i>Editar
     </button>
