@@ -1,39 +1,10 @@
 /* eslint-env browser */
 
-const Position = {
-  TOP_LEFT: '1',
-  TOP_CENTER: '2',
-  TOP_RIGHT: '3',
-  CENTER: '4',
-  TOP: '5',
-  BOTTOM: '6',
-};
-
 function isValidURL(url) {
   try {
     return new URL(url);
   } catch (error) {
     return false;
-  }
-}
-
-function getPositionStyle(position) {
-  const { CENTER, TOP_CENTER, TOP_RIGHT } = Position;
-
-  switch (position) {
-    case CENTER:
-      return {
-        top: '0', left: '0', bottom: '0', right: '0', margin: 'auto',
-      };
-    case TOP_RIGHT:
-      return {
-        top: '0', right: '0', margin: '2% 2% auto auto',
-      };
-    case TOP_CENTER:
-    default:
-      return {
-        left: '0', right: '0', margin: '2% auto',
-      };
   }
 }
 
@@ -63,13 +34,9 @@ export default class HomeController {
 
   getConsoleDefault() {
     return {
-      backgroundColor: '313A47',
-      borderColor: '262B33',
-      textColor: 'D3B832',
-      text: 'Seja vem-vindo ao meu mundo!',
-      width: 25,
-      height: 13,
-      position: Position.BOTTOM,
+      backgroundColor: '000000',
+      textColor: 'FFEB3B',
+      height: 60,
     };
   }
 
@@ -94,13 +61,19 @@ export default class HomeController {
   getConsoleStyle() {
     const { console } = this.widgetConfigs;
 
-    return Object.assign({
+    return {
       'background-color': `#${console.backgroundColor}`,
-      border: `2px solid #${console.borderColor}`,
+      height: `${console.height}px`,
+    };
+  }
+
+  getConsoleInputStyle() {
+    const { console } = this.widgetConfigs;
+
+    return {
+      'caret-color': `#${console.textColor}`,
       color: `#${console.textColor}`,
-      width: `${console.width}%`,
-      height: `${console.height}%`,
-    }, getPositionStyle(console.position));
+    };
   }
 
   getOutdoorDefaultContent() {
@@ -219,6 +192,22 @@ export default class HomeController {
       .then(() => {
         this.widgetConfigs.outdoor = this.widgetConfigs.outdoor.filter(cont => cont !== content);
       });
+  }
+
+  processCommand() {
+    const { consoleInput } = this;
+
+    const title = 'Oops...';
+    let message;
+
+    if (consoleInput) {
+      message = `Comando '${this.consoleInput}' não reconhecido.`;
+    } else {
+      message = 'Não foi informado nenhum comando para ser processado.';
+    }
+
+    this.alertService.error({ title, message });
+    this.consoleInput = '';
   }
 
   saveWidgetConfigs() {

@@ -69,61 +69,20 @@
 
         <div class="row">
           <div class="col-md-4">
-            Cor da borda:
-          </div>
-          <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.console.borderColor" options="home.colorPickerOptions"></color-picker>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Altura (%):
-          </div>
-          <div class="col-md-8">
-            <input type="number" class="form-control" min="5" max="60"
-                     ng-model="home.widgetConfigs.console.height"/>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Largura (%):
-          </div>
-          <div class="col-md-8">
-            <input type="number" class="form-control" min="5" max="60"
-                     ng-model="home.widgetConfigs.console.width"/>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Posição:
-          </div>
-          <div class="col-md-8">
-            <select class="form-control" ng-model="home.widgetConfigs.console.position">
-              <option value="5">Topo</option>
-              <option value="6">Rodapé</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Texto:
-          </div>
-          <div class="col-md-8">
-            <input type="text" class="form-control" placeholder="Seja bem-vindo ao meu mundo!"
-                   ng-model="home.widgetConfigs.console.text"/>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
             Cor do texto:
           </div>
           <div class="col-md-8">
             <color-picker ng-model="home.widgetConfigs.console.textColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Tamanho (px):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="50" max="70"
+                   ng-model="home.widgetConfigs.console.height"/>
           </div>
         </div>
       </div>
@@ -175,14 +134,13 @@
     </div>
   </div>
 
-  <!-- ng-style="home.getConsoleStyle()" -->
-  <div id="console">
-    <!-- <span>{{ home.widgetConfigs.console.text }}</span> -->
+  <div id="console" ng-style="home.getConsoleStyle()">
     <div id="consoleInput">
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" ng-style="home.getConsoleInputStyle()"
+             ng-model="home.consoleInput" />
     </div>
     <div id="consoleAction">
-      <button type="text" class="btn btn-success">
+      <button type="text" class="btn btn-success" ng-click="home.processCommand()">
         <i class="fa fa-play"></i>
       </button>
     </div>
