@@ -1,5 +1,4 @@
 /* eslint-env browser */
-/* global swal */
 
 const Position = {
   TOP_LEFT: '1',
@@ -37,8 +36,9 @@ function getPositionStyle(position) {
 }
 
 export default class HomeController {
-  constructor(widgetService) {
+  constructor(widgetService, alertService) {
     this.widgetService = widgetService;
+    this.alertService = alertService;
 
     this.inputOutdoor = {};
 
@@ -146,25 +146,15 @@ export default class HomeController {
     const title = 'Atenção';
     const message = 'As alterações realizadas nos seus Widgets serão perdidas, caso não as salve. \
                      Tem certeza de que deseja prosseguir?';
+    const primaryButtonText = 'Prosseguir';
+    const secondaryButtonText = 'Continuar editando';
 
-    swal(title, message, 'warning', {
-      buttons: {
-        cancel: {
-          text: 'Continuar editando',
-          value: false,
-          visible: true,
-        },
-        confirm: {
-          text: 'Prosseguir',
-          value: true,
-          visible: true,
-        },
-      },
-    })
-      .then((proceed) => {
-        if (proceed) {
-          this.closeWidgetConfiguration(true);
-        }
+    this.alertService
+      .confirm({
+        title, message, primaryButtonText, secondaryButtonText,
+      })
+      .then(() => {
+        this.closeWidgetConfiguration(true);
       });
   }
 
@@ -208,18 +198,22 @@ export default class HomeController {
 
   addOutdoorContent() {
     const { inputOutdoor } = this;
-    const { url, clickAction } = inputOutdoor
-    
+    const { url, clickAction } = inputOutdoor;
+
     if (!isValidURL(url)) {
+      const title = 'Oops...';
       const message =
         'A URL da imagem informada não é válida. Favor corrigir e tente novamente';
-      return swal('Oops...', message, 'error');
+
+      return this.alertService.error({ title, message });
     }
 
     if (!isValidURL(clickAction)) {
-      const message = 
+      const title = 'Oops...';
+      const message =
         'A URL de redirecionamento informada não é válida. Favor corrigir e tente novamente';
-      return swal('Oops...', message, 'error');
+
+      return this.alertService.error({ title, message });
     }
 
     return this.widgetConfigs.outdoor.push(inputOutdoor);
@@ -228,40 +222,28 @@ export default class HomeController {
   removeOutdoorContent(content) {
     const title = 'Atenção';
     const message = 'Tem certeza de que deseja excluir esse conteúdo?';
+    const primaryButtonText = 'Sim, excluir';
+    const secondaryButtonText = 'Deixa pra lá';
+    const dangerMode = true;
 
-    swal(title, message, 'warning', {
-      dangerMode: true,
-      buttons: {
-        cancel: {
-          text: 'Deixa pra lá',
-          value: false,
-          visible: true,
-        },
-        confirm: {
-          text: 'Sim, excluir',
-          value: true,
-          visible: true,
-        },
-      },
-    })
-      .then((proceed) => {
-        if (proceed) {
-          if (proceed) {
-            this.widgetConfigs.outdoor = this.widgetConfigs.outdoor.filter(cont => {
-              return cont != content;
-            });
-  
-            console.log(this.widgetConfigs.outdoor);
-          }
-        }
+    this.alertService
+      .confirm({
+        title, message, dangerMode, primaryButtonText, secondaryButtonText,
+      })
+      /* eslint-disable-next-line */
+      .then(() => {
+        this.widgetConfigs.outdoor = this.widgetConfigs.outdoor.filter(cont => cont !== content);
       });
   }
 
   saveWidgetConfigs() {
-    this.widgetService.upsertBulk(this.widgetConfigs);
+    const title = 'Yaay :)';
+    const message = 'Suas configurações de Widgets foram salvas com sucesso!';
+
     this.closeWidgetConfiguration();
-    swal('Yaay :)', 'Suas configurações de Widgets foram salvas com sucesso!', 'success');
+    this.widgetService.upsertBulk(this.widgetConfigs);
+    this.alertService.success({ title, message });
   }
 }
 
-HomeController.$inject = ['widgetService'];
+HomeController.$inject = ['widgetService', 'alertService'];
