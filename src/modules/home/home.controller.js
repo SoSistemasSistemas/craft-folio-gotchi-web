@@ -36,9 +36,10 @@ function getPositionStyle(position) {
 }
 
 export default class HomeController {
-  constructor(widgetService, alertService) {
+  constructor(widgetService, alertService, assetsService) {
     this.widgetService = widgetService;
     this.alertService = alertService;
+    this.assetsService = assetsService;
 
     this.inputOutdoor = {};
 
@@ -71,32 +72,21 @@ export default class HomeController {
   }
 
   getSkyTextures() {
-    const texturesUrls = [
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_1.jpg',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_2.jpg',
-    ];
+    const texturesUrls = this.assetsService.getSkyTextures();
     /* eslint-disable-next-line */
-    return texturesUrls.map(url => {
-      return {
-        url,
-        active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
-      };
-    });
+    return texturesUrls.map(url => ({
+      url,
+      active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
+    }));
   }
 
   getGroundTextures() {
-    const texturesUrls = [
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/grass.jpg',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/rock.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/sand.jpg',
-    ];
+    const texturesUrls = this.assetsService.getGroundTextures();
     /* eslint-disable-next-line */
-    return texturesUrls.map(url => {
-      return {
-        url,
-        active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
-      };
-    });
+    return texturesUrls.map(url => ({
+      url,
+      active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
+    }));
   }
 
   getWelcomeBoxStyle() {
@@ -112,20 +102,13 @@ export default class HomeController {
   }
 
   getOutdoorDefaultContent() {
-    return [
-      {
-        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/cefetmg.jpg',
-        clickAction: 'http://www.cefetmg.br/',
-      },
-      {
-        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/github.png',
-        clickAction: 'https://github.com/SoSistemasSistemas',
-      },
-      {
-        url: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/google.jpg',
-        clickAction: 'https://www.google.com.br/',
-      },
-    ];
+    const content = this.assetsService.getOutdoorImages().map(url => ({ url }));
+
+    content[0].clickAction = 'http://www.cefetmg.br/';
+    content[1].clickAction = 'https://github.com/SoSistemasSistemas';
+    content[2].clickAction = 'https://www.google.com.br/';
+
+    return content;
   }
 
   openWidgetConfiguration() {
@@ -246,4 +229,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['widgetService', 'alertService'];
+HomeController.$inject = ['widgetService', 'alertService', 'assetsService'];

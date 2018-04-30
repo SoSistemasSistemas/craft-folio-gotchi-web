@@ -13,8 +13,10 @@ import routing from './home.routes';
 import HomeController from './home.controller';
 import widgetService from '../../services/widget.service';
 import alertService from '../../services/alert.service';
+import assetsService from '../../services/assets.service';
 
-export default angular.module('app.home', [uiRouter, widgetService, alertService, colorpicker])
+export default angular
+  .module('app.home', [uiRouter, widgetService, alertService, assetsService, colorpicker])
   .config(routing)
   .controller('HomeController', HomeController)
   .name;
