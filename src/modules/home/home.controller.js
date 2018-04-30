@@ -32,6 +32,34 @@ export default class HomeController {
       swatchOnly: true,
       format: 'hex',
     };
+
+    this.registerAvatarMovementEvents();
+  }
+
+  registerAvatarMovementEvents() {
+
+    const avatarEl = document.getElementById('avatar');
+
+    function leftArrow() {
+      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) - 5 + 'px' : '-5px';
+    }
+
+    function rightArrow() {
+      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) + 5 + 'px' : '+5px';
+    }
+
+    function moveSelection(evt) {
+      switch (evt.keyCode) {
+        case 37:
+          leftArrow();
+          break;
+        case 39:
+          rightArrow();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', moveSelection);
   }
 
   getConsoleDefault() {
