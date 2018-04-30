@@ -40,21 +40,17 @@ export default class HomeController {
 
     const avatarEl = document.getElementById('avatar');
 
-    function leftArrow() {
-      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) - 5 + 'px' : '-5px';
-    }
-
-    function rightArrow() {
-      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) + 5 + 'px' : '+5px';
+    function move(size) {
+      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) + size + 'px' : `${size}px`;
     }
 
     function moveSelection(evt) {
       switch (evt.keyCode) {
         case 37:
-          leftArrow();
+          move(-10);
           break;
         case 39:
-          rightArrow();
+          move(10);
           break;
       }
     };
