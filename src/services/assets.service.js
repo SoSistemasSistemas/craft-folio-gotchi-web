@@ -27,6 +27,16 @@ class AssetsService {
       'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/outdoor/google.jpg',
     ];
   }
+
+  getAvatars() {
+    return [
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/mametchi.png',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/decoratchi.png',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/knighttchi.png',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/tacttchi.png',
+      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/yumemitchi.png',
+    ];
+  }
 }
 
 export default angular.module('services.assets', [])

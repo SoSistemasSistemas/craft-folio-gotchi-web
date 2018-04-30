@@ -9,6 +9,30 @@
       <hr>
 
       <div class="sidenav-widget">
+        <h5>Avatar</h5>
+        <div id="avatarCarousel" class="carousel slide" data-interval="false">
+      
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="carousel-item {{ avatar.active ? 'active' : '' }}" 
+                  ng-repeat="avatar in home.avatars">
+              <img src="{{ avatar.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
+            </div>
+          </div>
+      
+          <!-- Left and right controls -->
+          <a class="carousel-control-prev" href="#avatarCarousel" data-slide="prev"
+              ng-click="home.changeAvatar('prev')">
+              <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#avatarCarousel" data-slide="next"
+          ng-click="home.changeAvatar('next')">
+              <span class="carousel-control-next-icon"></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidenav-widget">
         <h5>Fundo</h5>
         <div id="skyCarousel" class="carousel slide" data-interval="false">
       
@@ -56,37 +80,6 @@
         </div>
       </div>
 
-      <div id="consoleConfig" class="sidenav-widget">
-        <h5>Box de Boas-vindas</h5>
-        <div class="row">
-          <div class="col-md-4">
-            Cor do Fundo:
-          </div>
-          <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.console.backgroundColor" options="home.colorPickerOptions"></color-picker>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Cor do texto:
-          </div>
-          <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.console.textColor" options="home.colorPickerOptions"></color-picker>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            Tamanho (px):
-          </div>
-          <div class="col-md-8">
-            <input type="number" class="form-control" min="50" max="70"
-                   ng-model="home.widgetConfigs.console.height"/>
-          </div>
-        </div>
-      </div>
-
       <div id="outdoorConfig" class="sidenav-widget">
         <h5>Outdoor</h5>
 
@@ -127,6 +120,37 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div id="consoleConfig" class="sidenav-widget">
+        <h5>Console</h5>
+        <div class="row">
+          <div class="col-md-4">
+            Cor do Fundo:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.console.backgroundColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Cor do texto:
+          </div>
+          <div class="col-md-8">
+            <color-picker ng-model="home.widgetConfigs.console.textColor" options="home.colorPickerOptions"></color-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            Tamanho (px):
+          </div>
+          <div class="col-md-8">
+            <input type="number" class="form-control" min="50" max="70"
+                    ng-model="home.widgetConfigs.console.height"/>
+          </div>
+        </div>
       </div>
       
       <button type="button" class="btn btn-block btn-primary"
@@ -178,7 +202,10 @@
     </button>
   </div>
 
-  <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}">
+  <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}"></div>
 
+  <!-- <img id="avatar1" src="{{ home.widgetConfigs.avatar.url }}"> -->
+  <div id="avatar">
+    <img id="avatarImg" src="{{ home.widgetConfigs.avatar.url }}">
   </div>
 </div>

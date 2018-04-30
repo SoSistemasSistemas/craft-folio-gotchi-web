@@ -22,9 +22,11 @@ export default class HomeController {
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
+    this.avatars = this.getAvatars();
 
     this.widgetConfigs.sky = this.skyTextures.find(texture => texture.active).url;
     this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
+    this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
 
     this.colorPickerOptions = {
       swatchOnly: true,
@@ -55,6 +57,16 @@ export default class HomeController {
     return texturesUrls.map(url => ({
       url,
       active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
+    }));
+  }
+
+  getAvatars() {
+    const { avatar } = this.widgetConfigs;
+    const avatarsUrls = this.assetsService.getAvatars();
+    /* eslint-disable-next-line */
+    return avatarsUrls.map(url => ({
+      url,
+      active: (avatar && avatar.url || avatarsUrls[0]) === url,
     }));
   }
 
@@ -132,6 +144,15 @@ export default class HomeController {
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.groundTextures.length);
 
     this.widgetConfigs.ground = this.groundTextures[nextIndex].url;
+  }
+
+  changeAvatar(direction) {
+    const groundImage = document.querySelectorAll('#avatarCarousel .active img')[0];
+    const previousIndex = parseInt(groundImage.attributes[2].value, 10);
+    const nextIndex =
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.avatars.length);
+
+    this.widgetConfigs.avatar = this.avatars[nextIndex];
   }
 
   getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
