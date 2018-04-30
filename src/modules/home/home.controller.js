@@ -44,6 +44,13 @@ export default class HomeController {
       avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) + size + 'px' : `${size}px`;
     }
 
+    function jump() {
+      avatarEl.classList.add('jump');
+      setTimeout(function() {
+        avatarEl.classList.remove('jump');
+      }, 1000);
+    }
+
     function moveSelection(evt) {
       switch (evt.keyCode) {
         case 37:
@@ -52,6 +59,11 @@ export default class HomeController {
         case 39:
           move(10);
           break;
+        case 32:
+          jump();
+          break;
+        case 38:
+          jump();
       }
     };
 

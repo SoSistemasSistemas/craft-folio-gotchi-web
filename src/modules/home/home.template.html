@@ -11,15 +11,15 @@
       <div class="sidenav-widget">
         <h5>Avatar</h5>
         <div id="avatarCarousel" class="carousel slide" data-interval="false">
-      
+
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="carousel-item {{ avatar.active ? 'active' : '' }}" 
+            <div class="carousel-item {{ avatar.active ? 'active' : '' }}"
                   ng-repeat="avatar in home.avatars">
               <img src="{{ avatar.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
-      
+
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#avatarCarousel" data-slide="prev"
               ng-click="home.changeAvatar('prev')">
@@ -35,15 +35,15 @@
       <div class="sidenav-widget">
         <h5>Fundo</h5>
         <div id="skyCarousel" class="carousel slide" data-interval="false">
-      
+
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="carousel-item {{ sky.active ? 'active' : '' }}" 
+            <div class="carousel-item {{ sky.active ? 'active' : '' }}"
                  ng-repeat="sky in home.skyTextures">
               <img src="{{ sky.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
-      
+
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#skyCarousel" data-slide="prev"
              ng-click="home.changeSky('prev')">
@@ -59,15 +59,15 @@
       <div class="sidenav-widget">
         <h5>Chão</h5>
         <div id="groundCarousel" class="carousel slide" data-interval="false">
-            
+
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="carousel-item {{ ground.active ? 'active' : '' }}" 
+            <div class="carousel-item {{ ground.active ? 'active' : '' }}"
                   ng-repeat="ground in home.groundTextures">
               <img src="{{ ground.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
-      
+
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#groundCarousel" data-slide="prev"
              ng-click="home.changeGround('prev')">
@@ -152,7 +152,7 @@
           </div>
         </div>
       </div>
-      
+
       <button type="button" class="btn btn-block btn-primary"
               ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
@@ -176,7 +176,7 @@
 
       <div id="outdoorCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" 
+          <div class="carousel-item {{ $index == 0 ? 'active' : '' }}"
                 ng-repeat="content in home.widgetConfigs.outdoor">
             <a href="{{ content.clickAction }}" target="_blank">
               <img src="{{ content.url }}">
@@ -191,12 +191,12 @@
             <span class="carousel-control-next-icon"></span>
         </a>
       </div>
-      
+
     </div>
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
-    <button class="btn pull-left" type="button" 
+    <button class="btn pull-left" type="button"
             ng-click="home.openWidgetConfiguration()">
       <i class="fa fa-edit"></i>Editar
     </button>
