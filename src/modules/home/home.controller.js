@@ -5,6 +5,8 @@ const Position = {
   TOP_CENTER: '2',
   TOP_RIGHT: '3',
   CENTER: '4',
+  TOP: '5',
+  BOTTOM: '6',
 };
 
 function isValidURL(url) {
@@ -44,7 +46,7 @@ export default class HomeController {
     this.inputOutdoor = {};
 
     this.widgetConfigs = widgetService.getAll() || {};
-    this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || this.getWelcomeBoxDefault();
+    this.widgetConfigs.console = this.widgetConfigs.console || this.getConsoleDefault();
     this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
 
     this.skyTextures = this.getSkyTextures();
@@ -59,7 +61,7 @@ export default class HomeController {
     };
   }
 
-  getWelcomeBoxDefault() {
+  getConsoleDefault() {
     return {
       backgroundColor: '313A47',
       borderColor: '262B33',
@@ -67,7 +69,7 @@ export default class HomeController {
       text: 'Seja vem-vindo ao meu mundo!',
       width: 25,
       height: 13,
-      position: Position.TOP_CENTER,
+      position: Position.BOTTOM,
     };
   }
 
@@ -89,16 +91,16 @@ export default class HomeController {
     }));
   }
 
-  getWelcomeBoxStyle() {
-    const { welcomeBox } = this.widgetConfigs;
+  getConsoleStyle() {
+    const { console } = this.widgetConfigs;
 
     return Object.assign({
-      'background-color': `#${welcomeBox.backgroundColor}`,
-      border: `2px solid #${welcomeBox.borderColor}`,
-      color: `#${welcomeBox.textColor}`,
-      width: `${welcomeBox.width}%`,
-      height: `${welcomeBox.height}%`,
-    }, getPositionStyle(welcomeBox.position));
+      'background-color': `#${console.backgroundColor}`,
+      border: `2px solid #${console.borderColor}`,
+      color: `#${console.textColor}`,
+      width: `${console.width}%`,
+      height: `${console.height}%`,
+    }, getPositionStyle(console.position));
   }
 
   getOutdoorDefaultContent() {

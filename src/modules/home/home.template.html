@@ -56,14 +56,14 @@
         </div>
       </div>
 
-      <div id="welcomeBoxConfig" class="sidenav-widget">
+      <div id="consoleConfig" class="sidenav-widget">
         <h5>Box de Boas-vindas</h5>
         <div class="row">
           <div class="col-md-4">
             Cor do Fundo:
           </div>
           <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.welcomeBox.backgroundColor" options="home.colorPickerOptions"></color-picker>
+            <color-picker ng-model="home.widgetConfigs.console.backgroundColor" options="home.colorPickerOptions"></color-picker>
           </div>
         </div>
 
@@ -72,7 +72,7 @@
             Cor da borda:
           </div>
           <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.welcomeBox.borderColor" options="home.colorPickerOptions"></color-picker>
+            <color-picker ng-model="home.widgetConfigs.console.borderColor" options="home.colorPickerOptions"></color-picker>
           </div>
         </div>
 
@@ -82,7 +82,7 @@
           </div>
           <div class="col-md-8">
             <input type="number" class="form-control" min="5" max="60"
-                     ng-model="home.widgetConfigs.welcomeBox.height"/>
+                     ng-model="home.widgetConfigs.console.height"/>
           </div>
         </div>
 
@@ -92,7 +92,7 @@
           </div>
           <div class="col-md-8">
             <input type="number" class="form-control" min="5" max="60"
-                     ng-model="home.widgetConfigs.welcomeBox.width"/>
+                     ng-model="home.widgetConfigs.console.width"/>
           </div>
         </div>
 
@@ -101,10 +101,9 @@
             Posição:
           </div>
           <div class="col-md-8">
-            <select class="form-control" ng-model="home.widgetConfigs.welcomeBox.position">
-              <option value="2">Topo/Centro</option>
-              <option value="3">Topo/Direita</option>
-              <option value="4">Centro</option>
+            <select class="form-control" ng-model="home.widgetConfigs.console.position">
+              <option value="5">Topo</option>
+              <option value="6">Rodapé</option>
             </select>
           </div>
         </div>
@@ -115,7 +114,7 @@
           </div>
           <div class="col-md-8">
             <input type="text" class="form-control" placeholder="Seja bem-vindo ao meu mundo!"
-                   ng-model="home.widgetConfigs.welcomeBox.text"/>
+                   ng-model="home.widgetConfigs.console.text"/>
           </div>
         </div>
 
@@ -124,7 +123,7 @@
             Cor do texto:
           </div>
           <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.welcomeBox.textColor" options="home.colorPickerOptions"></color-picker>
+            <color-picker ng-model="home.widgetConfigs.console.textColor" options="home.colorPickerOptions"></color-picker>
           </div>
         </div>
       </div>
@@ -176,8 +175,17 @@
     </div>
   </div>
 
-  <div id="welcomeBox" ng-style="home.getWelcomeBoxStyle()">
-    <span>{{ home.widgetConfigs.welcomeBox.text }}</span>
+  <!-- ng-style="home.getConsoleStyle()" -->
+  <div id="console">
+    <!-- <span>{{ home.widgetConfigs.console.text }}</span> -->
+    <div id="consoleInput">
+      <input type="text" class="form-control" />
+    </div>
+    <div id="consoleAction">
+      <button type="text" class="btn btn-success">
+        <i class="fa fa-play"></i>
+      </button>
+    </div>
   </div>
 
   <div id="outdoor">
