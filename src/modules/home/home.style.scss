@@ -1,3 +1,10 @@
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-lg-min: 1200px;
+$screen-md-max: ($screen-lg-min - 1);
+
 #home {
   height: 100vh;
 
@@ -27,28 +34,27 @@
     #consoleAction {
       position: absolute;
       right: 0;
-      width: 5%;
-      min-width: 80;
-      height: 100%;
-      padding: 5px;
       button {
         border-radius: 4px;
         width: 90%;
-        width: 100%;
       }
     }
-    // font-size: 3.0vh;
   }
   #avatar {
     position: absolute;
     width: 10%;
     height: 25%;
-    top: 0; left: 0; bottom: 15px; right: 0;
+    top: 0; left: 0; bottom: 3%; right: 0;
     margin: auto auto 5% auto;
     // background-color: red;
     z-index: 1;
     img {
       height: 100%;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      width: 30%;
+      bottom: 10%;
     }
   }
   #outdoor {
@@ -127,26 +133,10 @@
           }
         }
       }
-      table {
-        margin-top: 15px;
-
-        tbody tr td {
-          vertical-align: middle;
-          i {
-            &.link {
-              color: #2196F3;
-            }
-            &.trash {
-              color: #F44336;
-              cursor: pointer;
-            }
-          }
-        }
-      }
     }
   }
   .sidenav-content {
-    margin: 20px;
+    margin: 5%;
     .sidenav-widget {
       h5 {
         font-weight: bold;
@@ -213,4 +203,17 @@
     animation: jump .5s linear alternate infinite;
   }
 
+  .sidenav-open {
+    width: 30%;
+    @media (max-width: $screen-sm-max) {
+      width: 100%;
+    }
+  }
+}
+
+.swal-modal {
+  width: 40%;
+  @media (max-width: $screen-sm-max) {
+    width: 80%;
+  }
 }

@@ -139,7 +139,7 @@ export default class HomeController {
   openWidgetConfiguration() {
     this.rollbackWidgetConfigs = Object.assign({}, this.widgetConfigs);
 
-    document.getElementById('mySidenav').style.width = '500px';
+    document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   closeWidgetConfiguration(rollbackWidgetConfigs) {
@@ -147,7 +147,7 @@ export default class HomeController {
       this.widgetConfigs = this.rollbackWidgetConfigs;
     }
 
-    document.getElementById('mySidenav').style.width = '0';
+    document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   askToCloseWidgetConfiguration() {

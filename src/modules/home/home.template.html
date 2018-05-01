@@ -109,21 +109,15 @@
           </div>
         </div>
 
-        <table class="table">
-          <tbody>
-            <tr ng-repeat="content in home.widgetConfigs.outdoor">
-              <td>
-                {{ content.url }}
-              </td>
-              <td>
-                <i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i>
-              </td>
-              <td>
-                <i class="fa fa-trash trash" ng-click="home.removeOutdoorContent(content)"></i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div ng-repeat="content in home.widgetConfigs.outdoor">
+          <div>
+            {{ content.url }}
+          </div>
+          <div>
+            <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
+            <span ng-click="home.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
+          </div>
+        </div>
       </div>
 
       <div id="consoleConfig" class="sidenav-widget">
