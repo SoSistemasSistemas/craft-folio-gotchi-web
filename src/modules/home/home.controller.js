@@ -37,16 +37,15 @@ export default class HomeController {
   }
 
   registerAvatarMovementEvents() {
-
     const avatarEl = document.getElementById('avatar');
 
     function move(size) {
-      avatarEl.style.left = avatarEl.style.left ? parseInt(avatarEl.style.left) + size + 'px' : `${size}px`;
+      avatarEl.style.left = avatarEl.style.left ? `${parseInt(avatarEl.style.left, 10) + size}px` : `${size}px`;
     }
 
     function jump() {
       avatarEl.classList.add('jump');
-      setTimeout(function() {
+      setTimeout(() => {
         avatarEl.classList.remove('jump');
       }, 1000);
     }
@@ -60,12 +59,12 @@ export default class HomeController {
           move(10);
           break;
         case 32:
-          jump();
-          break;
         case 38:
           jump();
+          break;
+        default: break;
       }
-    };
+    }
 
     window.addEventListener('keydown', moveSelection);
   }
