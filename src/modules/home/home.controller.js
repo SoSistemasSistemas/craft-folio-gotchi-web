@@ -9,10 +9,11 @@ function isValidURL(url) {
 }
 
 export default class HomeController {
-  constructor(widgetService, alertService, assetsService) {
+  constructor(widgetService, alertService, assetsService, commandProcessorService) {
     this.widgetService = widgetService;
     this.alertService = alertService;
     this.assetsService = assetsService;
+    this.commandProcessorService = commandProcessorService;
 
     this.inputOutdoor = {};
 
@@ -109,6 +110,7 @@ export default class HomeController {
     return avatarsUrls.map(url => ({
       url,
       active: (avatar && avatar.url || avatarsUrls[0]) === url,
+      state: avatar && avatar.state || 'normal',
     }));
   }
 
@@ -218,15 +220,16 @@ export default class HomeController {
   }
 
   addOutdoorContent() {
-    const { inputOutdoor } = this;
+    const { inputOutdoor, alertService, widgetConfigs } = this;
     const { url, clickAction } = inputOutdoor;
+    const { outdoor } = widgetConfigs;
 
     if (!isValidURL(url)) {
       const title = 'Oops...';
       const message =
         'A URL da imagem informada não é válida. Favor corrigir e tente novamente';
 
-      return this.alertService.error({ title, message });
+      return alertService.error({ title, message });
     }
 
     if (!isValidURL(clickAction)) {
@@ -234,47 +237,46 @@ export default class HomeController {
       const message =
         'A URL de redirecionamento informada não é válida. Favor corrigir e tente novamente';
 
-      return this.alertService.error({ title, message });
+      return alertService.error({ title, message });
     }
 
-    return this.widgetConfigs.outdoor.push(inputOutdoor);
+    return outdoor.push(inputOutdoor);
   }
 
   removeOutdoorContent(content) {
+    const { alertService, widgetConfigs } = this;
+
     const title = 'Atenção';
     const message = 'Tem certeza de que deseja excluir esse conteúdo?';
     const primaryButtonText = 'Sim, excluir';
     const secondaryButtonText = 'Deixa pra lá';
     const dangerMode = true;
 
-    this.alertService
+    alertService
       .confirm({
         title, message, dangerMode, primaryButtonText, secondaryButtonText,
       })
       /* eslint-disable-next-line */
       .then(() => {
-        this.widgetConfigs.outdoor = this.widgetConfigs.outdoor.filter(cont => cont !== content);
+        widgetConfigs.outdoor = widgetConfigs.outdoor.filter(cont => cont !== content);
       });
   }
 
   processCommand() {
-    const { consoleInput } = this;
+    const { commandProcessorService, widgetConfigs, consoleInput } = this;
+    const { avatar } = widgetConfigs;
 
-    const title = 'Oops...';
-    let message;
-
-    if (consoleInput) {
-      message = `Comando '${this.consoleInput}' não reconhecido.`;
-    } else {
-      message = 'Não foi informado nenhum comando para ser processado.';
-    }
-
-    this.alertService.error({ title, message });
+    avatar.state = commandProcessorService.process(avatar.state, consoleInput);
     this.consoleInput = '';
   }
 
   showSignPlaque() {
-    this.alertService.show({ title: '', message: this.widgetConfigs.signPlaque.text });
+    const { alertService, widgetConfigs } = this;
+    const { signPlaque } = widgetConfigs;
+
+    if (signPlaque && signPlaque.text) {
+      alertService.show({ title: '', message: signPlaque.text });
+    }
   }
 
   saveWidgetConfigs() {
@@ -287,4 +289,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['widgetService', 'alertService', 'assetsService'];
+HomeController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService'];
