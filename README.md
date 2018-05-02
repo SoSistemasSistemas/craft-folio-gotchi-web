@@ -4,6 +4,8 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 
 Veja a [Wiki](https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/wiki) com a descrição das principais entregas desse projeto.
 
+A aplicação publicada na núvem pode ser vista [aqui](http://35.184.50.176)
+
 ## Requisitos de ambiente
 
 - npm
