@@ -2,6 +2,8 @@
 
 Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotchi. Esse projeto faz parte do [trabalho final da disciplina Programação WEB](https://github.com/fegemo/cefet-web/tree/master/assignments/project-craftfoliogotchi) do curso de Engenharia de Computação/CEFET-MG.
 
+Veja a [Wiki](https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/wiki) com a descrição das principais entregas desse projeto.
+
 ## Requisitos de ambiente
 
 - npm
