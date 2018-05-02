@@ -219,6 +219,10 @@
   <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}"></div>
 
   <div id="avatar">
-    <img id="avatarImg" src="{{ home.widgetConfigs.avatar.url }}">
+    <div id="avatarState">
+      <img id="emotion" src="{{ home.emotions.sicky }}">
+      <img id="speechBallon" src="{{ home.assets.speechBallon }}">
+    </div>
+    <img src="{{ home.widgetConfigs.avatar.url }}">
   </div>
 </div>

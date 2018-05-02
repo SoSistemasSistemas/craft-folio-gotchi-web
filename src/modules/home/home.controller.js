@@ -29,8 +29,8 @@ export default class HomeController {
     this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
     this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
 
-    this.assets = {};
-    this.assets.signPlaque = assetsService.getSignPlaque();
+    this.assets = assetsService.getGeneralAssets();
+    this.emotions = assetsService.getEmotions();
 
     this.colorPickerOptions = {
       swatchOnly: true,

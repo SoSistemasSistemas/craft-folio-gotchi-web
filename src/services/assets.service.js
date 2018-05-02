@@ -38,8 +38,19 @@ class AssetsService {
     ];
   }
 
-  getSignPlaque() {
-    return 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/plaquinha.png';
+  getGeneralAssets() {
+    return {
+      signPlaque: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/plaquinha.png',
+      speechBallon: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/speech-bubble.png',
+    };
+  }
+
+  getEmotions() {
+    return {
+      sicky: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/sicky.png',
+      sleepy: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/sleepy.jpg',
+      hungry: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/hungry.jpeg',
+    }
   }
 }
 
