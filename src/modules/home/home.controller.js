@@ -45,9 +45,13 @@ export default class HomeController {
     const avatarEl = document.getElementById('avatar');
 
     function move(size) {
-      const position = Math.abs(parseInt(avatarEl.style.left || 0, 10)) + (avatarEl.offsetWidth || 0);
-      if (position + Math.abs(size) < window.innerWidth || (parseInt(avatarEl.style.left, 10) / size < 0)) {
-        avatarEl.style.left = avatarEl.style.left ? `${parseInt(avatarEl.style.left, 10) + size}px` : `${size}px`;
+      const position =
+        Math.abs(parseInt(avatarEl.style.left || 0, 10)) + (avatarEl.offsetWidth || 0);
+      if (position + Math.abs(size) < window.innerWidth ||
+          (parseInt(avatarEl.style.left, 10) / size < 0)) {
+        avatarEl.style.left = avatarEl.style.left ?
+          `${parseInt(avatarEl.style.left, 10) + size}px` :
+          `${size}px`;
       }
     }
 
