@@ -43,25 +43,26 @@ $screen-md-max: ($screen-lg-min - 1);
   #avatar {
     position: absolute;
     width: 10%;
-    height: 25%;
-    top: 0; left: 0; bottom: 3%; right: 0;
+    height: auto;
+    bottom: 3%; right: 0;
     margin: auto auto 5% auto;
-    // background-color: red;
     z-index: 1;
     img {
-      height: 100%;
+      position: relative;
+      max-width: 100%;
+      height: auto;
     }
 
     @media (max-width: $screen-sm-max) {
-      width: 30%;
       bottom: 10%;
+      width: 20%;
     }
   }
   #outdoor {
     position: absolute;
     width: 30%;
     height: auto;
-    bottom: 0; right: 0;
+    bottom: 3%; right: 0;
     margin: auto 2% 10% auto;
     img {
       position: relative;
@@ -84,6 +85,32 @@ $screen-md-max: ($screen-lg-min - 1);
         height: 100%;
       }
     }
+    @media screen and (max-width: $screen-sm-max){
+      bottom: 10%;
+      width: 50%;
+    }
+  }
+  #sign-plaque {
+    position: absolute;
+    width: 7%;
+    height: auto;
+    bottom: 3%; left: 0;
+    margin: auto auto 3% 2%;
+    z-index: 2;
+    img {
+      position: relative;
+      max-width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+    @media screen and (max-width: $screen-md-max){
+      bottom: 6%;
+      width: 10%;
+    }
+    @media screen and (max-width: $screen-sm-max){
+      bottom: 10%;
+      width: 14%;
+    }
   }
   #sky {
     height: 70%;
@@ -96,7 +123,7 @@ $screen-md-max: ($screen-lg-min - 1);
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     left: 0;
     background-color: #FEFEFE;
@@ -183,14 +210,6 @@ $screen-md-max: ($screen-lg-min - 1);
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
-  }
-
-  @media screen and (max-width: 900px){
-    #outdoor {
-      width: 50%;
-      height: auto;
-      margin: auto 2% 20% auto;
-    }
   }
 
   @keyframes jump {

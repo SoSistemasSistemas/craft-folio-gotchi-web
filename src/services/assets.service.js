@@ -37,6 +37,10 @@ class AssetsService {
       'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/yumemitchi.png',
     ];
   }
+
+  getSignPlaque() {
+    return 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/plaquinha.png';
+  }
 }
 
 export default angular.module('services.assets', [])
