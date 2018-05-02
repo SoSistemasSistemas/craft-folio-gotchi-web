@@ -9,11 +9,15 @@ function isValidURL(url) {
 }
 
 export default class HomeController {
-  constructor(widgetService, alertService, assetsService, commandProcessorService) {
+  constructor(
+    widgetService, alertService, assetsService, commandProcessorService,
+    speechRecognitionService,
+  ) {
     this.widgetService = widgetService;
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
+    this.speechRecognitionService = speechRecognitionService;
 
     this.inputOutdoor = {};
 
@@ -266,11 +270,23 @@ export default class HomeController {
       });
   }
 
-  processCommand() {
-    const { commandProcessorService, widgetConfigs, consoleInput } = this;
+  listenToCommand() {
+    this.speechRecognitionService.listen()
+      .then((event) => {
+        if (event && event.results && event.results[0] && event.results[0][0]) {
+          const command = event.results[0][0].transcript;
+          if (command) {
+            this.processCommand(command.toLowerCase());
+          }
+        }
+      });
+  }
+
+  processCommand(command) {
+    const { commandProcessorService, widgetConfigs } = this;
     const { avatar } = widgetConfigs;
 
-    avatar.state = commandProcessorService.process(avatar.state, consoleInput);
+    avatar.state = commandProcessorService.process(avatar.state, command);
     this.consoleInput = '';
   }
 
@@ -293,4 +309,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService'];
+HomeController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService'];

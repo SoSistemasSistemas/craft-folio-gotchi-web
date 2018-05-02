@@ -174,8 +174,11 @@
              ng-model="home.consoleInput" />
     </div>
     <div id="consoleAction">
-      <button type="text" class="btn btn-success" ng-click="home.processCommand()">
+      <button type="text" class="btn btn-success" ng-click="home.processCommand(home.consoleInput)">
         <i class="fa fa-play"></i>
+      </button>
+      <button type="text" class="btn btn-danger" ng-click="home.listenToCommand()">
+        <i class="fa fa-microphone"></i>
       </button>
     </div>
   </div>

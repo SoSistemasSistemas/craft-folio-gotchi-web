@@ -16,9 +16,10 @@ import alertService from '../../services/alert.service';
 import assetsService from '../../services/assets.service';
 import emotionsMachineStateService from '../../services/emotionsMachineState.service';
 import commandProcessorService from '../../services/commandProcessor.service';
+import speechRecognitionService from '../../services/speechRecognition.service';
 
 export default angular
-  .module('app.home', [uiRouter, colorpicker, widgetService, alertService, assetsService, commandProcessorService, emotionsMachineStateService])
+  .module('app.home', [uiRouter, colorpicker, widgetService, alertService, assetsService, commandProcessorService, emotionsMachineStateService, speechRecognitionService])
   .config(routing)
   .controller('HomeController', HomeController)
   .name;
