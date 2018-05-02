@@ -152,6 +152,17 @@
         </div>
       </div>
 
+      <div id="signPlaqueConfig" class="sidenav-widget">
+        <h5>Plaquina</h5>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <textarea class="form-control" rows="4" placeholder="Digite aqui o conteúdo da plaquinha"
+                      ng-model="home.widgetConfigs.signPlaque.text"></textarea>
+          </div>
+        </div>
+      </div>
+
       <button type="button" class="btn btn-block btn-primary btn-home-save"
               ng-click="home.saveWidgetConfigs()">Salvar</button>
     </div>
@@ -195,7 +206,7 @@
   </div>
 
   <div id="sign-plaque">
-    <img src="{{ home.assets.signPlaque }}">
+    <img src="{{ home.assets.signPlaque }}" ng-click="home.showSignPlaque()">
   </div>
 
   <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
@@ -207,7 +218,6 @@
 
   <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}"></div>
 
-  <!-- <img id="avatar1" src="{{ home.widgetConfigs.avatar.url }}"> -->
   <div id="avatar">
     <img id="avatarImg" src="{{ home.widgetConfigs.avatar.url }}">
   </div>

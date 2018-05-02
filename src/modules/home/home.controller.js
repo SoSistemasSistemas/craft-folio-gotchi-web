@@ -19,6 +19,7 @@ export default class HomeController {
     this.widgetConfigs = widgetService.getAll() || {};
     this.widgetConfigs.console = this.widgetConfigs.console || this.getConsoleDefault();
     this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
+    this.widgetConfigs.signPlaque = this.widgetConfigs.signPlaque || { text: '' };
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
@@ -270,6 +271,10 @@ export default class HomeController {
 
     this.alertService.error({ title, message });
     this.consoleInput = '';
+  }
+
+  showSignPlaque() {
+    this.alertService.show({ title: '', message: this.widgetConfigs.signPlaque.text });
   }
 
   saveWidgetConfigs() {
