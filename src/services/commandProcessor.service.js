@@ -16,10 +16,12 @@ class CommandProcessorService {
       states.some(state => state.actionsIn.includes(command) || state.actionsOut.includes(command));
 
     if (!isEmotionCommand) {
-      return alertService.error({
+      alertService.error({
         title: 'Oops...',
         message: `Comando '${command}' não reconhecido.`,
       });
+
+      return actualState;
     }
 
     return emotionsMachineStateService.next(actualState, command);
