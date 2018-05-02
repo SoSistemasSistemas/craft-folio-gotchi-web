@@ -1,50 +1,33 @@
 /* global angular */
 
-import alertService from './alert.service';
-
-const STATES = [
-  {
-    name: 'sleepy',
-    actionsIn: ['dormir', 'cochilar', 'capotar', 'tirar uma soneca', 'apagar'],
-    actionsOut: ['acordar', 'levantar'],
-  },
-  {
-    name: 'sicky',
-    actionsIn: ['adoecer', 'enjoar', 'dar pt', 'torcer pro galo'],
-    actionsOut: ['medicar', 'ir ao médico', 'vacinar'],
-  },
-  {
-    name: 'hungry',
-    actionsIn: ['fome', 'sede', 'fumar maconha'],
-    actionsOut: ['comer', 'rangar', 'laricar'],
-  },
-];
+import as from './alert.service';
+import emss from './emotionsMachineState.service';
 
 class CommandProcessorService {
-  constructor(alertService){
+  constructor(alertService, emotionsMachineStateService) {
     this.alertService = alertService;
+    this.emotionsMachineStateService = emotionsMachineStateService;
   }
 
   process(actualState, command) {
-    if (!STATES.some(state => state.actionsIn.includes(command) || state.actionsOut.includes(command))) {
-      return this.alertService.error({
-        title: 'Oops...', 
+    const { emotionsMachineStateService, alertService } = this;
+    const states = emotionsMachineStateService.getStates();
+    const isEmotionCommand =
+      states.some(state => state.actionsIn.includes(command) || state.actionsOut.includes(command));
+
+    if (!isEmotionCommand) {
+      return alertService.error({
+        title: 'Oops...',
         message: `Comando '${command}' não reconhecido.`,
       });
     }
 
-    if (actualState === 'normal') {
-      const newState = (STATES.find(state => state.actionsIn.includes(command)) || {}).name;
-      return newState || actualState;
-    } else {
-      const { actionsOut } = STATES.find(state => state.name === actualState) || {};
-      return actionsOut && actionsOut.includes(command) ? 'normal' : actualState;
-    }
+    return emotionsMachineStateService.next(actualState, command);
   }
 }
 
-CommandProcessorService.$inject = ['alertService'];
+CommandProcessorService.$inject = ['alertService', 'emotionsMachineStateService'];
 
-export default angular.module('services.commandProcessor', [alertService])
+export default angular.module('services.commandProcessor', [as, emss])
   .service('commandProcessorService', CommandProcessorService)
   .name;

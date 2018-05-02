@@ -50,7 +50,7 @@ class AssetsService {
       sicky: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/sicky.png',
       sleepy: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/sleepy.jpg',
       hungry: 'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/hungry.jpeg',
-    }
+    };
   }
 }
 

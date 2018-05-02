@@ -110,7 +110,7 @@ export default class HomeController {
     return avatarsUrls.map(url => ({
       url,
       active: (avatar && avatar.url || avatarsUrls[0]) === url,
-      state: avatar && avatar.state || 'normal',
+      state: avatar && avatar.state || { name: 'normal' },
     }));
   }
 

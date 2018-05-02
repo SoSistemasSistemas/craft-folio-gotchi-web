@@ -219,8 +219,8 @@
   <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}"></div>
 
   <div id="avatar">
-    <div id="avatarState" ng-if="home.widgetConfigs.avatar.state && home.widgetConfigs.avatar.state !== 'normal'">
-      <img id="emotion" src="{{ home.emotions.sicky }}">
+    <div id="avatarState" ng-if="home.widgetConfigs.avatar.state && home.widgetConfigs.avatar.state.name !== 'normal'">
+      <img id="emotion" src="{{ home.widgetConfigs.avatar.state.url }}">
       <img id="speechBallon" src="{{ home.assets.speechBallon }}">
     </div>
     <img src="{{ home.widgetConfigs.avatar.url }}">

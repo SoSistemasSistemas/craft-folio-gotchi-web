@@ -14,10 +14,11 @@ import HomeController from './home.controller';
 import widgetService from '../../services/widget.service';
 import alertService from '../../services/alert.service';
 import assetsService from '../../services/assets.service';
+import emotionsMachineStateService from '../../services/emotionsMachineState.service';
 import commandProcessorService from '../../services/commandProcessor.service';
 
 export default angular
-  .module('app.home', [uiRouter, colorpicker, widgetService, alertService, assetsService, commandProcessorService])
+  .module('app.home', [uiRouter, colorpicker, widgetService, alertService, assetsService, commandProcessorService, emotionsMachineStateService])
   .config(routing)
   .controller('HomeController', HomeController)
   .name;
