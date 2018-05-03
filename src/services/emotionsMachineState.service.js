@@ -3,49 +3,79 @@
 import as from './assets.service';
 
 class EmotionsMachineStateService {
-  constructor(assetsService) {
+
+  constructor(assetsService, alertService) {
     this.assetsService = assetsService;
+    this.alertService = alertService;
   }
 
   getStates() {
+
     const emotions = this.assetsService.getEmotions();
 
-    return [
-      {
-        name: 'sleepy',
-        actionsIn: ['dormir', 'cochilar', 'capotar', 'tirar uma soneca', 'apagar'],
-        actionsOut: ['acordar', 'levantar'],
-        url: emotions.sleepy,
+    return [{
+      name: 'normal',
+      actions: {
+        'dormir': 'sleepy',
+        'cochilar': 'sleepy',
+        'capotar': 'sleepy',
+        'tirar uma soneca': 'sleepy',
+        'apagar': 'sleepy',
+        'adoecer': 'sicky',
+        'enjoar': 'sicky',
+        'dar pt': 'sicky',
+        'torcer pro galo': 'sicky',
+        'fome': 'hungry',
+        'sede': 'hungry'
       },
-      {
-        name: 'sicky',
-        actionsIn: ['adoecer', 'enjoar', 'dar pt', 'torcer pro galo'],
-        actionsOut: ['medicar', 'ir ao médico', 'vacinar'],
-        url: emotions.sicky,
+      url: emotions.sleepy,
+    }, {
+      name: 'sleepy',
+      actions: {
+        'acordar': 'normal',
+        'levantar': 'normal'
       },
-      {
-        name: 'hungry',
-        actionsIn: ['fome', 'sede', 'fumar maconha'],
-        actionsOut: ['comer', 'rangar', 'laricar'],
-        url: emotions.hungry,
+      url: emotions.sleepy,
+    }, {
+      name: 'sicky',
+      actions: {
+        'medicar': 'normal',
+        'ir ao médico': 'normal',
+        'vacinar': 'normal'
       },
-    ];
+      url: emotions.sicky,
+    }, {
+      name: 'hungry',
+      actions: {
+        'comer': 'normal',
+        'rangar': 'normal'
+      },
+      url: emotions.hungry,
+    }];
   }
 
   next(actualState, command) {
+
     const states = this.getStates();
 
-    if (actualState.name === 'normal') {
-      const newState = states.find(state => state.actionsIn.includes(command));
-      return newState || actualState;
+    if (!actualState) {
+      actualState = states.find(s => s.name === 'normal');
     }
 
-    const { actionsOut } = states.find(state => state.name === actualState.name) || {};
-    return actionsOut && actionsOut.includes(command) ? { name: 'normal' } : actualState;
+    if (actualState.actions[command]) {
+      actualState = states.find(s => s.name === actualState.actions[command]);
+    } else {
+      this.alertService.warning({
+        title: 'Oops, comando inválido...',
+        message: `Comandos disponíveis para este estado:\n ${Object.keys(actualState.actions).join(" - ")}`,
+      });
+    }
+
+    return actualState;
   }
 }
 
-EmotionsMachineStateService.$inject = ['assetsService'];
+EmotionsMachineStateService.$inject = ['assetsService', 'alertService'];
 
 export default angular.module('services.emotionsMachineState', [as])
   .service('emotionsMachineStateService', EmotionsMachineStateService)
