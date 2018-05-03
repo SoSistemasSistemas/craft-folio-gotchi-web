@@ -1,10 +1,12 @@
 # craft-folio-gotchi-web
 
-Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotchi. Esse projeto faz parte do [trabalho final da disciplina Programação WEB](https://github.com/fegemo/cefet-web/tree/master/assignments/project-craftfoliogotchi) do curso de Engenharia de Computação/CEFET-MG.
+O CraftFolioGotchi é uma aplicação Web que possibilita a criação e personalização de mundos virtuais onde vivem personagens controlados pelos usuários.
+
+Esse projeto faz parte do [trabalho final da disciplina Programação para Web](https://github.com/fegemo/cefet-web/tree/master/assignments/project-craftfoliogotchi) do curso de Engenharia de Computação do CEFET-MG.
 
 Veja a [Wiki](https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/wiki) com a descrição das principais entregas desse projeto.
 
-A aplicação publicada na núvem pode ser vista [aqui](http://35.184.50.176)
+A aplicação publicada na nuvem pode ser acessada [aqui](http://35.184.50.176).
 
 ## Requisitos de ambiente
 
@@ -12,31 +14,32 @@ A aplicação publicada na núvem pode ser vista [aqui](http://35.184.50.176)
 - node
 - docker (opcional)
 - docker-compose (opcional)
-- docker-machine (caso seu computador não suporte virtualização)
+- virtualbox (opcional, apenas em host Mac)
 - gcloud (opcional, para realizar deploys. Entre em contato com lcnascimento para liberar acesso)
 
 ## Como rodar aplicação local
 
-Com docker
 ```shell
-docker-compose up
+npm install
+npm run bundle
+API_PORT=8000 node src/app.js
 ```
 
-Com docker-machine
-```shell
+__Com Docker__
 
+Passo opcional, para utilizar com docker-machine
+
+```shell
 docker-machine create default
 docker-machine start default
 eval $(docker-machine env default)
 docker-compose up
 ```
 
-Sem docker
+Subir container
 
 ```shell
-npm install
-npm run bundle
-API_PORT=8000 node src/app.js
+docker-compose up
 ```
 
 ### Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada
