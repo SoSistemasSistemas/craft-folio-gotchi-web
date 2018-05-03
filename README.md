@@ -6,7 +6,7 @@ Esse projeto faz parte do [trabalho final da disciplina Programação para Web](
 
 Veja a [Wiki](https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/wiki) com a descrição das principais entregas desse projeto.
 
-A aplicação publicada na nuvem pode ser acessada [aqui](http://35.184.50.176).
+A aplicação está publicada na nuvem e pode ser acessada [aqui](http://35.184.50.176).
 
 ## Requisitos de ambiente
 
@@ -42,7 +42,7 @@ Subir container
 docker-compose up
 ```
 
-### Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada
+__Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada__
 
 ```shell
 docker-compose down
