@@ -1,0 +1,28 @@
+#signup{
+  width: 100vw;
+  height: 100vh;
+  background-color: #AD1457;
+  .form {
+    background-color: #FFF;
+    min-width: 250px;
+    max-width: 350px;
+    width: 25vw;
+    padding: 20px;
+    box-shadow: 5px 5px 10px 10px #880E4F;
+    border-radius: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  };
+  .form-header {
+    text-align: center;
+    padding-bottom: 15px; 
+  }
+  .form-body {
+    padding-bottom: 15px;
+    input {
+      width: 100%;
+      margin-bottom: 3px;
+    }
+  }
+}
