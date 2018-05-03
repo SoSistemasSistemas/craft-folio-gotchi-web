@@ -4,8 +4,6 @@ O CraftFolioGotchi é uma aplicação Web que possibilita a criação e personal
 
 Esse projeto faz parte do [trabalho final da disciplina Programação para Web](https://github.com/fegemo/cefet-web/tree/master/assignments/project-craftfoliogotchi) do curso de Engenharia de Computação do CEFET-MG.
 
-Veja a [Wiki](https://github.com/SoSistemasSistemas/craft-folio-gotchi-web/wiki) com a descrição das principais entregas desse projeto.
-
 A aplicação está publicada na nuvem e pode ser acessada [aqui](http://35.184.50.176).
 
 ## Requisitos de ambiente
@@ -49,6 +47,34 @@ docker-compose down
 docker-compose build
 docker-compose up
 ```
+
+## Itens extras implementados
+
+- Páginas responsivas
+- Favicon
+- Framework CSS: Bootstrap
+- Pré-processador CSS: Sass
+- Framework Javascript: Angular
+- Dividir código em múltiplos arquivos + recursos ES6 (Webpack + babel)
+- Configuração de Widgets na própria página
+- Novos tipos de Widgets
+  - Plaquinha fincada no chão
+  - Selecionar Avatar (Sugestão do grupo)
+- Sobre o personagem
+  - Salto
+  - Máquina de estados (mudança de estado via console ou comando de voz)
+    - Estados: dormindo, com fome, doente
+    - Ações: dormir, acordar, fome, comer, adoecer, mediar, etc...
+  - Iteração do personagem com o cenário
+    - Imaginamos o mundo em um plano 3D. Nesse sentido existem 3 níveis: Plaquinha, Avatar, Outdoor. A sobreposicão dos componentes deve seguir essa hierarquia.
+- Extras gerais
+  - Speech Recognition API
+
+__Itens adicionados por conta do grupo visando melhor qualidade no desenvolvimento e nas entregas__
+
+- Docker
+- ESLint
+- Cloud (GCP + Kubernetes)
 
 ## Como fazer deploy em produção
 
