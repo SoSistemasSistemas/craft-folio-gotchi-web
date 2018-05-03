@@ -44,7 +44,7 @@ $screen-md-max: ($screen-lg-min - 1);
     position: absolute;
     width: 10%;
     height: auto;
-    bottom: 3%; right: 0;
+    bottom: 3%; right: 0; left: 0;
     margin: auto auto 5% auto;
     z-index: 1;
     img {
@@ -55,7 +55,7 @@ $screen-md-max: ($screen-lg-min - 1);
 
     @media (max-width: $screen-sm-max) {
       bottom: 10%;
-      width: 20%;
+      width: 30%;
     }
 
     #avatarState {
