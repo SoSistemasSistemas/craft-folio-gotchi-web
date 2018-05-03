@@ -50,18 +50,19 @@ docker-compose up
 
 ## Itens extras implementados
 
-- Páginas responsivas
+- Todas as páginas responsive
 - Favicon
 - Framework CSS: Bootstrap
 - Pré-processador CSS: Sass
 - Framework Javascript: Angular
-- Dividir código em múltiplos arquivos + recursos ES6 (Webpack + babel)
+- Dividir código em múltiplos arquivos
+- Recursos ES6 (Webpack + babel)
 - Configuração de Widgets na própria página
 - Novos tipos de Widgets
   - Plaquinha fincada no chão
   - Selecionar Avatar (Sugestão do grupo)
 - Sobre o personagem
-  - Salto
+  - Salto quando uma tecla é pressionada
   - Máquina de estados (mudança de estado via console ou comando de voz)
     - Estados: dormindo, com fome, doente
     - Ações: dormir, acordar, fome, comer, adoecer, mediar, etc...
