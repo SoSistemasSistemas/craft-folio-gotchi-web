@@ -155,6 +155,13 @@ $screen-md-max: ($screen-lg-min - 1);
 
     #avatarCarousel {
       background-color: #757575;
+      img {
+        width: auto !important;
+        margin: auto;
+        display: block;
+        margin-bottom: 3%;
+        margin-top: 3%;
+      }
     }
 
     #consoleConfig {
@@ -260,11 +267,12 @@ $screen-md-max: ($screen-lg-min - 1);
   }
 
   .fa-trash {
-    color: red;
+    color: #F44336;
+    cursor: pointer;
   }
 
   .fa-link {
-    color: blue;
+    color: #2196F3;
   }
 }
 

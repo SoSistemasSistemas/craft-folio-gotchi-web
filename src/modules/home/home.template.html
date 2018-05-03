@@ -105,12 +105,12 @@
 
         <div class="card" ng-repeat="content in home.widgetConfigs.outdoor">
           <div class="card-body">
-            <div>
-              {{ content.url }}
-            </div>
-            <div>
+            <div class="pull-right">
               <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
               <span ng-click="home.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
+            </div>
+            <div>
+              {{ content.url }}
             </div>
           </div>
         </div>
