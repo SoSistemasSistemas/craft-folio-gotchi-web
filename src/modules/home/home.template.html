@@ -88,34 +88,30 @@
         <hr>
 
         <div class="row">
-          <div class="col-md-10">
-            <div class="row">
-              <div class="col-md-12">
-                <input type="text" placeholder="URL da imagem" class="form-control"
-                       ng-model="home.inputOutdoor.url" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <input type="text" placeholder="URL de redirecionamento" class="form-control"
-                       ng-model="home.inputOutdoor.clickAction" />
-              </div>
-            </div>
+          <div class="col-md-12">
+            <input type="text" placeholder="URL da imagem" class="form-control"
+                   ng-model="home.inputOutdoor.url" />
           </div>
-          <div class="col-md-2">
-            <button class="btn btn-block btn-primary" ng-click="home.addOutdoorContent()">
+          <div class="col-md-12">
+            <input type="text" placeholder="URL de redirecionamento" class="form-control"
+                   ng-model="home.inputOutdoor.clickAction" />
+          </div>
+          <div class="col-md-12">
+            <button class="btn btn-block btn-primary btn-add-outdoor" ng-click="home.addOutdoorContent()">
               <i class="fa fa-plus"></i>
             </button>
           </div>
         </div>
 
-        <div ng-repeat="content in home.widgetConfigs.outdoor">
-          <div>
-            {{ content.url }}
-          </div>
-          <div>
-            <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
-            <span ng-click="home.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
+        <div class="card" ng-repeat="content in home.widgetConfigs.outdoor">
+          <div class="card-body">
+            <div>
+              {{ content.url }}
+            </div>
+            <div>
+              <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
+              <span ng-click="home.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
+            </div>
           </div>
         </div>
       </div>

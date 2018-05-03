@@ -250,6 +250,22 @@ $screen-md-max: ($screen-lg-min - 1);
       width: 100%;
     }
   }
+
+  .card {
+    margin-bottom: 5px;
+  }
+
+  .btn-add-outdoor {
+    margin: 10px 0;
+  }
+
+  .fa-trash {
+    color: red;
+  }
+
+  .fa-link {
+    color: blue;
+  }
 }
 
 .swal-modal {
