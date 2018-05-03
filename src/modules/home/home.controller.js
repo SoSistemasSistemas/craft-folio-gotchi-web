@@ -1,109 +1,159 @@
 /* eslint-env browser */
-/* global swal */
 
-const Position = {
-  TOP_LEFT: '1',
-  TOP_CENTER: '2',
-  TOP_RIGHT: '3',
-  CENTER: '4',
-};
-
-function getPositionStyle(position) {
-  const { CENTER, TOP_CENTER, TOP_RIGHT } = Position;
-
-  switch (position) {
-    case CENTER:
-      return {
-        top: '0', left: '0', bottom: '0', right: '0', margin: 'auto',
-      };
-    case TOP_RIGHT:
-      return {
-        top: '0', right: '0', margin: '2% 2% auto auto',
-      };
-    case TOP_CENTER:
-    default:
-      return {
-        left: '0', right: '0', margin: '2% auto',
-      };
+function isValidURL(url) {
+  try {
+    return new URL(url);
+  } catch (error) {
+    return false;
   }
 }
 
 export default class HomeController {
-  constructor(widgetService) {
+  constructor(
+    widgetService, alertService, assetsService, commandProcessorService,
+    speechRecognitionService,
+  ) {
     this.widgetService = widgetService;
+    this.alertService = alertService;
+    this.assetsService = assetsService;
+    this.commandProcessorService = commandProcessorService;
+    this.speechRecognitionService = speechRecognitionService;
+
+    this.inputOutdoor = {};
 
     this.widgetConfigs = widgetService.getAll() || {};
-    this.widgetConfigs.welcomeBox = this.widgetConfigs.welcomeBox || this.getWelcomeBoxDefault();
+    this.widgetConfigs.console = this.widgetConfigs.console || this.getConsoleDefault();
+    this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
+    this.widgetConfigs.signPlaque = this.widgetConfigs.signPlaque || { text: '' };
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
+    this.avatars = this.getAvatars();
 
     this.widgetConfigs.sky = this.skyTextures.find(texture => texture.active).url;
     this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
+    this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
+
+    this.assets = assetsService.getGeneralAssets();
+    this.emotions = assetsService.getEmotions();
 
     this.colorPickerOptions = {
       swatchOnly: true,
       format: 'hex',
     };
+
+    this.registerAvatarMovementEvents();
   }
 
-  getWelcomeBoxDefault() {
+  registerAvatarMovementEvents() {
+    const avatarEl = document.getElementById('avatar');
+
+    function move(size) {
+      const position =
+        Math.abs(parseInt(avatarEl.style.left || 0, 10)) + (avatarEl.offsetWidth || 0);
+      if (position + Math.abs(size) < window.innerWidth ||
+          (parseInt(avatarEl.style.left, 10) / size < 0)) {
+        avatarEl.style.left = avatarEl.style.left ?
+          `${parseInt(avatarEl.style.left, 10) + size}px` :
+          `${size}px`;
+      }
+    }
+
+    function jump() {
+      avatarEl.classList.add('jump');
+      setTimeout(() => {
+        avatarEl.classList.remove('jump');
+      }, 1000);
+    }
+
+    function moveSelection(evt) {
+      switch (evt.keyCode) {
+        case 37:
+          move(-10);
+          break;
+        case 39:
+          move(10);
+          break;
+        case 32:
+        case 38:
+          jump();
+          break;
+        default: break;
+      }
+    }
+
+    window.addEventListener('keydown', moveSelection);
+  }
+
+  getConsoleDefault() {
     return {
-      backgroundColor: '313A47',
-      borderColor: '262B33',
-      textColor: 'D3B832',
-      text: 'Seja vem-vindo ao meu mundo!',
-      width: 25,
-      height: 13,
-      position: Position.TOP_CENTER,
+      backgroundColor: '515151',
+      textColor: 'FFEB3B',
+      height: 60,
     };
   }
 
   getSkyTextures() {
-    const texturesUrls = [
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_1.jpg',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/sky/sky_2.jpg',
-    ];
+    const texturesUrls = this.assetsService.getSkyTextures();
     /* eslint-disable-next-line */
-    return texturesUrls.map(url => {
-      return {
-        url,
-        active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
-      };
-    });
+    return texturesUrls.map(url => ({
+      url,
+      active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
+    }));
   }
 
   getGroundTextures() {
-    const texturesUrls = [
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/grass.jpg',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/rock.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/ground/sand.jpg',
-    ];
+    const texturesUrls = this.assetsService.getGroundTextures();
     /* eslint-disable-next-line */
-    return texturesUrls.map(url => {
-      return {
-        url,
-        active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
-      };
-    });
+    return texturesUrls.map(url => ({
+      url,
+      active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
+    }));
   }
 
-  getWelcomeBoxStyle() {
-    const { welcomeBox } = this.widgetConfigs;
+  getAvatars() {
+    const { avatar } = this.widgetConfigs;
+    const avatarsUrls = this.assetsService.getAvatars();
+    /* eslint-disable-next-line */
+    return avatarsUrls.map(url => ({
+      url,
+      active: (avatar && avatar.url || avatarsUrls[0]) === url,
+      state: avatar && avatar.state || { name: 'normal' },
+    }));
+  }
 
-    return Object.assign({
-      'background-color': `#${welcomeBox.backgroundColor}`,
-      border: `2px solid #${welcomeBox.borderColor}`,
-      color: `#${welcomeBox.textColor}`,
-      width: `${welcomeBox.width}%`,
-      height: `${welcomeBox.height}%`,
-    }, getPositionStyle(welcomeBox.position));
+  getConsoleStyle() {
+    const { console } = this.widgetConfigs;
+
+    return {
+      'background-color': `#${console.backgroundColor}`,
+      height: `${console.height}px`,
+    };
+  }
+
+  getConsoleInputStyle() {
+    const { console } = this.widgetConfigs;
+
+    return {
+      'caret-color': `#${console.textColor}`,
+      color: `#${console.textColor}`,
+    };
+  }
+
+  getOutdoorDefaultContent() {
+    const content = this.assetsService.getOutdoorImages().map(url => ({ url }));
+
+    content[0].clickAction = 'http://www.cefetmg.br/';
+    content[1].clickAction = 'https://github.com/SoSistemasSistemas';
+    content[2].clickAction = 'https://www.google.com.br/';
+
+    return content;
   }
 
   openWidgetConfiguration() {
     this.rollbackWidgetConfigs = Object.assign({}, this.widgetConfigs);
 
-    document.getElementById('mySidenav').style.width = '500px';
+    document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   closeWidgetConfiguration(rollbackWidgetConfigs) {
@@ -111,32 +161,22 @@ export default class HomeController {
       this.widgetConfigs = this.rollbackWidgetConfigs;
     }
 
-    document.getElementById('mySidenav').style.width = '0';
+    document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   askToCloseWidgetConfiguration() {
     const title = 'Atenção';
     const message = 'As alterações realizadas nos seus Widgets serão perdidas, caso não as salve. \
                      Tem certeza de que deseja prosseguir?';
+    const primaryButtonText = 'Prosseguir';
+    const secondaryButtonText = 'Continuar editando';
 
-    swal(title, message, 'warning', {
-      buttons: {
-        cancel: {
-          text: 'Continuar editando',
-          value: false,
-          visible: true,
-        },
-        confirm: {
-          text: 'Prosseguir',
-          value: true,
-          visible: true,
-        },
-      },
-    })
-      .then((proceed) => {
-        if (proceed) {
-          this.closeWidgetConfiguration(true);
-        }
+    this.alertService
+      .confirm({
+        title, message, primaryButtonText, secondaryButtonText,
+      })
+      .then(() => {
+        this.closeWidgetConfiguration(true);
       });
   }
 
@@ -156,6 +196,15 @@ export default class HomeController {
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.groundTextures.length);
 
     this.widgetConfigs.ground = this.groundTextures[nextIndex].url;
+  }
+
+  changeAvatar(direction) {
+    const groundImage = document.querySelectorAll('#avatarCarousel .active img')[0];
+    const previousIndex = parseInt(groundImage.attributes[2].value, 10);
+    const nextIndex =
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.avatars.length);
+
+    this.widgetConfigs.avatar = this.avatars[nextIndex];
   }
 
   getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
@@ -178,11 +227,86 @@ export default class HomeController {
     return nextIndex;
   }
 
+  addOutdoorContent() {
+    const { inputOutdoor, alertService, widgetConfigs } = this;
+    const { url, clickAction } = inputOutdoor;
+    const { outdoor } = widgetConfigs;
+
+    if (!isValidURL(url)) {
+      const title = 'Oops...';
+      const message =
+        'A URL da imagem informada não é válida. Favor corrigir e tente novamente';
+
+      return alertService.error({ title, message });
+    }
+
+    if (!isValidURL(clickAction)) {
+      const title = 'Oops...';
+      const message =
+        'A URL de redirecionamento informada não é válida. Favor corrigir e tente novamente';
+
+      return alertService.error({ title, message });
+    }
+
+    return outdoor.push(inputOutdoor);
+  }
+
+  removeOutdoorContent(content) {
+    const { alertService, widgetConfigs } = this;
+
+    const title = 'Atenção';
+    const message = 'Tem certeza de que deseja excluir esse conteúdo?';
+    const primaryButtonText = 'Sim, excluir';
+    const secondaryButtonText = 'Deixa pra lá';
+    const dangerMode = true;
+
+    alertService
+      .confirm({
+        title, message, dangerMode, primaryButtonText, secondaryButtonText,
+      })
+      /* eslint-disable-next-line */
+      .then(() => {
+        widgetConfigs.outdoor = widgetConfigs.outdoor.filter(cont => cont !== content);
+      });
+  }
+
+  listenToCommand() {
+    this.speechRecognitionService.listen()
+      .then((event) => {
+        if (event && event.results && event.results[0] && event.results[0][0]) {
+          const command = event.results[0][0].transcript;
+          if (command) {
+            this.processCommand(command.toLowerCase());
+          }
+        }
+      });
+  }
+
+  processCommand(command) {
+    const { commandProcessorService, widgetConfigs } = this;
+    const { avatar } = widgetConfigs;
+
+    avatar.state = commandProcessorService.process(avatar.state, command);
+    this.consoleInput = '';
+  }
+
+  showSignPlaque() {
+    const { alertService, widgetConfigs } = this;
+    const { signPlaque } = widgetConfigs;
+
+    if (signPlaque && signPlaque.text) {
+      alertService.show({ title: '', message: signPlaque.text });
+    }
+  }
+
   saveWidgetConfigs() {
-    this.widgetService.upsertBulk(this.widgetConfigs);
+    const title = 'Yaay :)';
+    const message = 'Suas configurações de Widgets foram salvas com sucesso!';
+
     this.closeWidgetConfiguration();
-    swal('Yaay :)', 'Suas configurações de Widgets foram salvas com sucesso!', 'success');
+    this.widgetService.upsertBulk(this.widgetConfigs);
+    this.alertService.success({ title, message });
   }
 }
 
-HomeController.$inject = ['widgetService'];
+HomeController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService'];

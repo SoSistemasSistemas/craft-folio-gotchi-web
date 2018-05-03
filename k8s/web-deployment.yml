@@ -28,6 +28,7 @@ spec:
     spec:
       containers:
       - name: craft-folio-gotchi-web
+        imagePullPolicy: Always
         image: gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:latest
         resources:
           requests:

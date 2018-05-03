@@ -1,6 +1,10 @@
 # craft-folio-gotchi-web
 
-Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotchi. Esse projeto faz parte do trabalho final da disciplina Programação WEB do curso de Engenharia de Computação/CEFET-MG.
+O CraftFolioGotchi é uma aplicação Web que possibilita a criação e personalização de mundos virtuais onde vivem personagens controlados pelos usuários.
+
+Esse projeto faz parte do [trabalho final da disciplina Programação para Web](https://github.com/fegemo/cefet-web/tree/master/assignments/project-craftfoliogotchi) do curso de Engenharia de Computação do CEFET-MG.
+
+A aplicação está publicada na nuvem e pode ser acessada [aqui](http://35.184.50.176).
 
 ## Requisitos de ambiente
 
@@ -15,21 +19,29 @@ Microserviço responsável por servir o conteúdo Web do projeto CraftFolioGotch
 ## Como rodar aplicação local
 
 ```shell
+npm install
+npm run bundle
+API_PORT=8000 node src/app.js
+```
+
+__Com Docker__
+
+Passo opcional, para utilizar com docker-machine
+
+```shell
 docker-machine create default
 docker-machine start default
 eval $(docker-machine env default)
 docker-compose up
 ```
 
-Sem Docker:
+Subir container
 
 ```shell
-npm install
-npm run bundle
-API_PORT=8000 node src/app.js
+docker-compose up
 ```
 
-### Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada
+__Caso seja incluído um novo pacote via NPM, a imagem dos containers deve ser atualizada__
 
 ```shell
 docker-compose down
@@ -37,32 +49,66 @@ docker-compose build
 docker-compose up
 ```
 
+## Itens extras implementados
+
+- Todas as páginas responsive
+- Favicon
+- Framework CSS: Bootstrap
+- Pré-processador CSS: Sass
+- Framework Javascript: Angular
+- Dividir código em múltiplos arquivos
+- Recursos ES6 (Webpack + babel)
+- Configuração de Widgets na própria página
+- Novos tipos de Widgets
+  - Plaquinha fincada no chão
+  - Selecionar Avatar (Sugestão do grupo)
+- Sobre o personagem
+  - Salto quando uma tecla é pressionada
+  - Máquina de estados (mudança de estado via console ou comando de voz)
+    - Estados: dormindo, com fome, doente
+    - Ações: dormir, acordar, fome, comer, adoecer, mediar, etc...
+  - Iteração do personagem com o cenário
+    - Imaginamos o mundo em um plano 3D. Nesse sentido existem 3 níveis: Plaquinha, Avatar, Outdoor. A sobreposicão dos componentes deve seguir essa hierarquia.
+- Extras gerais
+  - Speech Recognition API
+
+__Itens adicionados por conta do grupo visando melhor qualidade no desenvolvimento e nas entregas__
+
+- Docker
+- ESLint
+- Cloud (GCP + Kubernetes)
+
 ## Como fazer deploy em produção
 
-Gerar nova imagem local, incrementando valor da tag:
+Gerar nova imagem local com a tag latest:
 
 ```shell
-docker build -t gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:0.1.X
+docker build -t gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:latest
 ```
 
 Depois subir a nova imagem criada para o repositório do Google na cloud
 
 ```shell
-gcloud docker -- push gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:0.1.X
+gcloud docker -- push gcr.io/so-sistemas-sistemas-201603/craft-folio-gotchi-web:latest
 ```
 
-Atualizar o atributo referente a tag da imagem no arquivo `k8s/web-deployment.yml`
-
-Aplicar as alterações no cluster de produção
+Recriar pods
 
 ```shell
-kubectl apply -f k8s/web-deployment.yml
+kubectl delete --all pods
 ```
 
 Aguardar até que os novos pods criados estejam com status `running`
 
 ```shell
 kubectl get pods
+```
+
+Executar o bundler em cada um dos pods criados
+
+```shell
+kubectl get pods
+kubectl exec -it <pod> npm run bundle
 ```
 
 ### Observações Finais
