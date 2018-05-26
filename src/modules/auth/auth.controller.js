@@ -2,13 +2,15 @@ export default class AuthController {
   constructor($location, authService) {
     this.$location = $location;
     this.authService = authService;
-
-    this.username = 'luisnascimento';
-    this.password = '12345';
   }
 
   login() {
-    this.authService.login().then(() => this.$location.path('/home'));
+    const { username, password } = this;
+
+    this.authService
+      .login({ username, password })
+      .then(() => this.$location.path('/home'))
+      .catch(console.log);
   }
 }
 
