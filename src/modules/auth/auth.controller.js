@@ -9,7 +9,7 @@ export default class AuthController {
 
     this.authService
       .login({ username, password })
-      .then(() => this.$location.path('/home'));
+      .then(() => this.$location.path('/worlds'));
   }
 }
 

@@ -1,8 +1,8 @@
-<div id="home">
+<div id="world">
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn"
-       ng-click="home.askToCloseWidgetConfiguration()">&times;</a>
+       ng-click="world.askToCloseWidgetConfiguration()">&times;</a>
 
     <div class="sidenav-content">
       <h3>Configure seus Widgets</h3>
@@ -16,18 +16,18 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div class="carousel-item {{ avatar.active ? 'active' : '' }}"
-                  ng-repeat="avatar in home.avatars">
+                  ng-repeat="avatar in world.avatars">
               <img src="{{ avatar.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
 
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#avatarCarousel" data-slide="prev"
-              ng-click="home.changeAvatar('prev')">
+              ng-click="world.changeAvatar('prev')">
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#avatarCarousel" data-slide="next"
-          ng-click="home.changeAvatar('next')">
+          ng-click="world.changeAvatar('next')">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -41,18 +41,18 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div class="carousel-item {{ sky.active ? 'active' : '' }}"
-                 ng-repeat="sky in home.skyTextures">
+                 ng-repeat="sky in world.skyTextures">
               <img src="{{ sky.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
 
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#skyCarousel" data-slide="prev"
-             ng-click="home.changeSky('prev')">
+             ng-click="world.changeSky('prev')">
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#skyCarousel" data-slide="next"
-          ng-click="home.changeSky('next')">
+          ng-click="world.changeSky('next')">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -66,18 +66,18 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div class="carousel-item {{ ground.active ? 'active' : '' }}"
-                  ng-repeat="ground in home.groundTextures">
+                  ng-repeat="ground in world.groundTextures">
               <img src="{{ ground.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
 
           <!-- Left and right controls -->
           <a class="carousel-control-prev" href="#groundCarousel" data-slide="prev"
-             ng-click="home.changeGround('prev')">
+             ng-click="world.changeGround('prev')">
               <span class="carousel-control-prev-icon"></span>
           </a>
           <a class="carousel-control-next" href="#groundCarousel" data-slide="next"
-             ng-click="home.changeGround('next')">
+             ng-click="world.changeGround('next')">
               <span class="carousel-control-next-icon"></span>
           </a>
         </div>
@@ -90,24 +90,24 @@
         <div class="row">
           <div class="col-md-12">
             <input type="text" placeholder="URL da imagem" class="form-control"
-                   ng-model="home.inputOutdoor.url" />
+                   ng-model="world.inputOutdoor.url" />
           </div>
           <div class="col-md-12">
             <input type="text" placeholder="URL de redirecionamento" class="form-control"
-                   ng-model="home.inputOutdoor.clickAction" />
+                   ng-model="world.inputOutdoor.clickAction" />
           </div>
           <div class="col-md-12">
-            <button class="btn btn-block btn-primary btn-add-outdoor" ng-click="home.addOutdoorContent()">
+            <button class="btn btn-block btn-primary btn-add-outdoor" ng-click="world.addOutdoorContent()">
               <i class="fa fa-plus"></i>
             </button>
           </div>
         </div>
 
-        <div class="card" ng-repeat="content in home.widgetConfigs.outdoor">
+        <div class="card" ng-repeat="content in world.widgetConfigs.outdoor">
           <div class="card-body">
             <div class="pull-right">
               <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
-              <span ng-click="home.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
+              <span ng-click="world.removeOutdoorContent(content)"><i class="fa fa-trash trash"></i></span>
             </div>
             <div>
               {{ content.url }}
@@ -124,7 +124,7 @@
             Cor do Fundo:
           </div>
           <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.console.backgroundColor" options="home.colorPickerOptions"></color-picker>
+            <color-picker ng-model="world.widgetConfigs.console.backgroundColor" options="world.colorPickerOptions"></color-picker>
           </div>
         </div>
 
@@ -133,7 +133,7 @@
             Cor do texto:
           </div>
           <div class="col-md-8">
-            <color-picker ng-model="home.widgetConfigs.console.textColor" options="home.colorPickerOptions"></color-picker>
+            <color-picker ng-model="world.widgetConfigs.console.textColor" options="world.colorPickerOptions"></color-picker>
           </div>
         </div>
 
@@ -143,7 +143,7 @@
           </div>
           <div class="col-md-8">
             <input type="number" class="form-control" min="50" max="70"
-                    ng-model="home.widgetConfigs.console.height"/>
+                    ng-model="world.widgetConfigs.console.height"/>
           </div>
         </div>
       </div>
@@ -154,26 +154,26 @@
         <div class="row">
           <div class="col-md-12">
             <textarea class="form-control" rows="4" placeholder="Digite aqui o conteúdo da plaquinha"
-                      ng-model="home.widgetConfigs.signPlaque.text"></textarea>
+                      ng-model="world.widgetConfigs.signPlaque.text"></textarea>
           </div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-block btn-primary btn-home-save"
-              ng-click="home.saveWidgetConfigs()">Salvar</button>
+      <button type="button" class="btn btn-block btn-primary btn-world-save"
+              ng-click="world.saveWidgetConfigs()">Salvar</button>
     </div>
   </div>
 
-  <div id="console" ng-style="home.getConsoleStyle()">
+  <div id="console" ng-style="world.getConsoleStyle()">
     <div id="consoleInput">
-      <input type="text" class="form-control" ng-style="home.getConsoleInputStyle()"
-             ng-model="home.consoleInput" />
+      <input type="text" class="form-control" ng-style="world.getConsoleInputStyle()"
+             ng-model="world.consoleInput" />
     </div>
     <div id="consoleAction">
-      <button type="text" class="btn btn-success" ng-click="home.processCommand(home.consoleInput)">
+      <button type="text" class="btn btn-success" ng-click="world.processCommand(world.consoleInput)">
         <i class="fa fa-play"></i>
       </button>
-      <button type="text" class="btn btn-danger" ng-click="home.listenToCommand()">
+      <button type="text" class="btn btn-danger" ng-click="world.listenToCommand()">
         <i class="fa fa-microphone"></i>
       </button>
     </div>
@@ -186,7 +186,7 @@
       <div id="outdoorCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item {{ $index == 0 ? 'active' : '' }}"
-                ng-repeat="content in home.widgetConfigs.outdoor">
+                ng-repeat="content in world.widgetConfigs.outdoor">
             <a href="{{ content.clickAction }}" target="_blank">
               <img src="{{ content.url }}">
             </a>
@@ -205,23 +205,23 @@
   </div>
 
   <div id="sign-plaque">
-    <img src="{{ home.assets.signPlaque }}" ng-click="home.showSignPlaque()">
+    <img src="{{ world.assets.signPlaque }}" ng-click="world.showSignPlaque()">
   </div>
 
-  <div id="sky" ng-style="{'background-image':'url(' + home.widgetConfigs.sky + ')'}">
-    <button class="btn pull-left btn-home-edit" type="button"
-            ng-click="home.openWidgetConfiguration()">
+  <div id="sky" ng-style="{'background-image':'url(' + world.widgetConfigs.sky + ')'}">
+    <button class="btn pull-left btn-world-edit" type="button"
+            ng-click="world.openWidgetConfiguration()">
       <i class="fa fa-edit"></i>Editar
     </button>
   </div>
 
-  <div id="ground" ng-style="{'background-image':'url(' + home.widgetConfigs.ground + ')'}"></div>
+  <div id="ground" ng-style="{'background-image':'url(' + world.widgetConfigs.ground + ')'}"></div>
 
   <div id="avatar">
-    <div id="avatarState" ng-if="home.widgetConfigs.avatar.state && home.widgetConfigs.avatar.state.name !== 'normal'">
-      <img id="emotion" src="{{ home.widgetConfigs.avatar.state.url }}">
-      <img id="speechBallon" src="{{ home.assets.speechBallon }}">
+    <div id="avatarState" ng-if="world.widgetConfigs.avatar.state && world.widgetConfigs.avatar.state.name !== 'normal'">
+      <img id="emotion" src="{{ world.widgetConfigs.avatar.state.url }}">
+      <img id="speechBallon" src="{{ world.assets.speechBallon }}">
     </div>
-    <img src="{{ home.widgetConfigs.avatar.url }}">
+    <img src="{{ world.widgetConfigs.avatar.url }}">
   </div>
 </div>

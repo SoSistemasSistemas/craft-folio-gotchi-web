@@ -10,8 +10,8 @@ import intercepting from '../../configs/interceptors.config';
 import authModule from '../auth';
 import signupModule from '../signup';
 import landingModule from '../landing';
-import homeModule from '../home';
+import worldModule from '../world';
 
-angular.module('app', [uiRouter, authModule, landingModule, homeModule, signupModule])
+angular.module('app', [uiRouter, authModule, landingModule, worldModule, signupModule])
   .config(routing)
   .config(intercepting);

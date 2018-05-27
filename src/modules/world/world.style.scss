@@ -5,7 +5,7 @@ $screen-sm-max: ($screen-md-min - 1);
 $screen-lg-min: 1200px;
 $screen-md-max: ($screen-lg-min - 1);
 
-#home {
+#world {
   height: 100vh;
 
   img {
@@ -227,12 +227,12 @@ $screen-md-max: ($screen-lg-min - 1);
     margin-left: 50px;
   }
 
-  .btn-home-edit {
+  .btn-world-edit {
     margin: 10px 10px;
     padding: 10px 20px;
   }
 
-  .btn-home-save {
+  .btn-world-save {
     margin-bottom: 30px;
   }
 

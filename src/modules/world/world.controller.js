@@ -8,7 +8,7 @@ function isValidURL(url) {
   }
 }
 
-export default class HomeController {
+export default class WorldController {
   constructor(
     widgetService, alertService, assetsService, commandProcessorService,
     speechRecognitionService,
@@ -308,4 +308,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService'];
+WorldController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService'];
