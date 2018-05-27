@@ -1,6 +1,14 @@
-/* global env */
+/* global env, localStorage */
 
 import angular from 'angular';
+
+function handleToken(response) {
+  const { token } = response && response.data || {};
+
+  if (token) {
+    localStorage.setItem('cfg-auth-token', token);
+  }
+}
 
 class AuthService {
   constructor($q, $http) {
@@ -9,11 +17,15 @@ class AuthService {
   }
 
   login(credentials) {
-    return this.$http.post(`${env.API_ENDPOINT}/auth/login`, credentials);
+    return this.$http
+      .post(`${env.API_ENDPOINT}/auth/login`, credentials)
+      .then(handleToken);
   }
 
-  signup() {
-
+  signup(credentials) {
+    return this.$http
+      .post(`${env.API_ENDPOINT}/auth`, credentials)
+      .then(handleToken);
   }
 }
 

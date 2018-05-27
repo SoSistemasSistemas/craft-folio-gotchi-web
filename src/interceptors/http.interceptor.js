@@ -1,5 +1,15 @@
+/* globals localStorage */
+
 export default function httpInterceptor($q, alertService) {
-  const request = req => req;
+  const request = (req) => {
+    const token = localStorage.getItem('cfg-auth-token');
+
+    if (token) {
+      req.headers['x-access-token'] = token;
+    }
+
+    return req;
+  };
 
   const handleError = (rejection) => {
     const deferred = $q.defer();

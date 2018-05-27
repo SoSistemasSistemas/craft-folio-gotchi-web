@@ -5,9 +5,9 @@ import './signup.style.scss';
 
 import routing from './signup.routes';
 import SignupController from './signup.controller';
-import signupService from '../../services/signup.service';
+import authService from '../../services/auth.service';
 
-export default angular.module('app.signup', [uiRouter, signupService])
+export default angular.module('app.signup', [uiRouter, authService])
   .config(routing)
   .controller('SignupController', SignupController)
   .name;

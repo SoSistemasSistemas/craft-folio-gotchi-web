@@ -1,16 +1,16 @@
 export default class SignupController {
-  constructor($location, signupService) {
+  constructor($location, authService) {
     this.$location = $location;
-    this.signupService = signupService;
+    this.authService = authService;
   }
 
   signup() {
     const { username, password, confirmPassword } = this;
 
-    this.signupService
+    this.authService
       .signup({ username, password, confirmPassword })
       .then(() => this.$location.path('/home'));
   }
 }
 
-SignupController.$inject = ['$location', 'signupService'];
+SignupController.$inject = ['$location', 'authService'];
