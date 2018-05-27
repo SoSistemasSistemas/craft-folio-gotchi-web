@@ -1,12 +1,15 @@
+/* global env */
+
 import angular from 'angular';
 
 class SignupService {
-  constructor($q) {
+  constructor($q, $http) {
     this.$q = $q;
+    this.$http = $http;
   }
 
-  signup() {
-    return this.$q(resolve => resolve(this));
+  signup(credentials) {
+    return this.$http.post(`${env.API_ENDPOINT}/auth`, credentials);
   }
 }
 
@@ -14,4 +17,4 @@ export default angular.module('services.signup', [])
   .service('signupService', SignupService)
   .name;
 
-SignupService.$inject = ['$q'];
+SignupService.$inject = ['$q', '$http'];

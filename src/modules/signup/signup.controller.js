@@ -5,7 +5,11 @@ export default class SignupController {
   }
 
   signup() {
-    this.signupService.signup().then(() => this.$location.path('/home'));
+    const { username, password, confirmPassword } = this;
+
+    this.signupService
+      .signup({ username, password, confirmPassword })
+      .then(() => this.$location.path('/home'));
   }
 }
 
