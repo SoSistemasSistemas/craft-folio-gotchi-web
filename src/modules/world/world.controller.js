@@ -24,7 +24,6 @@ export default class WorldController {
 
     this.widgetConfigs = widgetService.getAll() || {};
     this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
-    this.widgetConfigs.signPlaque = this.widgetConfigs.signPlaque || { text: '' };
 
     this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
@@ -282,8 +281,8 @@ export default class WorldController {
   }
 
   showSignPlaque() {
-    const { alertService, widgetConfigs } = this;
-    const { signPlaque } = widgetConfigs;
+    const { alertService, world } = this;
+    const { signPlaque } = world && world.widgets || {};
 
     if (signPlaque && signPlaque.text) {
       alertService.show({ title: '', message: signPlaque.text });
