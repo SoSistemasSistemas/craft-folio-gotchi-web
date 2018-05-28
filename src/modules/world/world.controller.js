@@ -18,11 +18,11 @@ export default class WorldController {
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
+    this.world = world;
 
     this.inputOutdoor = {};
 
     this.widgetConfigs = widgetService.getAll() || {};
-    this.widgetConfigs.console = this.widgetConfigs.console || this.getConsoleDefault();
     this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
     this.widgetConfigs.signPlaque = this.widgetConfigs.signPlaque || { text: '' };
 
@@ -41,7 +41,7 @@ export default class WorldController {
       swatchOnly: true,
       format: 'hex',
     };
-    console.log(world);
+
     this.registerAvatarMovementEvents();
   }
 
@@ -85,14 +85,6 @@ export default class WorldController {
     window.addEventListener('keydown', moveSelection);
   }
 
-  getConsoleDefault() {
-    return {
-      backgroundColor: '515151',
-      textColor: 'FFEB3B',
-      height: 60,
-    };
-  }
-
   getSkyTextures() {
     const texturesUrls = this.assetsService.getSkyTextures();
     /* eslint-disable-next-line */
@@ -122,7 +114,7 @@ export default class WorldController {
   }
 
   getConsoleStyle() {
-    const { console } = this.widgetConfigs;
+    const { console } = this.world.widgets || {};
 
     return {
       'background-color': `#${console.backgroundColor}`,
@@ -131,7 +123,7 @@ export default class WorldController {
   }
 
   getConsoleInputStyle() {
-    const { console } = this.widgetConfigs;
+    const { console } = this.world.widgets || {};
 
     return {
       'caret-color': `#${console.textColor}`,
