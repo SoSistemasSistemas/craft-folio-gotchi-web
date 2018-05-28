@@ -11,7 +11,7 @@ function isValidURL(url) {
 export default class WorldController {
   constructor(
     widgetService, alertService, assetsService, commandProcessorService,
-    speechRecognitionService,
+    speechRecognitionService, world,
   ) {
     this.widgetService = widgetService;
     this.alertService = alertService;
@@ -41,7 +41,7 @@ export default class WorldController {
       swatchOnly: true,
       format: 'hex',
     };
-
+    console.log(world);
     this.registerAvatarMovementEvents();
   }
 
@@ -308,4 +308,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService'];
+WorldController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world'];

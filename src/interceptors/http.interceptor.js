@@ -16,7 +16,7 @@ export default function httpInterceptor($q, alertService) {
 
     const { data } = rejection;
     const title = 'Ops... Algo de errado aconteceu!';
-    const message = data && data.error || data;
+    const message = data && data.error || data || 'Favor entrar em contato com a equipe técnica.';
 
     alertService.error({ title, message });
 

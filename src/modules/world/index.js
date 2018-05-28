@@ -14,12 +14,13 @@ import WorldController from './world.controller';
 import widgetService from '../../services/widget.service';
 import alertService from '../../services/alert.service';
 import assetsService from '../../services/assets.service';
+import worldService from '../../services/world.service';
 import emotionsMachineStateService from '../../services/emotionsMachineState.service';
 import commandProcessorService from '../../services/commandProcessor.service';
 import speechRecognitionService from '../../services/speechRecognition.service';
 
 export default angular
-  .module('app.world', [uiRouter, colorpicker, widgetService, alertService, assetsService, commandProcessorService, emotionsMachineStateService, speechRecognitionService])
+  .module('app.world', [uiRouter, colorpicker, widgetService, worldService, alertService, assetsService, commandProcessorService, emotionsMachineStateService, speechRecognitionService])
   .config(routing)
   .controller('WorldController', WorldController)
   .name;

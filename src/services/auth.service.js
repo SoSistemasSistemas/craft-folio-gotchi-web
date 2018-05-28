@@ -2,6 +2,8 @@
 
 import angular from 'angular';
 
+import ws from './world.service';
+
 function handleToken(response) {
   const { token } = response && response.data || {};
 
@@ -11,9 +13,10 @@ function handleToken(response) {
 }
 
 class AuthService {
-  constructor($q, $http) {
+  constructor($q, $http, worldService) {
     this.$q = $q;
     this.$http = $http;
+    this.worldService = worldService;
   }
 
   login(credentials) {
@@ -25,12 +28,13 @@ class AuthService {
   signup(credentials) {
     return this.$http
       .post(`${env.API_ENDPOINT}/auth`, credentials)
-      .then(handleToken);
+      .then(handleToken)
+      .then(() => this.worldService.create());
   }
 }
 
-export default angular.module('services.auth', [])
+AuthService.$inject = ['$q', '$http', 'worldService'];
+
+export default angular.module('services.auth', [ws])
   .service('authService', AuthService)
   .name;
-
-AuthService.$inject = ['$q', '$http'];

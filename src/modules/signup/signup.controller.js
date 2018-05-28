@@ -9,7 +9,7 @@ export default class SignupController {
 
     this.authService
       .signup({ username, password, confirmPassword })
-      .then(() => this.$location.path('/worlds'));
+      .then(() => this.$location.path(`/worlds/${username}`));
   }
 }
 
