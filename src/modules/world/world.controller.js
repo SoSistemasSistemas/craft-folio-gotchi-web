@@ -218,9 +218,9 @@ export default class WorldController {
   }
 
   addOutdoorContent() {
-    const { inputOutdoor, alertService, widgetConfigs } = this;
+    const { inputOutdoor, alertService, world } = this;
     const { url, clickAction } = inputOutdoor;
-    const { outdoor } = widgetConfigs;
+    const { outdoor } = world.widgets;
 
     if (!isValidURL(url)) {
       const title = 'Oops...';

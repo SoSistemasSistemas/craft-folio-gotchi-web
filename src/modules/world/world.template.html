@@ -103,7 +103,7 @@
           </div>
         </div>
 
-        <div class="card" ng-repeat="content in world.widgetConfigs.outdoor">
+        <div class="card" ng-repeat="content in world.world.widgets.outdoor">
           <div class="card-body">
             <div class="pull-right">
               <span><i class="fa fa-link link" rel="tooltip" title="{{ content.clickAction }}"></i></span>
@@ -186,7 +186,7 @@
       <div id="outdoorCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item {{ $index == 0 ? 'active' : '' }}"
-                ng-repeat="content in world.widgetConfigs.outdoor">
+                ng-repeat="content in world.world.widgets.outdoor">
             <a href="{{ content.clickAction }}" target="_blank">
               <img src="{{ content.url }}">
             </a>
