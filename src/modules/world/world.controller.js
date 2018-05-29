@@ -11,12 +11,13 @@ function isValidURL(url) {
 export default class WorldController {
   constructor(
     alertService, assetsService, commandProcessorService,
-    speechRecognitionService, worldService, world, avatars,
+    speechRecognitionService, userService, worldService, world, avatars,
   ) {
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
+    this.userService = userService;
     this.worldService = worldService;
     this.world = world;
 
@@ -82,12 +83,12 @@ export default class WorldController {
   }
 
   formatAvatars(avatarsUrls) {
-    const { avatar } = this.world.owner;
+    const { avatarUrl } = this.world.owner;
 
     /* eslint-disable-next-line */
     return avatarsUrls.map(url => ({
       url,
-      active: (avatar && avatar.url || avatarsUrls[0]) === url,
+      active: (avatarUrl || avatarsUrls[0]) === url,
     }));
   }
 
@@ -122,7 +123,7 @@ export default class WorldController {
 
       this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
       this.ground = this.world.widgets.groundTextures.find(texture => texture.active).url;
-      this.avatar = this.world.owner.avatar;
+      this.avatar.url = this.world.owner.avatarUrl;
     }
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
@@ -180,7 +181,7 @@ export default class WorldController {
 
     this.avatar = this.avatars[nextIndex];
 
-    this.world.owner.avatar.url = this.avatar.url;
+    this.world.owner.avatarUrl = this.avatar.url;
   }
 
   getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
@@ -276,19 +277,21 @@ export default class WorldController {
   }
 
   save() {
-    const { alertService, worldService, world } = this;
+    const {
+      alertService, userService, worldService, world, closeWidgetConfiguration,
+    } = this;
     const { widgets } = world;
-    const { username } = world.owner;
+    const { username, avatarUrl } = world.owner;
 
     const title = 'Yaay :)';
     const message = 'Suas configurações foram salvas com sucesso!';
 
-    this.closeWidgetConfiguration();
-    // this.widgetService.upsertBulk(this.widgetConfigs);
-    console.log(world);
+    closeWidgetConfiguration();
+
     worldService.updateWidgets(username, widgets)
+      .then(() => userService.updateAvatar(username, avatarUrl))
       .then(() => alertService.success({ title, message }));
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'worldService', 'world', 'avatars'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'userService', 'worldService', 'world', 'avatars'];
