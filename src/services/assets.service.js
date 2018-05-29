@@ -1,16 +1,6 @@
 import angular from 'angular';
 
 class AssetsService {
-  getAvatars() {
-    return [
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/mametchi.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/decoratchi.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/knighttchi.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/tacttchi.png',
-      'https://storage.googleapis.com/sss-craft-folio-gotchi/avatars/yumemitchi.png',
-    ];
-  }
-
   getGeneralAssets() {
     return {
       signPlaque: 'https://storage.googleapis.com/sss-craft-folio-gotchi/widgets/plaquinha.png',

@@ -13,6 +13,7 @@ export default function routes($stateProvider) {
 
           return worldService.getByOwnerUsername(ownerUsername);
         }],
+        avatars: ['avatarService', avatarService => avatarService.all()],
       },
     });
 }

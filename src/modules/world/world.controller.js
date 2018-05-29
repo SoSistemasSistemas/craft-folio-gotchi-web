@@ -11,7 +11,7 @@ function isValidURL(url) {
 export default class WorldController {
   constructor(
     alertService, assetsService, commandProcessorService,
-    speechRecognitionService, world,
+    speechRecognitionService, world, avatars,
   ) {
     this.alertService = alertService;
     this.assetsService = assetsService;
@@ -21,7 +21,7 @@ export default class WorldController {
 
     this.inputOutdoor = {};
 
-    this.avatars = this.getAvatars();
+    this.avatars = this.formatAvatars(avatars);
 
     this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
     this.groundTextures = this.world.widgets.groundTextures;
@@ -79,10 +79,9 @@ export default class WorldController {
     window.addEventListener('keydown', moveSelection);
   }
 
-  getAvatars() {
+  formatAvatars(avatarsUrls) {
     const { avatar } = this.world.owner;
 
-    const avatarsUrls = this.assetsService.getAvatars();
     /* eslint-disable-next-line */
     return avatarsUrls.map(url => ({
       url,
@@ -284,4 +283,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world', 'avatars'];
