@@ -2,7 +2,6 @@
 
 import angular from 'angular';
 
-
 class AvatarService {
   constructor($http) {
     this.$http = $http;

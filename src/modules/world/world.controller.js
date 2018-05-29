@@ -23,6 +23,7 @@ export default class WorldController {
 
     this.avatars = this.formatAvatars(avatars);
 
+    this.skyTextures = this.world.widgets.skyTextures;
     this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
     this.groundTextures = this.world.widgets.groundTextures;
     this.ground = this.groundTextures.find(texture => texture.active).url;
@@ -272,9 +273,9 @@ export default class WorldController {
     }
   }
 
-  saveWidgetConfigs() {
+  save() {
     const title = 'Yaay :)';
-    const message = 'Suas configurações de Widgets foram salvas com sucesso!';
+    const message = 'Suas configurações foram salvas com sucesso!';
 
     this.closeWidgetConfiguration();
     // this.widgetService.upsertBulk(this.widgetConfigs);
