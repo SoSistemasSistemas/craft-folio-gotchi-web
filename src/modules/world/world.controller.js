@@ -11,12 +11,13 @@ function isValidURL(url) {
 export default class WorldController {
   constructor(
     alertService, assetsService, commandProcessorService,
-    speechRecognitionService, world, avatars,
+    speechRecognitionService, worldService, world, avatars,
   ) {
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
+    this.worldService = worldService;
     this.world = world;
 
     this.inputOutdoor = {};
@@ -275,14 +276,19 @@ export default class WorldController {
   }
 
   save() {
+    const { alertService, worldService, world } = this;
+    const { widgets } = world;
+    const { username } = world.owner;
+
     const title = 'Yaay :)';
     const message = 'Suas configurações foram salvas com sucesso!';
 
     this.closeWidgetConfiguration();
     // this.widgetService.upsertBulk(this.widgetConfigs);
-    console.log(this.world);
-    this.alertService.success({ title, message });
+    console.log(world);
+    worldService.updateWidgets(username, widgets)
+      .then(() => alertService.success({ title, message }));
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world', 'avatars'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'worldService', 'world', 'avatars'];

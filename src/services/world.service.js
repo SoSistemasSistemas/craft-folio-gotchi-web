@@ -17,6 +17,11 @@ class WorldService {
       .post(`${env.API_ENDPOINT}/worlds/`)
       .then(({ data }) => data);
   }
+
+  updateWidgets(ownerUsername, widgets) {
+    return this.$http
+      .put(`${env.API_ENDPOINT}/worlds/${ownerUsername}/widgets`, widgets);
+  }
 }
 
 WorldService.$inject = ['$http'];
