@@ -267,6 +267,11 @@ export default class WorldController {
     this.consoleInput = '';
   }
 
+  notificateVisitors() {
+    const { alertService } = this;
+    alertService.show({ title: '', message: 'Funcionalidade ainda não implementada!' });
+  }
+
   showSignPlaque() {
     const { alertService, world } = this;
     const { signPlaque } = world && world.widgets || {};

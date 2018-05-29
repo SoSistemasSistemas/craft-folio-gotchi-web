@@ -23,7 +23,7 @@ $screen-md-max: ($screen-lg-min - 1);
     align-items: center;
     #consoleInput {
       position: absolute;
-      width: 95%;
+      width: 90%;
       height: 100%;
       input {
         height: 100%;
@@ -36,7 +36,7 @@ $screen-md-max: ($screen-lg-min - 1);
       right: 0;
       button {
         border-radius: 4px;
-        width: 45%;
+        width: 30%;
       }
     }
   }
