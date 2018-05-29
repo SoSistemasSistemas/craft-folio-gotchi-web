@@ -8,7 +8,6 @@ class UserService {
   }
 
   updateAvatar(username, url) {
-    console.log(url);
     return this.$http
       .put(`${env.API_ENDPOINT}/users/${username}/avatar`, { url });
   }
