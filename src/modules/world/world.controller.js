@@ -24,11 +24,11 @@ export default class WorldController {
 
     this.widgetConfigs = widgetService.getAll() || {};
 
-    this.groundTextures = this.getGroundTextures();
     this.avatars = this.getAvatars();
 
     this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
-    this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
+    this.groundTextures = this.world.widgets.groundTextures;
+    this.ground = this.groundTextures.find(texture => texture.active).url;
     this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
 
     this.assets = assetsService.getGeneralAssets();
@@ -80,15 +80,6 @@ export default class WorldController {
     }
 
     window.addEventListener('keydown', moveSelection);
-  }
-
-  getGroundTextures() {
-    const texturesUrls = this.assetsService.getGroundTextures();
-    /* eslint-disable-next-line */
-    return texturesUrls.map(url => ({
-      url,
-      active: (this.widgetConfigs.ground || texturesUrls[0]) === url,
-    }));
   }
 
   getAvatars() {
@@ -163,12 +154,18 @@ export default class WorldController {
   }
 
   changeGround(direction) {
+    const { groundTextures } = this.world.widgets;
     const groundImage = document.querySelectorAll('#groundCarousel .active img')[0];
     const previousIndex = parseInt(groundImage.attributes[2].value, 10);
     const nextIndex =
-      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.groundTextures.length);
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, groundTextures.length);
 
-    this.widgetConfigs.ground = this.groundTextures[nextIndex].url;
+    this.ground = groundTextures[nextIndex].url;
+
+    const { ground } = this;
+
+    this.world.widgets.groundTextures =
+      groundTextures.map(({ url }) => ({ url, active: url === ground }));
   }
 
   changeAvatar(direction) {
