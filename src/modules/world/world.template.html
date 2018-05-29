@@ -41,7 +41,7 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div class="carousel-item {{ sky.active ? 'active' : '' }}"
-                 ng-repeat="sky in world.skyTextures">
+                 ng-repeat="sky in world.world.widgets.skyTextures">
               <img src="{{ sky.url }}" style="width:100%; height: 300px;" data-index="{{ $index }}">
             </div>
           </div>
@@ -208,7 +208,7 @@
     <img src="{{ world.assets.signPlaque }}" ng-click="world.showSignPlaque()">
   </div>
 
-  <div id="sky" ng-style="{'background-image':'url(' + world.widgetConfigs.sky + ')'}">
+  <div id="sky" ng-style="{'background-image':'url(' + world.sky + ')'}">
     <button class="btn pull-left btn-world-edit" type="button"
             ng-click="world.openWidgetConfiguration()">
       <i class="fa fa-edit"></i>Editar

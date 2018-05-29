@@ -23,13 +23,11 @@ export default class WorldController {
     this.inputOutdoor = {};
 
     this.widgetConfigs = widgetService.getAll() || {};
-    this.widgetConfigs.outdoor = this.widgetConfigs.outdoor || this.getOutdoorDefaultContent();
 
-    this.skyTextures = this.getSkyTextures();
     this.groundTextures = this.getGroundTextures();
     this.avatars = this.getAvatars();
 
-    this.widgetConfigs.sky = this.skyTextures.find(texture => texture.active).url;
+    this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
     this.widgetConfigs.ground = this.groundTextures.find(texture => texture.active).url;
     this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
 
@@ -84,15 +82,6 @@ export default class WorldController {
     window.addEventListener('keydown', moveSelection);
   }
 
-  getSkyTextures() {
-    const texturesUrls = this.assetsService.getSkyTextures();
-    /* eslint-disable-next-line */
-    return texturesUrls.map(url => ({
-      url,
-      active: (this.widgetConfigs.sky || texturesUrls[0]) === url,
-    }));
-  }
-
   getGroundTextures() {
     const texturesUrls = this.assetsService.getGroundTextures();
     /* eslint-disable-next-line */
@@ -130,16 +119,6 @@ export default class WorldController {
     };
   }
 
-  getOutdoorDefaultContent() {
-    const content = this.assetsService.getOutdoorImages().map(url => ({ url }));
-
-    content[0].clickAction = 'http://www.cefetmg.br/';
-    content[1].clickAction = 'https://github.com/SoSistemasSistemas';
-    content[2].clickAction = 'https://www.google.com.br/';
-
-    return content;
-  }
-
   openWidgetConfiguration() {
     this.rollbackWidgetConfigs = Object.assign({}, this.widgetConfigs);
 
@@ -171,12 +150,16 @@ export default class WorldController {
   }
 
   changeSky(direction) {
+    const { skyTextures } = this.world.widgets;
     const skyImage = document.querySelectorAll('#skyCarousel .active img')[0];
     const previousIndex = parseInt(skyImage.attributes[2].value, 10);
     const nextIndex =
-      this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.skyTextures.length);
+      this.getChangedBackgroundWidgetIndex(previousIndex, direction, skyTextures.length);
 
-    this.widgetConfigs.sky = this.skyTextures[nextIndex].url;
+    this.sky = skyTextures[nextIndex].url;
+
+    const { sky } = this;
+    this.world.widgets.skyTextures = skyTextures.map(({ url }) => ({ url, active: url === sky }));
   }
 
   changeGround(direction) {
@@ -294,7 +277,8 @@ export default class WorldController {
     const message = 'Suas configurações de Widgets foram salvas com sucesso!';
 
     this.closeWidgetConfiguration();
-    this.widgetService.upsertBulk(this.widgetConfigs);
+    // this.widgetService.upsertBulk(this.widgetConfigs);
+    console.log(this.world);
     this.alertService.success({ title, message });
   }
 }
