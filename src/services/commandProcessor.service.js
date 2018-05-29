@@ -4,7 +4,6 @@ import as from './alert.service';
 import emss from './emotionsMachineState.service';
 
 class CommandProcessorService {
-
   constructor(emotionsMachineStateService) {
     this.emotionsMachineStateService = emotionsMachineStateService;
   }

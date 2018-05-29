@@ -10,10 +10,9 @@ function isValidURL(url) {
 
 export default class WorldController {
   constructor(
-    widgetService, alertService, assetsService, commandProcessorService,
+    alertService, assetsService, commandProcessorService,
     speechRecognitionService, world,
   ) {
-    this.widgetService = widgetService;
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
@@ -22,14 +21,12 @@ export default class WorldController {
 
     this.inputOutdoor = {};
 
-    this.widgetConfigs = widgetService.getAll() || {};
-
     this.avatars = this.getAvatars();
 
     this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
     this.groundTextures = this.world.widgets.groundTextures;
     this.ground = this.groundTextures.find(texture => texture.active).url;
-    this.widgetConfigs.avatar = this.avatars.find(avatar => avatar.active);
+    this.avatar = this.avatars.find(avatar => avatar.active);
 
     this.assets = assetsService.getGeneralAssets();
     this.emotions = assetsService.getEmotions();
@@ -83,7 +80,8 @@ export default class WorldController {
   }
 
   getAvatars() {
-    const { avatar } = this.widgetConfigs;
+    const { avatar } = this.world.owner;
+
     const avatarsUrls = this.assetsService.getAvatars();
     /* eslint-disable-next-line */
     return avatarsUrls.map(url => ({
@@ -111,14 +109,18 @@ export default class WorldController {
   }
 
   openWidgetConfiguration() {
-    this.rollbackWidgetConfigs = Object.assign({}, this.widgetConfigs);
+    this.rollback = {
+      widgets: Object.assign({}, this.world.widgets),
+      avatar: Object.assign({}, this.world.owner.avatar),
+    };
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   closeWidgetConfiguration(rollbackWidgetConfigs) {
     if (rollbackWidgetConfigs) {
-      this.widgetConfigs = this.rollbackWidgetConfigs;
+      this.world.widgets = this.rollback.widgets;
+      this.world.owner.avatar = this.rollback.avatar;
     }
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
@@ -174,7 +176,9 @@ export default class WorldController {
     const nextIndex =
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.avatars.length);
 
-    this.widgetConfigs.avatar = this.avatars[nextIndex];
+    this.avatar = this.avatars[nextIndex];
+
+    this.world.owner.avatar.url = this.avatar.url;
   }
 
   getChangedBackgroundWidgetIndex(previousIndex, direction, totalBackgrounds) {
@@ -222,7 +226,8 @@ export default class WorldController {
   }
 
   removeOutdoorContent(content) {
-    const { alertService, widgetConfigs } = this;
+    const { alertService, world } = this;
+    let { outdoor } = world.widgets;
 
     const title = 'Atenção';
     const message = 'Tem certeza de que deseja excluir esse conteúdo?';
@@ -236,7 +241,7 @@ export default class WorldController {
       })
       /* eslint-disable-next-line */
       .then(() => {
-        widgetConfigs.outdoor = widgetConfigs.outdoor.filter(cont => cont !== content);
+        outdoor = outdoor.filter(cont => cont !== content);
       });
   }
 
@@ -253,8 +258,7 @@ export default class WorldController {
   }
 
   processCommand(command) {
-    const { commandProcessorService, widgetConfigs } = this;
-    const { avatar } = widgetConfigs;
+    const { commandProcessorService, avatar } = this;
 
     avatar.state = commandProcessorService.process(avatar.state, command);
     this.consoleInput = '';
@@ -280,4 +284,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['widgetService', 'alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'world'];
