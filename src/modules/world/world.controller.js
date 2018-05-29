@@ -109,18 +109,19 @@ export default class WorldController {
   }
 
   openWidgetConfiguration() {
-    this.rollback = {
-      widgets: Object.assign({}, this.world.widgets),
-      avatar: Object.assign({}, this.world.owner.avatar),
-    };
+    const { world } = this;
+    this.rollback = JSON.stringify(world);
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
   }
 
   closeWidgetConfiguration(rollbackWidgetConfigs) {
     if (rollbackWidgetConfigs) {
-      this.world.widgets = this.rollback.widgets;
-      this.world.owner.avatar = this.rollback.avatar;
+      this.world = JSON.parse(this.rollback);
+
+      this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
+      this.ground = this.world.widgets.groundTextures.find(texture => texture.active).url;
+      this.avatar = this.world.owner.avatar;
     }
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
@@ -128,7 +129,7 @@ export default class WorldController {
 
   askToCloseWidgetConfiguration() {
     const title = 'Atenção';
-    const message = 'As alterações realizadas nos seus Widgets serão perdidas, caso não as salve. \
+    const message = 'As alterações realizadas no seu mundo serão perdidas, caso não as salve. \
                      Tem certeza de que deseja prosseguir?';
     const primaryButtonText = 'Prosseguir';
     const secondaryButtonText = 'Continuar editando';
@@ -227,7 +228,7 @@ export default class WorldController {
 
   removeOutdoorContent(content) {
     const { alertService, world } = this;
-    let { outdoor } = world.widgets;
+    const { outdoor } = world.widgets;
 
     const title = 'Atenção';
     const message = 'Tem certeza de que deseja excluir esse conteúdo?';
@@ -241,7 +242,7 @@ export default class WorldController {
       })
       /* eslint-disable-next-line */
       .then(() => {
-        outdoor = outdoor.filter(cont => cont !== content);
+        this.world.widgets.outdoor = outdoor.filter(cont => cont !== content);
       });
   }
 

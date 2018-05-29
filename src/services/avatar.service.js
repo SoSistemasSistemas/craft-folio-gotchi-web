@@ -16,6 +16,6 @@ class AvatarService {
 
 AvatarService.$inject = ['$http'];
 
-export default angular.module('services.auth', [])
+export default angular.module('services.avatar', [])
   .service('avatarService', AvatarService)
   .name;
