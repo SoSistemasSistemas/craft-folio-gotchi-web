@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const app = express();
 const { API_PORT } = process.env;
 
-app.use(morgan('combined'));
+app.use(morgan('combined', { skip: (_, res) => res.statusCode < 400 }));
 app.use(cors()); // Used to cheat 'Same Origem Policy' from browsers
 
 app.use(express.static(path.join(__dirname, '/dist')));
