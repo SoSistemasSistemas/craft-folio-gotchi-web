@@ -3,75 +3,66 @@
 import as from './assets.service';
 
 class EmotionsMachineStateService {
-
   constructor(assetsService, alertService) {
     this.assetsService = assetsService;
     this.alertService = alertService;
   }
 
   getStates() {
-
     const emotions = this.assetsService.getEmotions();
 
     return [{
       name: 'normal',
       actions: {
-        'dormir': 'sleepy',
-        'cochilar': 'sleepy',
-        'capotar': 'sleepy',
-        'tirar uma soneca': 'sleepy',
-        'apagar': 'sleepy',
-        'adoecer': 'sicky',
-        'enjoar': 'sicky',
-        'dar pt': 'sicky',
-        'torcer pro galo': 'sicky',
-        'fome': 'hungry',
-        'sede': 'hungry'
+        dormir: 'sleepy',
+        cochilar: 'sleepy',
+        capotar: 'sleepy',
+        apagar: 'sleepy',
+        adoecer: 'sicky',
+        enjoar: 'sicky',
+        fome: 'hungry',
+        sede: 'hungry',
       },
       url: emotions.sleepy,
     }, {
       name: 'sleepy',
       actions: {
-        'acordar': 'normal',
-        'levantar': 'normal'
+        acordar: 'normal',
+        levantar: 'normal',
       },
       url: emotions.sleepy,
     }, {
       name: 'sicky',
       actions: {
-        'medicar': 'normal',
-        'ir ao médico': 'normal',
-        'vacinar': 'normal'
+        medicar: 'normal',
+        vacinar: 'normal',
       },
       url: emotions.sicky,
     }, {
       name: 'hungry',
       actions: {
-        'comer': 'normal',
-        'rangar': 'normal'
+        comer: 'normal',
+        rangar: 'normal',
       },
       url: emotions.hungry,
     }];
   }
 
   next(actualState, command) {
-
     const states = this.getStates();
 
     if (!actualState) {
-      actualState = states.find(s => s.name === 'normal');
+      return states.find(s => s.name === 'normal');
     }
 
     if (actualState.actions[command]) {
-      actualState = states.find(s => s.name === actualState.actions[command]);
-    } else {
-      this.alertService.warning({
-        title: 'Oops, comando inválido...',
-        message: `Comandos disponíveis para este estado:\n ${Object.keys(actualState.actions).join(" - ")}`,
-      });
+      return states.find(s => s.name === actualState.actions[command]);
     }
 
-    return actualState;
+    return this.alertService.warning({
+      title: 'Oops, comando inválido...',
+      message: `Comandos disponíveis para este estado:\n ${Object.keys(actualState.actions).join(' - ')}`,
+    });
   }
 }
 

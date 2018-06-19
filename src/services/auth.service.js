@@ -13,9 +13,10 @@ function handleToken(response) {
 }
 
 class AuthService {
-  constructor($q, $http, worldService) {
+  constructor($q, $http, $state, worldService) {
     this.$q = $q;
     this.$http = $http;
+    this.$state = $state;
     this.worldService = worldService;
   }
 
@@ -31,9 +32,14 @@ class AuthService {
       .then(handleToken)
       .then(() => this.worldService.create());
   }
+
+  signOut() {
+    localStorage.removeItem('cfg-auth-token');
+    return this.$state.go('auth');
+  }
 }
 
-AuthService.$inject = ['$q', '$http', 'worldService'];
+AuthService.$inject = ['$q', '$http', '$state', 'worldService'];
 
 export default angular.module('services.auth', [ws])
   .service('authService', AuthService)

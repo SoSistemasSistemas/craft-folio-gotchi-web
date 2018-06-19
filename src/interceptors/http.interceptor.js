@@ -1,6 +1,8 @@
 /* globals localStorage */
 
-export default function httpInterceptor($q, alertService) {
+import { UNAUTHORIZED } from 'http-status-codes';
+
+export default function httpInterceptor($q, $state, alertService) {
   const request = (req) => {
     const token = localStorage.getItem('cfg-auth-token');
 
@@ -14,11 +16,15 @@ export default function httpInterceptor($q, alertService) {
   const handleError = (rejection) => {
     const deferred = $q.defer();
 
-    const { data } = rejection;
+    const { data, status } = rejection;
     const title = 'Ops... Algo de errado aconteceu!';
     const message = data && data.error || data || 'Favor entrar em contato com a equipe técnica.';
 
     alertService.error({ title, message });
+
+    if (status === UNAUTHORIZED) {
+      $state.go('auth');
+    }
 
     return deferred.promise;
   };
@@ -31,4 +37,4 @@ export default function httpInterceptor($q, alertService) {
   };
 }
 
-httpInterceptor.$inject = ['$q', 'alertService'];
+httpInterceptor.$inject = ['$q', '$state', 'alertService'];

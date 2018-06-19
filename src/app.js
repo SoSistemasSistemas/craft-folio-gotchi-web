@@ -1,3 +1,5 @@
+const { BAD_REQUEST } = require('http-status-codes');
+
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -6,7 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const { API_PORT } = process.env;
 
-app.use(morgan('combined', { skip: (_, res) => res.statusCode < 400 }));
+app.use(morgan('combined', { skip: (_, res) => res.statusCode < BAD_REQUEST }));
 app.use(cors()); // Used to cheat 'Same Origem Policy' from browsers
 
 app.use(express.static(path.join(__dirname, '/dist')));

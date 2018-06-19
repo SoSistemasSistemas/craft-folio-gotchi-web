@@ -9,23 +9,19 @@ class AlertService {
     this.$q = $q;
   }
 
-  show(opts) {
-    const { title, message, icon } = opts;
+  show({ title, message, icon }) {
     swal(title, message, icon || 'info');
   }
 
-  error(opts) {
-    const { title, message } = opts;
+  error({ title, message }) {
     this.show({ title, message, icon: 'error' });
   }
 
-  success(opts) {
-    const { title, message } = opts;
+  success({ title, message }) {
     this.show({ title, message, icon: 'success' });
   }
 
-  warning(opts) {
-    const { title, message } = opts;
+  warning({ title, message }) {
     this.show({ title, message, icon: 'warning' });
   }
 
