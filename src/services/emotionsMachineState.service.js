@@ -49,20 +49,23 @@ class EmotionsMachineStateService {
   }
 
   next(actualState, command) {
+
     const states = this.getStates();
 
     if (!actualState) {
-      return states.find(s => s.name === 'normal');
+      actualState = states.find(s => s.name === 'normal');
     }
 
     if (actualState.actions[command]) {
       return states.find(s => s.name === actualState.actions[command]);
     }
 
-    return this.alertService.warning({
+    this.alertService.warning({
       title: 'Oops, comando inválido...',
       message: `Comandos disponíveis para este estado:\n ${Object.keys(actualState.actions).join(' - ')}`,
     });
+
+    return actualState;
   }
 }
 
