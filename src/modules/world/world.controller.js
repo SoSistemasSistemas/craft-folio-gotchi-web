@@ -40,6 +40,8 @@ export default class WorldController {
       format: 'hex',
     };
 
+    this.currentUsername = localStorage.getItem('cfg-auth-username');
+
     this.registerAvatarMovementEvents();
   }
 

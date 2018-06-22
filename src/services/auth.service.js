@@ -5,10 +5,16 @@ import angular from 'angular';
 import ws from './world.service';
 
 function handleToken(response) {
+
   const { token } = response && response.data || {};
+  const { username } = response && response.data || {};
 
   if (token) {
     localStorage.setItem('cfg-auth-token', token);
+  }
+
+  if (username) {
+    localStorage.setItem('cfg-auth-username', username);
   }
 }
 
