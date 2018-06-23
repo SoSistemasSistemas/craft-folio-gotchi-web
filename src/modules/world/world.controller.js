@@ -71,6 +71,7 @@ export default class WorldController {
     }
 
     function moveSelection(evt) {
+      socket.emit('moved', evt.keyCode);
       switch (evt.keyCode) {
         case 37:
           move(-10);
