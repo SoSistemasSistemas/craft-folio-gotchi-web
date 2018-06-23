@@ -8,6 +8,8 @@ function isValidURL(url) {
   }
 }
 
+var curWorld;
+
 export default class WorldController {
   constructor(
     alertService, assetsService, commandProcessorService,
@@ -21,6 +23,7 @@ export default class WorldController {
     this.authService = authService;
     this.worldService = worldService;
     this.world = world;
+    curWorld = this.world;
 
     this.inputOutdoor = {};
 
@@ -40,8 +43,6 @@ export default class WorldController {
       format: 'hex',
     };
 
-    this.currentUsername = localStorage.getItem('cfg-auth-username');
-
     this.registerAvatarMovementEvents();
   }
 
@@ -49,8 +50,25 @@ export default class WorldController {
     this.authService.signOut();
   }
 
+  isOwnWorld() {
+    return curWorld.owner.username === localStorage.getItem('cfg-auth-username');
+  }
+
   registerAvatarMovementEvents() {
+
     const avatarEl = document.getElementById('avatar');
+
+    if (!this.isOwnWorld()) {
+
+      socket.on('moved', (data) => {
+        avatarEl.style.left = data.left;
+      });
+
+      socket.on('jumped', () => {
+        jump();
+      });
+
+    }
 
     function move(size) {
       const position =
@@ -61,6 +79,11 @@ export default class WorldController {
           `${parseInt(avatarEl.style.left, 10) + size}px` :
           `${size}px`;
       }
+
+      socket.emit('moved', {
+        username: curWorld.owner.username,
+        left: avatarEl.style.left
+      });
     }
 
     function jump() {
@@ -71,7 +94,6 @@ export default class WorldController {
     }
 
     function moveSelection(evt) {
-      socket.emit('moved', evt.keyCode);
       switch (evt.keyCode) {
         case 37:
           move(-10);
@@ -82,12 +104,15 @@ export default class WorldController {
         case 32:
         case 38:
           jump();
+          socket.emit('jumped', {});
           break;
         default: break;
       }
     }
 
-    window.addEventListener('keydown', moveSelection);
+    if (this.isOwnWorld()) {
+      window.addEventListener('keydown', moveSelection);
+    }
   }
 
   formatAvatars(avatarsUrls) {
