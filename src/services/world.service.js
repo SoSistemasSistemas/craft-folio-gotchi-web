@@ -8,19 +8,19 @@ class WorldService {
 
   getByOwnerUsername(username) {
     return this.$http
-      .get(`${env.API_ENDPOINT}/worlds/${username}`)
+      .get(`http://${window.location.hostname}:3000/worlds/${username}`)
       .then(({ data }) => data);
   }
 
   create() {
     return this.$http
-      .post(`${env.API_ENDPOINT}/worlds/`)
+      .post(`http://${window.location.hostname}:3000/worlds/`)
       .then(({ data }) => data);
   }
 
   updateWidgets(ownerUsername, widgets) {
     return this.$http
-      .put(`${env.API_ENDPOINT}/worlds/${ownerUsername}/widgets`, widgets);
+      .put(`http://${window.location.hostname}:3000/worlds/${ownerUsername}/widgets`, widgets);
   }
 }
 

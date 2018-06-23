@@ -19,7 +19,7 @@
   <ui-view></ui-view>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-  <script type="text/javascript">const socket = io('http://localhost:3000')</script>
+  <script type="text/javascript">const socket = io(`http://${window.location.hostname}:3000`)</script>
   <script src="/bundle.js"></script>
 </body>
 </html>

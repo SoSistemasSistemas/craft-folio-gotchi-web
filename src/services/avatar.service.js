@@ -9,7 +9,7 @@ class AvatarService {
 
   all() {
     return this.$http
-      .get(`${env.API_ENDPOINT}/avatars`)
+      .get(`http://${window.location.hostname}:3000/avatars`)
       .then(({ data }) => data);
   }
 }

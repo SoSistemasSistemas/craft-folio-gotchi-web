@@ -28,13 +28,13 @@ class AuthService {
 
   login(credentials) {
     return this.$http
-      .post(`${env.API_ENDPOINT}/auth/login`, credentials)
+      .post(`http://${window.location.hostname}:3000/auth/login`, credentials)
       .then(handleToken);
   }
 
   signup(credentials) {
     return this.$http
-      .post(`${env.API_ENDPOINT}/auth`, credentials)
+      .post(`http://${window.location.hostname}:3000/auth`, credentials)
       .then(handleToken)
       .then(() => this.worldService.create());
   }

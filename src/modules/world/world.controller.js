@@ -61,11 +61,15 @@ export default class WorldController {
     if (!this.isOwnWorld()) {
 
       socket.on('moved', (data) => {
-        avatarEl.style.left = data.left;
+        if (data.username === curWorld.owner.username) {
+          avatarEl.style.left = data.left;
+        }
       });
 
-      socket.on('jumped', () => {
-        jump();
+      socket.on('jumped', (data) => {
+        if (data.username === curWorld.owner.username) {
+          jump();
+        }
       });
 
     }
@@ -104,7 +108,7 @@ export default class WorldController {
         case 32:
         case 38:
           jump();
-          socket.emit('jumped', {});
+          socket.emit('jumped', { username: curWorld.owner.username });
           break;
         default: break;
       }
