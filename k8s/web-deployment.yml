@@ -29,3 +29,5 @@ spec:
           value: production
         - name: API_PORT
           value: '80'
+        - name: API_ENDPOINT
+          value: http://35.198.0.131

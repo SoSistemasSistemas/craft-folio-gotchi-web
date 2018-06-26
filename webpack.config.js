@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const { API_ENDPOINT } = process.env;
+
 module.exports = {
   entry: {
     init: './src/modules/application/app.controller.js',
@@ -43,7 +45,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       env: {
-        API_ENDPOINT: JSON.stringify('http://localhost:3000'),
+        API_ENDPOINT: JSON.stringify(API_ENDPOINT),
       },
     }),
   ],
