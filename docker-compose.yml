@@ -18,6 +18,7 @@ services:
     command: ["npm", "run", "bundle:watch"]
     environment:
       - NODE_ENV=development
+      - API_ENDPOINT=http://localhost:3000
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
