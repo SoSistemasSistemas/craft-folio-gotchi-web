@@ -5,7 +5,6 @@ import angular from 'angular';
 import ws from './world.service';
 
 function handleToken(response) {
-
   const { token } = response && response.data || {};
   const { username } = response && response.data || {};
 
@@ -28,13 +27,13 @@ class AuthService {
 
   login(credentials) {
     return this.$http
-      .post(`http://${window.location.hostname}:3000/auth/login`, credentials)
+      .post(`${env.API_ENDPOINT}/auth/login`, credentials)
       .then(handleToken);
   }
 
   signup(credentials) {
     return this.$http
-      .post(`http://${window.location.hostname}:3000/auth`, credentials)
+      .post(`${env.API_ENDPOINT}/auth`, credentials)
       .then(handleToken)
       .then(() => this.worldService.create());
   }

@@ -9,7 +9,7 @@ class UserService {
 
   updateAvatar(username, url) {
     return this.$http
-      .put(`http://${window.location.hostname}:3000/users/${username}/avatar`, { url });
+      .put(`${env.API_ENDPOINT}/users/${username}/avatar`, { url });
   }
 }
 
