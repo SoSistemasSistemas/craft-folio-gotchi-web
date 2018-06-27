@@ -43,6 +43,15 @@ export default class WorldController {
       format: 'hex',
     };
 
+    const username = localStorage.getItem('cfg-auth-username');
+
+    if (username && !this.isOwnWorld()) {
+      worldService.getByOwnerUsername(username).then(data => {
+        console.log("OW: " + JSON.stringify(data));
+        this.loggedUserWorld = data;
+      });
+    }
+
     this.registerAvatarMovementEvents();
   }
 
