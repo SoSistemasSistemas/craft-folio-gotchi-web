@@ -1,4 +1,5 @@
 /* eslint-env browser */
+/* global socket */
 
 function isValidURL(url) {
   try {
@@ -8,7 +9,7 @@ function isValidURL(url) {
   }
 }
 
-var curWorld;
+let curWorld;
 
 export default class WorldController {
   constructor(
@@ -46,7 +47,7 @@ export default class WorldController {
     const username = localStorage.getItem('cfg-auth-username');
 
     if (username && !this.isOwnWorld()) {
-      worldService.getByOwnerUsername(username).then(data => {
+      worldService.getByOwnerUsername(username).then((data) => {
         this.loggedUserWorld = data;
       });
       this.registerVisitorAvatarMovementEvents();
@@ -64,11 +65,9 @@ export default class WorldController {
   }
 
   registerAvatarMovementEvents() {
-
     const avatarEl = document.getElementById('avatar');
 
     if (!this.isOwnWorld()) {
-
       socket.on('moved', (data) => {
         if (data.username === curWorld.owner.username) {
           avatarEl.style.left = data.left;
@@ -80,7 +79,6 @@ export default class WorldController {
           jump();
         }
       });
-
     }
 
     function move(size) {
@@ -95,7 +93,7 @@ export default class WorldController {
 
       socket.emit('moved', {
         username: curWorld.owner.username,
-        left: avatarEl.style.left
+        left: avatarEl.style.left,
       });
     }
 
@@ -129,7 +127,6 @@ export default class WorldController {
   }
 
   registerVisitorAvatarMovementEvents() {
-
     const visitorAvatarEl = document.getElementById('avatar-visitor');
 
     function move(size) {
