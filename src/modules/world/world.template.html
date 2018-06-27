@@ -211,6 +211,10 @@
     <img src="{{ world.assets.signPlaque }}" ng-click="world.showSignPlaque()">
   </div>
 
+  <div id="visits-count">
+    Visitantes Únicos: {{ world.world.visitors.length }}
+  </div>
+
   <div id="sky" ng-style="{'background-image':'url(' + world.sky + ')'}">
     <button class="btn pull-left btn-world-edit" type="button"
             ng-click="world.openWidgetConfiguration()"

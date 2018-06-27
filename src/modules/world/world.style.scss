@@ -137,6 +137,14 @@ $screen-md-max: ($screen-lg-min - 1);
       width: 14%;
     }
   }
+  #visits-count {
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+    color: #F44336;
+    text-align: center;
+    font-weight: bold;
+  }
   #sky {
     height: 70%;
   }
