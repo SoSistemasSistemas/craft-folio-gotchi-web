@@ -80,6 +80,9 @@ $screen-md-max: ($screen-lg-min - 1);
       }
     }
   }
+  .avatar-visitor {
+    margin: auto auto 50px 25%;
+  }
   #outdoor {
     position: absolute;
     width: 30%;

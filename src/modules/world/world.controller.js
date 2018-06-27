@@ -47,9 +47,9 @@ export default class WorldController {
 
     if (username && !this.isOwnWorld()) {
       worldService.getByOwnerUsername(username).then(data => {
-        console.log("OW: " + JSON.stringify(data));
         this.loggedUserWorld = data;
       });
+      this.registerVisitorAvatarMovementEvents();
     }
 
     this.registerAvatarMovementEvents();
@@ -126,6 +126,47 @@ export default class WorldController {
     if (this.isOwnWorld()) {
       window.addEventListener('keydown', moveSelection);
     }
+  }
+
+  registerVisitorAvatarMovementEvents() {
+
+    const visitorAvatarEl = document.getElementById('avatar-visitor');
+
+    function move(size) {
+      const position =
+        Math.abs(parseInt(visitorAvatarEl.style.left || 0, 10)) + (visitorAvatarEl.offsetWidth || 0);
+      if (position + Math.abs(size) < window.innerWidth ||
+          (parseInt(visitorAvatarEl.style.left, 10) / size < 0)) {
+        visitorAvatarEl.style.left = visitorAvatarEl.style.left ?
+          `${parseInt(visitorAvatarEl.style.left, 10) + size}px` :
+          `${size}px`;
+      }
+    }
+
+    function jump() {
+      visitorAvatarEl.classList.add('jump');
+      setTimeout(() => {
+        visitorAvatarEl.classList.remove('jump');
+      }, 1000);
+    }
+
+    function moveSelection(evt) {
+      switch (evt.keyCode) {
+        case 37:
+          move(-10);
+          break;
+        case 39:
+          move(10);
+          break;
+        case 32:
+        case 38:
+          jump();
+          break;
+        default: break;
+      }
+    }
+
+    window.addEventListener('keydown', moveSelection);
   }
 
   formatAvatars(avatarsUrls) {

@@ -233,8 +233,8 @@
     <img src="{{ world.avatar.url }}">
   </div>
 
-  <div id="avatar2" class="avatar" ng-if="world.loggedUserWorld">
-    <img src="{{ world.loggedUserWorld.owner.avatarUrl }}">
+  <div id="avatar-visitor" class="avatar avatar-visitor">
+    <img ng-if="world.loggedUserWorld" src="{{ world.loggedUserWorld.owner.avatarUrl }}">
   </div>
 
 </div>
