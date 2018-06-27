@@ -49,7 +49,6 @@ class EmotionsMachineStateService {
   }
 
   next(actualState, command) {
-
     const states = this.getStates();
 
     if (!actualState) {

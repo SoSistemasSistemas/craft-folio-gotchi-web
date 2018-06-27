@@ -26,7 +26,7 @@ class SpeechRecognitionService {
 
     const states = this.emotionsMachineStateService.getStates();
     const commands =
-      states.reduce((result, state) => [...result, ...state.actionsIn, ...state.actionsOut], []);
+      states.reduce((result, state) => [...result, ...state.actions], []);
 
     const grammar = `#JSGF V1.0; grammar commands public <command> = ${commands.join(' | ')} ;`;
 
