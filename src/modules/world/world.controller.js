@@ -11,13 +11,14 @@ function isValidURL(url) {
 
 export default class WorldController {
   constructor(
-    alertService, assetsService, commandProcessorService,
+    alertService, assetsService, commandProcessorService, avatarMovementService,
     speechRecognitionService, userService, authService, worldService, world, avatars,
   ) {
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
+    this.avatarMovementService = avatarMovementService;
     this.userService = userService;
     this.authService = authService;
     this.worldService = worldService;
@@ -41,73 +42,15 @@ export default class WorldController {
       format: 'hex',
     };
 
-    this.registerAvatarMovementEvents();
+    this.loggedAvatars = [
+      this.avatarMovementService.register(this.world.owner),
+    ];
+
+    this.loggedAvatars[0].attachKeyboardControls();
   }
 
   signOut() {
     this.authService.signOut();
-  }
-
-  registerAvatarMovementEvents() {
-    const avatarEl = document.getElementById('avatar');
-
-    if (!this.world.isOwner) {
-      socket.on('moved', (data) => {
-        if (data.username === this.world.owner.username) {
-          avatarEl.style.left = data.left;
-        }
-      });
-
-      socket.on('jumped', (data) => {
-        if (data.username === this.world.owner.username) {
-          jump();
-        }
-      });
-    }
-
-    function move(size) {
-      const position =
-        Math.abs(parseInt(avatarEl.style.left || 0, 10)) + (avatarEl.offsetWidth || 0);
-      if (position + Math.abs(size) < window.innerWidth ||
-          (parseInt(avatarEl.style.left, 10) / size < 0)) {
-        avatarEl.style.left = avatarEl.style.left ?
-          `${parseInt(avatarEl.style.left, 10) + size}px` :
-          `${size}px`;
-      }
-
-      socket.emit('moved', {
-        username: this.world.owner.username,
-        left: avatarEl.style.left,
-      });
-    }
-
-    function jump() {
-      avatarEl.classList.add('jump');
-      setTimeout(() => {
-        avatarEl.classList.remove('jump');
-      }, 1000);
-    }
-
-    function moveSelection(evt) {
-      switch (evt.keyCode) {
-        case 37:
-          move(-10);
-          break;
-        case 39:
-          move(10);
-          break;
-        case 32:
-        case 38:
-          jump();
-          socket.emit('jumped', { username: this.world.owner.username });
-          break;
-        default: break;
-      }
-    }
-
-    if (this.world.isOwner) {
-      window.addEventListener('keydown', moveSelection);
-    }
   }
 
   formatAvatars(avatarsUrls) {
@@ -327,4 +270,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'avatarMovementService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];
