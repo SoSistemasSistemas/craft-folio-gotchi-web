@@ -9,8 +9,6 @@ function isValidURL(url) {
   }
 }
 
-let curWorld;
-
 export default class WorldController {
   constructor(
     alertService, assetsService, commandProcessorService,
@@ -24,7 +22,6 @@ export default class WorldController {
     this.authService = authService;
     this.worldService = worldService;
     this.world = world;
-    curWorld = this.world;
 
     this.inputOutdoor = {};
 
@@ -44,15 +41,6 @@ export default class WorldController {
       format: 'hex',
     };
 
-    const username = localStorage.getItem('cfg-auth-username');
-
-    if (username && !this.isOwnWorld()) {
-      worldService.getByOwnerUsername(username).then((data) => {
-        this.loggedUserWorld = data;
-      });
-      this.registerVisitorAvatarMovementEvents();
-    }
-
     this.registerAvatarMovementEvents();
   }
 
@@ -60,22 +48,18 @@ export default class WorldController {
     this.authService.signOut();
   }
 
-  isOwnWorld() {
-    return curWorld.owner.username === localStorage.getItem('cfg-auth-username');
-  }
-
   registerAvatarMovementEvents() {
     const avatarEl = document.getElementById('avatar');
 
-    if (!this.isOwnWorld()) {
+    if (!this.world.isOwner) {
       socket.on('moved', (data) => {
-        if (data.username === curWorld.owner.username) {
+        if (data.username === this.world.owner.username) {
           avatarEl.style.left = data.left;
         }
       });
 
       socket.on('jumped', (data) => {
-        if (data.username === curWorld.owner.username) {
+        if (data.username === this.world.owner.username) {
           jump();
         }
       });
@@ -92,7 +76,7 @@ export default class WorldController {
       }
 
       socket.emit('moved', {
-        username: curWorld.owner.username,
+        username: this.world.owner.username,
         left: avatarEl.style.left,
       });
     }
@@ -115,55 +99,15 @@ export default class WorldController {
         case 32:
         case 38:
           jump();
-          socket.emit('jumped', { username: curWorld.owner.username });
+          socket.emit('jumped', { username: this.world.owner.username });
           break;
         default: break;
       }
     }
 
-    if (this.isOwnWorld()) {
+    if (this.world.isOwner) {
       window.addEventListener('keydown', moveSelection);
     }
-  }
-
-  registerVisitorAvatarMovementEvents() {
-    const visitorAvatarEl = document.getElementById('avatar-visitor');
-
-    function move(size) {
-      const position =
-        Math.abs(parseInt(visitorAvatarEl.style.left || 0, 10)) + (visitorAvatarEl.offsetWidth || 0);
-      if (position + Math.abs(size) < window.innerWidth ||
-          (parseInt(visitorAvatarEl.style.left, 10) / size < 0)) {
-        visitorAvatarEl.style.left = visitorAvatarEl.style.left ?
-          `${parseInt(visitorAvatarEl.style.left, 10) + size}px` :
-          `${size}px`;
-      }
-    }
-
-    function jump() {
-      visitorAvatarEl.classList.add('jump');
-      setTimeout(() => {
-        visitorAvatarEl.classList.remove('jump');
-      }, 1000);
-    }
-
-    function moveSelection(evt) {
-      switch (evt.keyCode) {
-        case 37:
-          move(-10);
-          break;
-        case 39:
-          move(10);
-          break;
-        case 32:
-        case 38:
-          jump();
-          break;
-        default: break;
-      }
-    }
-
-    window.addEventListener('keydown', moveSelection);
   }
 
   formatAvatars(avatarsUrls) {

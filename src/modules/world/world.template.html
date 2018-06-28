@@ -218,7 +218,7 @@
   <div id="sky" ng-style="{'background-image':'url(' + world.sky + ')'}">
     <button class="btn pull-left btn-world-edit" type="button"
             ng-click="world.openWidgetConfiguration()"
-            ng-if="world.isOwnWorld()">
+            ng-if="world.world.isOwner">
       <i class="fa fa-edit"></i>Editar
     </button>
     <button class="btn pull-right btn-world-edit" type="button"
