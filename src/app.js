@@ -1,3 +1,5 @@
+import oauth from './configs/auth.config';
+
 const { BAD_REQUEST } = require('http-status-codes');
 
 const path = require('path');
@@ -6,6 +8,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+
 const app = express();
 const { API_PORT } = process.env;
 
@@ -27,9 +30,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: config.facebook_api_key,
-  clientSecret:config.facebook_api_secret ,
-  callbackURL: config.callback_url
+  clientID: oauth.facebook_api_key,
+  clientSecret: oauth.facebook_api_secret,
+  callbackURL: oauth.callback_url
 }, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
     return done(null, profile);
