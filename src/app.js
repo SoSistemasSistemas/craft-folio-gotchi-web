@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const app = express();
 const { API_PORT } = process.env;
