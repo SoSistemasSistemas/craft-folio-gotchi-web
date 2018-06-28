@@ -60,7 +60,7 @@ class Avatar {
           break;
         case KEYBOARD_KEY_CODES.RIGHT:
           this.move(MOVEMENT_SIZE);
-          socket.emit('jumped', {
+          socket.emit('moved', {
             username: this.user.username,
             room: this.room,
             newPosition: this.htmlComponent().style.left,
