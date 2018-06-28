@@ -78,7 +78,6 @@ export default class WorldController {
     });
 
     socket.on('moved', ({ username, newPosition }) => {
-      console.log("Oi");
       const avatar = this.loggedAvatars.find(a => a.user.username === username);
 
       if (avatar && avatar.user.username !== this.user.username) {
