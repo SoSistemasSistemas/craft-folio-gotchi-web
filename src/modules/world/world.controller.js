@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global socket */
+/* global socket, env */
 
 function isValidURL(url) {
   try {
@@ -49,7 +49,8 @@ export default class WorldController {
     this.loggedAvatars = [];
     this.handleLoggedAvatarsRendering();
 
-    if (!localStorage.getItem('cfg-web-push-token-generated')) {
+    if (!localStorage.getItem('cfg-web-push-token-generated') &&
+        env.NODE_ENV === 'development') {
       this.webPushService
         .collectToken()
         .then(() => localStorage.setItem('cfg-web-push-token-generated', '{}'));
@@ -139,6 +140,9 @@ export default class WorldController {
       this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
       this.ground = this.world.widgets.groundTextures.find(texture => texture.active).url;
       this.avatar.url = this.world.owner.avatarUrl;
+
+      const myAvatar = this.loggedAvatars.find(a => a.user.username === this.user.username);
+      myAvatar.user.avatarUrl = this.avatar.url;
     }
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
@@ -189,12 +193,15 @@ export default class WorldController {
   }
 
   changeAvatar(direction) {
-    const groundImage = document.querySelectorAll('#avatarCarousel .active img')[0];
-    const previousIndex = parseInt(groundImage.attributes[2].value, 10);
+    const avatarImage = document.querySelectorAll('#avatarCarousel .active img')[0];
+    const previousIndex = parseInt(avatarImage.attributes[2].value, 10);
     const nextIndex =
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.avatars.length);
 
     this.avatar = this.avatars[nextIndex];
+
+    const myAvatar = this.loggedAvatars.find(a => a.user.username === this.user.username);
+    myAvatar.user.avatarUrl = this.avatar.url;
 
     this.world.owner.avatarUrl = this.avatar.url;
   }

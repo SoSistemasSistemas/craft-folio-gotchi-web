@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const { API_ENDPOINT } = process.env;
+const { API_ENDPOINT, NODE_ENV } = process.env;
 
 module.exports = {
   entry: {
@@ -46,6 +46,7 @@ module.exports = {
     new webpack.DefinePlugin({
       env: {
         API_ENDPOINT: JSON.stringify(API_ENDPOINT),
+        NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
   ],

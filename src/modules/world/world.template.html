@@ -230,7 +230,7 @@
   <div id="ground" ng-style="{'background-image':'url(' + world.ground + ')'}"></div>
 
   <div id="avatar-{{ avatar.user.username }}" class="avatar" ng-repeat="avatar in world.loggedAvatars">
-    <div class="avatarState" ng-if="world.avatar.state && world.avatar.state.name !== 'normal'">
+    <div class="avatarState" ng-if="avatar.user.username == world.user.username && world.avatar.state && world.avatar.state.name !== 'normal'">
       <img class="emotion" src="{{ world.avatar.state.url }}">
       <img class="speechBallon" src="{{ world.assets.speechBallon }}">
     </div>

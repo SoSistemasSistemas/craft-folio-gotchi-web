@@ -1,7 +1,5 @@
 /* eslint-env browser */
-/* global angular */
-
-/* global navigator */
+/* global angular, navigator, env */
 
 import firebase from 'firebase/app';
 import 'firebase/messaging';
@@ -17,9 +15,14 @@ const config = {
   messagingSenderId: '664523256006',
 };
 
-firebase.initializeApp(config);
+let messaging;
 
-const messaging = firebase.messaging();
+if (env.NODE_ENV === 'development') {
+  firebase.initializeApp(config);
+
+  messaging = firebase.messaging();
+}
+
 
 const registerServiceWorker = () => {
   if (!navigator || !navigator.serviceWorker) {
