@@ -1,0 +1,16 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tls-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "craft-folio-gotchi-web-ip"
+spec:
+  rules:
+  - host: craft-folio-gotchi.luisnascimento.me
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: craft-folio-gotchi-web
+          servicePort: 80
