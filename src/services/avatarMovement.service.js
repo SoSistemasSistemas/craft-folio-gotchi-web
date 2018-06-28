@@ -11,8 +11,9 @@ const KEYBOARD_KEY_CODES = {
 };
 
 class Avatar {
-  constructor(user) {
+  constructor(user, room) {
     this.user = user;
+    this.room = room;
     this._htmlComponent = undefined;
     this.htmlComponent = () => {
       this._htmlComponent = this._htmlComponent || document.getElementById(`avatar-${user.username}`);
@@ -42,19 +43,33 @@ class Avatar {
     }, 1000);
   }
 
+  updatePosition(newPosition) {
+    this.htmlComponent().style.left = newPosition;
+  }
+
   attachKeyboardControls() {
     window.addEventListener('keydown', (evt) => {
       switch (evt.keyCode) {
         case KEYBOARD_KEY_CODES.LEFT:
           this.move(-MOVEMENT_SIZE);
+          socket.emit('moved', {
+            username: this.user.username,
+            room: this.room,
+            newPosition: this.htmlComponent().style.left,
+          });
           break;
         case KEYBOARD_KEY_CODES.RIGHT:
           this.move(MOVEMENT_SIZE);
+          socket.emit('jumped', {
+            username: this.user.username,
+            room: this.room,
+            newPosition: this.htmlComponent().style.left,
+          });
           break;
         case KEYBOARD_KEY_CODES.SPACE:
         case KEYBOARD_KEY_CODES.UP:
           this.jump();
-          // socket.emit('jumped', { username: this.user.username });
+          socket.emit('jumped', { username: this.user.username, room: this.room });
           break;
         default: break;
       }
@@ -63,8 +78,8 @@ class Avatar {
 }
 
 class AvatarMovementService {
-  register(user) {
-    return new Avatar(user);
+  register(user, room) {
+    return new Avatar(user, room);
   }
 }
 

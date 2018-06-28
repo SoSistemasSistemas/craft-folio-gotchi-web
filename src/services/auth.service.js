@@ -4,17 +4,9 @@ import angular from 'angular';
 
 import ws from './world.service';
 
-function handleToken(response) {
-  const { token } = response && response.data || {};
-  const { username } = response && response.data || {};
-
-  if (token) {
-    localStorage.setItem('cfg-auth-token', token);
-  }
-
-  if (username) {
-    localStorage.setItem('cfg-auth-username', username);
-  }
+function handleAuth(response) {
+  const data = JSON.stringify(response && response.data || {});
+  localStorage.setItem('cfg-auth', data);
 }
 
 class AuthService {
@@ -28,18 +20,18 @@ class AuthService {
   login(credentials) {
     return this.$http
       .post(`${env.API_ENDPOINT}/auth/login`, credentials)
-      .then(handleToken);
+      .then(handleAuth);
   }
 
   signup(credentials) {
     return this.$http
       .post(`${env.API_ENDPOINT}/auth`, credentials)
-      .then(handleToken)
+      .then(handleAuth)
       .then(() => this.worldService.create());
   }
 
   signOut() {
-    localStorage.removeItem('cfg-auth-token');
+    localStorage.removeItem('cfg-auth');
     return this.$state.go('auth');
   }
 }

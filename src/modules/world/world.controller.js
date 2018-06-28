@@ -42,11 +42,49 @@ export default class WorldController {
       format: 'hex',
     };
 
-    this.loggedAvatars = [
-      this.avatarMovementService.register(this.world.owner),
-    ];
+    this.user = JSON.parse(localStorage.getItem('cfg-auth') || '{}');
+    delete this.user.token;
 
+    this.loggedAvatars = [];
+    this.handleLoggedAvatarsRendering();
+  }
+
+  handleLoggedAvatarsRendering() {
+    const room = this.world.owner.username;
+
+    this.loggedAvatars.push(this.avatarMovementService.register(this.user, room));
     this.loggedAvatars[0].attachKeyboardControls();
+
+    if (this.user.username !== this.world.owner.username) {
+      this.loggedAvatars.push(this.avatarMovementService.register(this.world.owner, room));
+    }
+
+    socket.emit('join-room', { room: this.world.owner.username, user: this.user });
+
+    socket.on('joined-room', ({ user }) => {
+      const avatar = this.loggedAvatars.find(a => a.user.username === user.username);
+
+      if (!avatar) {
+        this.loggedAvatars.push(this.avatarMovementService.register(user, room));
+      }
+    });
+
+    socket.on('jumped', (username) => {
+      const avatar = this.loggedAvatars.find(a => a.user.username === username);
+
+      if (avatar) {
+        avatar.jump();
+      }
+    });
+
+    socket.on('moved', ({ username, newPosition }) => {
+      console.log("Oi");
+      const avatar = this.loggedAvatars.find(a => a.user.username === username);
+
+      if (avatar && avatar.user.username !== this.user.username) {
+        avatar.updatePosition(newPosition);
+      }
+    });
   }
 
   signOut() {
