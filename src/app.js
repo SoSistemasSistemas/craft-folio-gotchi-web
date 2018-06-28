@@ -26,6 +26,16 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+passport.use(new FacebookStrategy({
+  clientID: config.facebook_api_key,
+  clientSecret:config.facebook_api_secret ,
+  callbackURL: config.callback_url
+}, function(accessToken, refreshToken, profile, done) {
+  process.nextTick(function () {
+    return done(null, profile);
+  });
+}
+));
 
 app.listen(parseInt(API_PORT, 10), () => {
   console.log(`CraftFolioGotchi up and running at 0.0.0.0:${API_PORT}... :)`);
