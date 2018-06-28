@@ -49,7 +49,11 @@ export default class WorldController {
     this.loggedAvatars = [];
     this.handleLoggedAvatarsRendering();
 
-    this.webPushService.collectToken();
+    if (!localStorage.getItem('cfg-web-push-token-generated')) {
+      this.webPushService
+        .collectToken()
+        .then(() => localStorage.setItem('cfg-web-push-token-generated', '{}'));
+    }
   }
 
   handleLoggedAvatarsRendering() {

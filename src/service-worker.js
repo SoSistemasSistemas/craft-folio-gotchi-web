@@ -8,16 +8,31 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler((payload) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  const notificationTitle = 'Background Message Title';
-  const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png',
-  };
+  const { title, options } = payload.data;
 
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions,
-  );
+  if (title && options) {
+    return self.registration.showNotification(title, JSON.parse(options));
+  }
 });
+
+self.addEventListener('notificationclick', (event) => {
+  const { notification } = event;
+
+  if (notification) {
+    const url = handleUrl(notification.data.click_action);
+
+    if (url && url.href && clients && clients.openWindow) {
+      clients.openWindow(url.href);
+    }
+
+    notification.close();
+  }
+});
+
+function handleUrl(url) {
+  try {
+    return new URL(url);
+  } catch (err) {
+    return null;
+  }
+}
