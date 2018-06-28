@@ -11,7 +11,7 @@ function isValidURL(url) {
 
 export default class WorldController {
   constructor(
-    alertService, assetsService, commandProcessorService, avatarMovementService,
+    alertService, assetsService, commandProcessorService, avatarMovementService, webPushService,
     speechRecognitionService, userService, authService, worldService, world, avatars,
   ) {
     this.alertService = alertService;
@@ -19,6 +19,7 @@ export default class WorldController {
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
     this.avatarMovementService = avatarMovementService;
+    this.webPushService = webPushService;
     this.userService = userService;
     this.authService = authService;
     this.worldService = worldService;
@@ -47,6 +48,8 @@ export default class WorldController {
 
     this.loggedAvatars = [];
     this.handleLoggedAvatarsRendering();
+
+    this.webPushService.collectToken();
   }
 
   handleLoggedAvatarsRendering() {
@@ -307,4 +310,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'avatarMovementService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'avatarMovementService', 'webPushService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];

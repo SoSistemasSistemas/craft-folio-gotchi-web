@@ -1,4 +1,4 @@
-/* global env */
+/* global env, localStorage */
 
 import angular from 'angular';
 
@@ -10,6 +10,12 @@ class UserService {
   updateAvatar(username, url) {
     return this.$http
       .put(`${env.API_ENDPOINT}/users/${username}/avatar`, { url });
+  }
+
+  updateTokenWebPush(token) {
+    const { username } = JSON.parse(localStorage.getItem('cfg-auth') || '{}');
+    return this.$http
+      .put(`${env.API_ENDPOINT}/users/${username}/tokenWebPush`, { token });
   }
 }
 
