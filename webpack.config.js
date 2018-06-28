@@ -46,7 +46,7 @@ module.exports = {
     new webpack.DefinePlugin({
       env: {
         API_ENDPOINT: JSON.stringify(API_ENDPOINT),
-      },
+      }
     }),
   ],
 };
