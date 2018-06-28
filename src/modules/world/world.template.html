@@ -229,16 +229,12 @@
 
   <div id="ground" ng-style="{'background-image':'url(' + world.ground + ')'}"></div>
 
-  <div id="avatar-luisnascimento" class="avatar">
+  <div id="avatar-{{ avatar.user.username }}" class="avatar" ng-repeat="avatar in world.loggedAvatars">
     <div class="avatarState" ng-if="world.avatar.state && world.avatar.state.name !== 'normal'">
       <img class="emotion" src="{{ world.avatar.state.url }}">
       <img class="speechBallon" src="{{ world.assets.speechBallon }}">
     </div>
     <img src="{{ world.avatar.url }}">
-  </div>
-
-  <div id="avatar-visitor" class="avatar avatar-visitor">
-    <img ng-if="world.loggedUserWorld" src="{{ world.loggedUserWorld.owner.avatarUrl }}">
   </div>
 
 </div>

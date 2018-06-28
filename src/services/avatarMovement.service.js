@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 /* global angular, socket, document, window */
 
 const MOVEMENT_SIZE = 10;
@@ -12,28 +13,32 @@ const KEYBOARD_KEY_CODES = {
 class Avatar {
   constructor(user) {
     this.user = user;
-    this.htmlComponent = document.getElementById(`avatar-${user.username}`);
+    this._htmlComponent = undefined;
+    this.htmlComponent = () => {
+      this._htmlComponent = this._htmlComponent || document.getElementById(`avatar-${user.username}`);
+      return this._htmlComponent;
+    };
   }
 
   move(size) {
-    const leftWidth = Math.abs(parseInt(this.htmlComponent.style.left || 0, 10));
-    const offsetWidth = Math.abs(parseInt(this.htmlComponent.offsetWidth || 0, 10));
+    const leftWidth = Math.abs(parseInt(this.htmlComponent().style.left || 0, 10));
+    const offsetWidth = Math.abs(parseInt(this.htmlComponent().offsetWidth || 0, 10));
 
     const position = leftWidth + offsetWidth;
 
     if ((position + Math.abs(size) < window.innerWidth) ||
-        (parseInt(this.htmlComponent.style.left, 10) / size < 0)) {
-      this.htmlComponent.style.left = this.htmlComponent.style.left ?
-        `${parseInt(this.htmlComponent.style.left, 10) + size}px` :
+        (parseInt(this.htmlComponent().style.left, 10) / size < 0)) {
+      this.htmlComponent().style.left = this.htmlComponent().style.left ?
+        `${parseInt(this.htmlComponent().style.left, 10) + size}px` :
         `${size}px`;
     }
   }
 
   jump() {
-    this.htmlComponent.classList.add('jump');
+    this.htmlComponent().classList.add('jump');
 
     setTimeout(() => {
-      this.htmlComponent.classList.remove('jump');
+      this.htmlComponent().classList.remove('jump');
     }, 1000);
   }
 
