@@ -19,9 +19,11 @@ import worldService from '../../services/world.service';
 import emotionsMachineStateService from '../../services/emotionsMachineState.service';
 import commandProcessorService from '../../services/commandProcessor.service';
 import speechRecognitionService from '../../services/speechRecognition.service';
+import avatarMovementService from '../../services/avatarMovement.service';
+import webPushService from '../../services/webPush.service';
 
 export default angular
-  .module('app.world', [uiRouter, colorpicker, avatarService, userService, worldService, alertService, assetsService, commandProcessorService, emotionsMachineStateService, speechRecognitionService])
+  .module('app.world', [uiRouter, colorpicker, avatarService, userService, worldService, alertService, assetsService, commandProcessorService, emotionsMachineStateService, speechRecognitionService, avatarMovementService, webPushService])
   .config(routing)
   .controller('WorldController', WorldController)
   .name;

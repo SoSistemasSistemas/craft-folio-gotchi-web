@@ -218,7 +218,7 @@
   <div id="sky" ng-style="{'background-image':'url(' + world.sky + ')'}">
     <button class="btn pull-left btn-world-edit" type="button"
             ng-click="world.openWidgetConfiguration()"
-            ng-if="world.isOwnWorld()">
+            ng-if="world.world.isOwner">
       <i class="fa fa-edit"></i>Editar
     </button>
     <button class="btn pull-right btn-world-edit" type="button"
@@ -229,16 +229,12 @@
 
   <div id="ground" ng-style="{'background-image':'url(' + world.ground + ')'}"></div>
 
-  <div id="avatar" class="avatar">
-    <div class="avatarState" ng-if="world.avatar.state && world.avatar.state.name !== 'normal'">
+  <div id="avatar-{{ avatar.user.username }}" class="avatar" ng-repeat="avatar in world.loggedAvatars">
+    <div class="avatarState" ng-if="avatar.user.username == world.user.username && world.avatar.state && world.avatar.state.name !== 'normal'">
       <img class="emotion" src="{{ world.avatar.state.url }}">
       <img class="speechBallon" src="{{ world.assets.speechBallon }}">
     </div>
-    <img src="{{ world.avatar.url }}">
-  </div>
-
-  <div id="avatar-visitor" class="avatar avatar-visitor">
-    <img ng-if="world.loggedUserWorld" src="{{ world.loggedUserWorld.owner.avatarUrl }}">
+    <img src="{{ avatar.user.avatarUrl || avatar.user.avatar.url }}">
   </div>
 
 </div>

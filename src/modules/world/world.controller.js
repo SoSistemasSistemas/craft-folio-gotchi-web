@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global socket */
+/* global socket, env */
 
 function isValidURL(url) {
   try {
@@ -9,22 +9,21 @@ function isValidURL(url) {
   }
 }
 
-let curWorld;
-
 export default class WorldController {
   constructor(
-    alertService, assetsService, commandProcessorService,
+    alertService, assetsService, commandProcessorService, avatarMovementService, webPushService,
     speechRecognitionService, userService, authService, worldService, world, avatars,
   ) {
     this.alertService = alertService;
     this.assetsService = assetsService;
     this.commandProcessorService = commandProcessorService;
     this.speechRecognitionService = speechRecognitionService;
+    this.avatarMovementService = avatarMovementService;
+    this.webPushService = webPushService;
     this.userService = userService;
     this.authService = authService;
     this.worldService = worldService;
     this.world = world;
-    curWorld = this.world;
 
     this.inputOutdoor = {};
 
@@ -44,126 +43,59 @@ export default class WorldController {
       format: 'hex',
     };
 
-    const username = localStorage.getItem('cfg-auth-username');
+    this.user = JSON.parse(localStorage.getItem('cfg-auth') || '{}');
+    delete this.user.token;
 
-    if (username && !this.isOwnWorld()) {
-      worldService.getByOwnerUsername(username).then((data) => {
-        this.loggedUserWorld = data;
-      });
-      this.registerVisitorAvatarMovementEvents();
+    this.loggedAvatars = [];
+    this.handleLoggedAvatarsRendering();
+
+    if (!localStorage.getItem('cfg-web-push-token-generated') &&
+        env.NODE_ENV === 'development') {
+      this.webPushService
+        .collectToken()
+        .then(() => localStorage.setItem('cfg-web-push-token-generated', '{}'));
+    }
+  }
+
+  handleLoggedAvatarsRendering() {
+    const room = this.world.owner.username;
+
+    this.loggedAvatars.push(this.avatarMovementService.register(this.user, room));
+    this.loggedAvatars[0].attachKeyboardControls();
+
+    if (this.user.username !== this.world.owner.username) {
+      this.loggedAvatars.push(this.avatarMovementService.register(this.world.owner, room));
     }
 
-    this.registerAvatarMovementEvents();
+    socket.emit('join-room', { room: this.world.owner.username, user: this.user });
+
+    socket.on('joined-room', ({ user }) => {
+      const avatar = this.loggedAvatars.find(a => a.user.username === user.username);
+
+      if (!avatar) {
+        this.loggedAvatars.push(this.avatarMovementService.register(user, room));
+      }
+    });
+
+    socket.on('jumped', (username) => {
+      const avatar = this.loggedAvatars.find(a => a.user.username === username);
+
+      if (avatar) {
+        avatar.jump();
+      }
+    });
+
+    socket.on('moved', ({ username, newPosition }) => {
+      const avatar = this.loggedAvatars.find(a => a.user.username === username);
+
+      if (avatar && avatar.user.username !== this.user.username) {
+        avatar.updatePosition(newPosition);
+      }
+    });
   }
 
   signOut() {
     this.authService.signOut();
-  }
-
-  isOwnWorld() {
-    return curWorld.owner.username === localStorage.getItem('cfg-auth-username');
-  }
-
-  registerAvatarMovementEvents() {
-    const avatarEl = document.getElementById('avatar');
-
-    if (!this.isOwnWorld()) {
-      socket.on('moved', (data) => {
-        if (data.username === curWorld.owner.username) {
-          avatarEl.style.left = data.left;
-        }
-      });
-
-      socket.on('jumped', (data) => {
-        if (data.username === curWorld.owner.username) {
-          jump();
-        }
-      });
-    }
-
-    function move(size) {
-      const position =
-        Math.abs(parseInt(avatarEl.style.left || 0, 10)) + (avatarEl.offsetWidth || 0);
-      if (position + Math.abs(size) < window.innerWidth ||
-          (parseInt(avatarEl.style.left, 10) / size < 0)) {
-        avatarEl.style.left = avatarEl.style.left ?
-          `${parseInt(avatarEl.style.left, 10) + size}px` :
-          `${size}px`;
-      }
-
-      socket.emit('moved', {
-        username: curWorld.owner.username,
-        left: avatarEl.style.left,
-      });
-    }
-
-    function jump() {
-      avatarEl.classList.add('jump');
-      setTimeout(() => {
-        avatarEl.classList.remove('jump');
-      }, 1000);
-    }
-
-    function moveSelection(evt) {
-      switch (evt.keyCode) {
-        case 37:
-          move(-10);
-          break;
-        case 39:
-          move(10);
-          break;
-        case 32:
-        case 38:
-          jump();
-          socket.emit('jumped', { username: curWorld.owner.username });
-          break;
-        default: break;
-      }
-    }
-
-    if (this.isOwnWorld()) {
-      window.addEventListener('keydown', moveSelection);
-    }
-  }
-
-  registerVisitorAvatarMovementEvents() {
-    const visitorAvatarEl = document.getElementById('avatar-visitor');
-
-    function move(size) {
-      const position =
-        Math.abs(parseInt(visitorAvatarEl.style.left || 0, 10)) + (visitorAvatarEl.offsetWidth || 0);
-      if (position + Math.abs(size) < window.innerWidth ||
-          (parseInt(visitorAvatarEl.style.left, 10) / size < 0)) {
-        visitorAvatarEl.style.left = visitorAvatarEl.style.left ?
-          `${parseInt(visitorAvatarEl.style.left, 10) + size}px` :
-          `${size}px`;
-      }
-    }
-
-    function jump() {
-      visitorAvatarEl.classList.add('jump');
-      setTimeout(() => {
-        visitorAvatarEl.classList.remove('jump');
-      }, 1000);
-    }
-
-    function moveSelection(evt) {
-      switch (evt.keyCode) {
-        case 37:
-          move(-10);
-          break;
-        case 39:
-          move(10);
-          break;
-        case 32:
-        case 38:
-          jump();
-          break;
-        default: break;
-      }
-    }
-
-    window.addEventListener('keydown', moveSelection);
   }
 
   formatAvatars(avatarsUrls) {
@@ -208,6 +140,9 @@ export default class WorldController {
       this.sky = this.world.widgets.skyTextures.find(texture => texture.active).url;
       this.ground = this.world.widgets.groundTextures.find(texture => texture.active).url;
       this.avatar.url = this.world.owner.avatarUrl;
+
+      const myAvatar = this.loggedAvatars.find(a => a.user.username === this.user.username);
+      myAvatar.user.avatarUrl = this.avatar.url;
     }
 
     document.getElementById('mySidenav').classList.toggle('sidenav-open');
@@ -258,12 +193,15 @@ export default class WorldController {
   }
 
   changeAvatar(direction) {
-    const groundImage = document.querySelectorAll('#avatarCarousel .active img')[0];
-    const previousIndex = parseInt(groundImage.attributes[2].value, 10);
+    const avatarImage = document.querySelectorAll('#avatarCarousel .active img')[0];
+    const previousIndex = parseInt(avatarImage.attributes[2].value, 10);
     const nextIndex =
       this.getChangedBackgroundWidgetIndex(previousIndex, direction, this.avatars.length);
 
     this.avatar = this.avatars[nextIndex];
+
+    const myAvatar = this.loggedAvatars.find(a => a.user.username === this.user.username);
+    myAvatar.user.avatarUrl = this.avatar.url;
 
     this.world.owner.avatarUrl = this.avatar.url;
   }
@@ -383,4 +321,4 @@ export default class WorldController {
   }
 }
 
-WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];
+WorldController.$inject = ['alertService', 'assetsService', 'commandProcessorService', 'avatarMovementService', 'webPushService', 'speechRecognitionService', 'userService', 'authService', 'worldService', 'world', 'avatars'];

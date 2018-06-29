@@ -4,7 +4,7 @@ import { UNAUTHORIZED } from 'http-status-codes';
 
 export default function httpInterceptor($q, $state, alertService) {
   const request = (req) => {
-    const token = localStorage.getItem('cfg-auth-token');
+    const { token } = JSON.parse(localStorage.getItem('cfg-auth') || '{}');
 
     if (token) {
       req.headers['x-access-token'] = token;
